@@ -86,12 +86,8 @@ function GameController(
   };
 
   // Play a round
-  const playRound = (row, column) => {
-    console.log(
-      `Placing ${
-        getActivePlayer().name
-      }'s token in row ${row}, column ${column}`
-    );
+  const playRound = (cell, row, column) => {
+    console.log(`Placing ${getActivePlayer().name}'s token in cell ${cell}`);
     board.dropToken(row, column, getActivePlayer().token);
 
     switchPlayerTurn();
@@ -108,91 +104,53 @@ function GameController(
 function ScreenController() {
   const game = GameController();
 
-  // // Update board for each turn
-  // const updateScreen = () => {
-  //   // Get newest version of the game and player turn
-  //   const board = game.getBoard();
-  //   const activePlayer = game.getActivePlayer();
-  // };
-
   // Make player selection
   function makeSelection() {
-    let selectedRow = prompt(
-      "Choose a row\n(Type 'Top', 'Middle', or 'Bottom')\n>"
+    let selectedRow;
+    let selectedColumn;
+    let selectedCell = Number(
+      prompt(`Choose a cell:\n[1][2][3]\n[4][5][6]\n[7][8][9]`)
     );
-    let selectedColumn = prompt(
-      "Choose a column\n(Type 'Left', 'Middle', or 'Right')\n>"
-    );
-    if (!selectedRow || !selectedColumn) {
+
+    if (!selectedCell) {
+      console.log("Invalid input given");
       return;
     } else {
-      if (
-        selectedRow.toLowerCase() === "top" &&
-        selectedColumn.toLowerCase() === "left"
-      ) {
+      if (selectedCell === 1) {
         selectedRow = 0;
         selectedColumn = 0;
-      } else if (
-        selectedRow.toLowerCase() === "top" &&
-        selectedColumn.toLowerCase() === "middle"
-      ) {
+      } else if (selectedCell === 2) {
         selectedRow = 0;
         selectedColumn = 1;
-      } else if (
-        selectedRow.toLowerCase() === "top" &&
-        selectedColumn.toLowerCase() === "right"
-      ) {
+      } else if (selectedCell === 3) {
         selectedRow = 0;
         selectedColumn = 2;
-      } else if (
-        selectedRow.toLowerCase() === "middle" &&
-        selectedColumn.toLowerCase() === "left"
-      ) {
+      } else if (selectedCell === 4) {
         selectedRow = 1;
         selectedColumn = 0;
-      } else if (
-        selectedRow.toLowerCase() === "middle" &&
-        selectedColumn.toLowerCase() === "middle"
-      ) {
+      } else if (selectedCell === 5) {
         selectedRow = 1;
         selectedColumn = 1;
-      } else if (
-        selectedRow.toLowerCase() === "middle" &&
-        selectedColumn.toLowerCase() === "right"
-      ) {
+      } else if (selectedCell === 6) {
         selectedRow = 1;
         selectedColumn = 2;
-      } else if (
-        selectedRow.toLowerCase() === "bottom" &&
-        selectedColumn.toLowerCase() === "left"
-      ) {
+      } else if (selectedCell === 7) {
         selectedRow = 2;
         selectedColumn = 0;
-      } else if (
-        selectedRow.toLowerCase() === "bottom" &&
-        selectedColumn.toLowerCase() === "middle"
-      ) {
+      } else if (selectedCell === 8) {
         selectedRow = 2;
         selectedColumn = 1;
-      } else if (
-        selectedRow.toLowerCase() === "bottom" &&
-        selectedColumn.toLowerCase() === "right"
-      ) {
+      } else if (selectedCell === 9) {
         selectedRow = 2;
         selectedColumn = 2;
       }
     }
 
-    console.log(selectedRow, selectedColumn);
-    game.playRound(selectedRow, selectedColumn);
-
-    // updateScreen();
+    console.log(selectedCell, selectedRow, selectedColumn);
+    game.playRound(selectedCell, selectedRow, selectedColumn);
   }
 
   makeSelection();
-
-  // Initial screen render
-  // updateScreen();
 }
 
 // Run game
