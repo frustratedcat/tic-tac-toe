@@ -145,17 +145,17 @@ function ScreenController() {
     let selectedColumn;
     let selectedCell = Number(
       prompt(
-        `${activePlayer.name}:\nChoose a cell:\n[${
+        `${activePlayer.name}:\nChoose a cell:\n${
           boardCellOne === 0 ? [1] : boardCellOne
-        }][${boardCellTwo === 0 ? [2] : boardCellTwo}][${
+        } | ${boardCellTwo === 0 ? [2] : boardCellTwo} | ${
           boardCellThree === 0 ? [3] : boardCellThree
-        }]\n[${boardCellFour === 0 ? [4] : boardCellFour}][${
+        }\n${boardCellFour === 0 ? [4] : boardCellFour} | ${
           boardCellFive === 0 ? [5] : boardCellFive
-        }][${boardCellSix === 0 ? [6] : boardCellSix}]\n[${
+        } | ${boardCellSix === 0 ? [6] : boardCellSix}\n${
           boardCellSeven === 0 ? [7] : boardCellSeven
-        }][${boardCellEight === 0 ? [8] : boardCellEight}][${
+        } | ${boardCellEight === 0 ? [8] : boardCellEight} | ${
           boardCellNine === 0 ? [9] : boardCellNine
-        }]`
+        }`
       )
     );
 
