@@ -113,9 +113,19 @@ function ScreenController() {
   const game = GameController();
   const board = game.getBoard();
 
+  // let boardCellOne = board[0][0].getValue();
+  // console.log(boardCellOne);
+
+  // getBoardCellValues = () => boardCellOne;
+
   // Make player selection
   function makeSelection() {
     const activePlayer = game.getActivePlayer();
+
+    // getBoardCellValues();
+
+    // let boardCellOne = board[0][0].getValue();
+    // console.log(boardCellOne);
 
     let selectedRow;
     let selectedColumn;
@@ -137,6 +147,28 @@ function ScreenController() {
 
     if (!selectedCell || selectedCell > 9 || selectedCell < 1) {
       console.log("Invalid input given");
+      return;
+    } else if (
+      (selectedCell === 1 && board[0][0].getValue() === "X") ||
+      (selectedCell === 1 && board[0][0].getValue() === "O") ||
+      (selectedCell === 2 && board[0][1].getValue() === "X") ||
+      (selectedCell === 2 && board[0][1].getValue() === "O") ||
+      (selectedCell === 3 && board[0][2].getValue() === "X") ||
+      (selectedCell === 3 && board[0][2].getValue() === "O") ||
+      (selectedCell === 4 && board[1][0].getValue() === "X") ||
+      (selectedCell === 4 && board[1][0].getValue() === "O") ||
+      (selectedCell === 5 && board[1][1].getValue() === "X") ||
+      (selectedCell === 5 && board[1][1].getValue() === "O") ||
+      (selectedCell === 6 && board[1][2].getValue() === "X") ||
+      (selectedCell === 6 && board[1][2].getValue() === "O") ||
+      (selectedCell === 7 && board[2][0].getValue() === "X") ||
+      (selectedCell === 7 && board[2][0].getValue() === "O") ||
+      (selectedCell === 8 && board[2][1].getValue() === "X") ||
+      (selectedCell === 8 && board[2][1].getValue() === "O") ||
+      (selectedCell === 9 && board[2][2].getValue() === "X") ||
+      (selectedCell === 9 && board[2][2].getValue() === "O")
+    ) {
+      console.log("This cell has already been selected");
       return;
     } else {
       if (selectedCell === 1) {
