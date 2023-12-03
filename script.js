@@ -186,7 +186,11 @@ function ScreenController() {
       (selectedCell === 9 && boardCellNine === "O")
     ) {
       console.log(
-        `This cell has already been selected, please select again\nStill ${activePlayer.name}'s turn`
+        `Cell ${selectedCell} has already been selected by ${(function () {
+          return activePlayer.name === "Player One"
+            ? "Player Two"
+            : "Player One";
+        })()}, please select again\nStill ${activePlayer.name}'s turn`
       );
       return (breakLoop = true);
     } else {
