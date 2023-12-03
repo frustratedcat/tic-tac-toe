@@ -110,8 +110,11 @@ function GameController(
 // Create function to put game on screen
 function ScreenController() {
   console.log("start the game");
+
   const game = GameController();
   const board = game.getBoard();
+
+  let breakLoop = false;
 
   let boardCellOne,
     boardCellTwo,
@@ -160,8 +163,8 @@ function ScreenController() {
     );
 
     if (!selectedCell || selectedCell > 9 || selectedCell < 1) {
-      console.log("Invalid input given");
-      return;
+      console.log(`Invalid input given\nStill ${activePlayer.name}'s turn`);
+      return (breakLoop = true);
     } else if (
       (selectedCell === 1 && boardCellOne === "X") ||
       (selectedCell === 1 && boardCellOne === "O") ||
@@ -182,8 +185,10 @@ function ScreenController() {
       (selectedCell === 9 && boardCellNine === "X") ||
       (selectedCell === 9 && boardCellNine === "O")
     ) {
-      console.log("This cell has already been selected");
-      return;
+      console.log(
+        `This cell has already been selected, please select again\nStill ${activePlayer.name}'s turn`
+      );
+      return (breakLoop = true);
     } else {
       if (selectedCell === 1) {
         selectedRow = 0;
@@ -219,17 +224,23 @@ function ScreenController() {
     game.playRound(selectedCell, selectedRow, selectedColumn);
   }
 
+  breakLoop = false;
+
   // Run a turn
   const runTurn = () => {
-    let i = 0;
-    while (i < board.length) {
-      let j = 0;
-      while (j < board[i].length) {
-        makeSelection(board[i][j].getValue());
-        console.log(board[i][j].getValue());
-        j++;
+    while (breakLoop === false) {
+      let i = 0;
+      while (i < board.length) {
+        let j = 0;
+        while (j < board[i].length) {
+          console.log(breakLoop);
+          makeSelection(board[i][j].getValue());
+          console.log(board[i][j].getValue());
+          j++;
+        }
+        i++;
       }
-      i++;
+      breakLoop = true;
     }
   };
 
