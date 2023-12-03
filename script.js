@@ -113,34 +113,48 @@ function ScreenController() {
   const game = GameController();
   const board = game.getBoard();
 
-  // let boardCellOne = board[0][0].getValue();
-  // console.log(boardCellOne);
+  let boardCellOne,
+    boardCellTwo,
+    boardCellThree,
+    boardCellFour,
+    boardCellFive,
+    boardCellSix,
+    boardCellSeven,
+    boardCellEight,
+    boardCellNine;
 
-  // getBoardCellValues = () => boardCellOne;
+  function getBoardCellValues() {
+    boardCellOne = board[0][0].getValue();
+    boardCellTwo = board[0][1].getValue();
+    boardCellThree = board[0][2].getValue();
+    boardCellFour = board[1][0].getValue();
+    boardCellFive = board[1][1].getValue();
+    boardCellSix = board[1][2].getValue();
+    boardCellSeven = board[2][0].getValue();
+    boardCellEight = board[2][1].getValue();
+    boardCellNine = board[2][2].getValue();
+  }
 
   // Make player selection
   function makeSelection() {
     const activePlayer = game.getActivePlayer();
 
-    // getBoardCellValues();
-
-    // let boardCellOne = board[0][0].getValue();
-    // console.log(boardCellOne);
+    getBoardCellValues();
 
     let selectedRow;
     let selectedColumn;
     let selectedCell = Number(
       prompt(
         `${activePlayer.name}:\nChoose a cell:\n[${
-          board[0][0].getValue() === 0 ? [1] : board[0][0].getValue()
-        }][${board[0][1].getValue() === 0 ? [2] : board[0][1].getValue()}][${
-          board[0][2].getValue() === 0 ? [3] : board[0][2].getValue()
-        }]\n[${board[1][0].getValue() === 0 ? [4] : board[1][0].getValue()}][${
-          board[1][1].getValue() === 0 ? [5] : board[1][1].getValue()
-        }][${board[1][2].getValue() === 0 ? [6] : board[1][2].getValue()}]\n[${
-          board[2][0].getValue() === 0 ? [7] : board[2][0].getValue()
-        }][${board[2][1].getValue() === 0 ? [8] : board[2][1].getValue()}][${
-          board[2][2].getValue() === 0 ? [9] : board[2][2].getValue()
+          boardCellOne === 0 ? [1] : boardCellOne
+        }][${boardCellTwo === 0 ? [2] : boardCellTwo}][${
+          boardCellThree === 0 ? [3] : boardCellThree
+        }]\n[${boardCellFour === 0 ? [4] : boardCellFour}][${
+          boardCellFive === 0 ? [5] : boardCellFive
+        }][${boardCellSix === 0 ? [6] : boardCellSix}]\n[${
+          boardCellSeven === 0 ? [7] : boardCellSeven
+        }][${boardCellEight === 0 ? [8] : boardCellEight}][${
+          boardCellNine === 0 ? [9] : boardCellNine
         }]`
       )
     );
@@ -149,24 +163,24 @@ function ScreenController() {
       console.log("Invalid input given");
       return;
     } else if (
-      (selectedCell === 1 && board[0][0].getValue() === "X") ||
-      (selectedCell === 1 && board[0][0].getValue() === "O") ||
-      (selectedCell === 2 && board[0][1].getValue() === "X") ||
-      (selectedCell === 2 && board[0][1].getValue() === "O") ||
-      (selectedCell === 3 && board[0][2].getValue() === "X") ||
-      (selectedCell === 3 && board[0][2].getValue() === "O") ||
-      (selectedCell === 4 && board[1][0].getValue() === "X") ||
-      (selectedCell === 4 && board[1][0].getValue() === "O") ||
-      (selectedCell === 5 && board[1][1].getValue() === "X") ||
-      (selectedCell === 5 && board[1][1].getValue() === "O") ||
-      (selectedCell === 6 && board[1][2].getValue() === "X") ||
-      (selectedCell === 6 && board[1][2].getValue() === "O") ||
-      (selectedCell === 7 && board[2][0].getValue() === "X") ||
-      (selectedCell === 7 && board[2][0].getValue() === "O") ||
-      (selectedCell === 8 && board[2][1].getValue() === "X") ||
-      (selectedCell === 8 && board[2][1].getValue() === "O") ||
-      (selectedCell === 9 && board[2][2].getValue() === "X") ||
-      (selectedCell === 9 && board[2][2].getValue() === "O")
+      (selectedCell === 1 && boardCellOne === "X") ||
+      (selectedCell === 1 && boardCellOne === "O") ||
+      (selectedCell === 2 && boardCellTwo === "X") ||
+      (selectedCell === 2 && boardCellTwo === "O") ||
+      (selectedCell === 3 && boardCellThree === "X") ||
+      (selectedCell === 3 && boardCellThree === "O") ||
+      (selectedCell === 4 && boardCellFour === "X") ||
+      (selectedCell === 4 && boardCellFour === "O") ||
+      (selectedCell === 5 && boardCellFive === "X") ||
+      (selectedCell === 5 && boardCellFive === "O") ||
+      (selectedCell === 6 && boardCellSix === "X") ||
+      (selectedCell === 6 && boardCellSix === "O") ||
+      (selectedCell === 7 && boardCellSeven === "X") ||
+      (selectedCell === 7 && boardCellSeven === "O") ||
+      (selectedCell === 8 && boardCellEight === "X") ||
+      (selectedCell === 8 && boardCellEight === "O") ||
+      (selectedCell === 9 && boardCellNine === "X") ||
+      (selectedCell === 9 && boardCellNine === "O")
     ) {
       console.log("This cell has already been selected");
       return;
