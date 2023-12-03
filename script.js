@@ -187,9 +187,68 @@ function ScreenController() {
     ) {
       console.log(
         `Cell ${selectedCell} has already been selected by ${(function () {
-          return activePlayer.name === "Player One"
-            ? "Player Two"
-            : "Player One";
+          if (
+            (activePlayer.token === "X" &&
+              selectedCell === 1 &&
+              boardCellOne === "X") ||
+            (activePlayer.token === "X" &&
+              selectedCell === 2 &&
+              boardCellTwo === "X") ||
+            (activePlayer.token === "X" &&
+              selectedCell === 3 &&
+              boardCellThree === "X") ||
+            (activePlayer.token === "X" &&
+              selectedCell === 4 &&
+              boardCellFour === "X") ||
+            (activePlayer.token === "X" &&
+              selectedCell === 5 &&
+              boardCellFive === "X") ||
+            (activePlayer.token === "X" &&
+              selectedCell === 6 &&
+              boardCellSix === "X") ||
+            (activePlayer.token === "X" &&
+              selectedCell === 7 &&
+              boardCellSeven === "X") ||
+            (activePlayer.token === "X" &&
+              selectedCell === 8 &&
+              boardCellEight === "X") ||
+            (activePlayer.token === "X" &&
+              selectedCell === 9 &&
+              boardCellNine === "X") ||
+            (activePlayer.token === "O" &&
+              selectedCell === 1 &&
+              boardCellOne === "O") ||
+            (activePlayer.token === "O" &&
+              selectedCell === 2 &&
+              boardCellTwo === "O") ||
+            (activePlayer.token === "O" &&
+              selectedCell === 3 &&
+              boardCellThree === "O") ||
+            (activePlayer.token === "O" &&
+              selectedCell === 4 &&
+              boardCellFour === "O") ||
+            (activePlayer.token === "O" &&
+              selectedCell === 5 &&
+              boardCellFive === "O") ||
+            (activePlayer.token === "O" &&
+              selectedCell === 6 &&
+              boardCellSix === "O") ||
+            (activePlayer.token === "O" &&
+              selectedCell === 7 &&
+              boardCellSeven === "O") ||
+            (activePlayer.token === "O" &&
+              selectedCell === 8 &&
+              boardCellEight === "O") ||
+            (activePlayer.token === "O" &&
+              selectedCell === 9 &&
+              boardCellNine === "O")
+          ) {
+            return activePlayer.name;
+          } else {
+            return activePlayer.name === "Player One"
+              ? "Player Two"
+              : "Player One";
+          }
         })()}, please select again\nStill ${activePlayer.name}'s turn`
       );
       return (breakLoop = true);
