@@ -22,7 +22,6 @@ function GameBoard() {
       .filter((row) => row[column].getValue() === 0)
       .map((row) => row[column]);
 
-    console.log(availableCells.length, availableCells);
     if (!availableCells.length) return;
 
     board[row][column].addToken(player);
@@ -113,8 +112,11 @@ function ScreenController() {
 
   const game = GameController();
   const board = game.getBoard();
+  const activePlayer = game.getActivePlayer();
 
   let breakLoop = false;
+  let emptyCells = true;
+  let winner = false;
 
   let boardCellOne,
     boardCellTwo,
@@ -140,8 +142,6 @@ function ScreenController() {
 
   // Make player selection
   function makeSelection() {
-    const activePlayer = game.getActivePlayer();
-
     getBoardCellValues();
 
     let selectedRow;
@@ -282,28 +282,163 @@ function ScreenController() {
         selectedColumn = 2;
       }
     }
-
     console.log(selectedCell, selectedRow, selectedColumn);
     game.playRound(selectedCell, selectedRow, selectedColumn);
+    getBoardCellValues();
   }
 
+  // Reset breakLoop to false
   breakLoop = false;
+
+  // Check for empty cells
+  function checkEmptyCells() {
+    checkForWinner();
+    if (winner === true) {
+      console.log(`${activePlayer.name} wins!`);
+      return;
+    } else if (
+      boardCellOne !== 0 &&
+      boardCellTwo !== 0 &&
+      boardCellThree !== 0 &&
+      boardCellFour !== 0 &&
+      boardCellFive !== 0 &&
+      boardCellSix !== 0 &&
+      boardCellSeven !== 0 &&
+      boardCellEight !== 0 &&
+      boardCellNine !== 0
+    ) {
+      emptyCells = false;
+      console.log(`Empty Cells: ${emptyCells}`);
+    } else {
+      console.log(`Empty Cells: ${emptyCells}`);
+    }
+  }
+
+  // Check if a player has won the game
+  function checkForWinner() {
+    if (
+      // Check if Player One wins on top row
+      boardCellOne === "X" &&
+      boardCellTwo === "X" &&
+      boardCellThree === "X"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player One wins on middle row
+      boardCellFour === "X" &&
+      boardCellFive === "X" &&
+      boardCellSix === "X"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player One wins on bottom row
+      boardCellSeven === "X" &&
+      boardCellEight === "X" &&
+      boardCellNine === "X"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player One wins on left column
+      boardCellOne === "X" &&
+      boardCellFour === "X" &&
+      boardCellSeven === "X"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player One wins on middle column
+      boardCellTwo === "X" &&
+      boardCellFive === "X" &&
+      boardCellEight === "X"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player One wins on right column
+      boardCellThree === "X" &&
+      boardCellSix === "X" &&
+      boardCellNine === "X"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player One wins on ascending diagonal
+      boardCellSeven === "X" &&
+      boardCellFive === "X" &&
+      boardCellThree === "X"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player One wins on descending diagonal
+      boardCellOne === "X" &&
+      boardCellFive === "X" &&
+      boardCellNine === "X"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player Two wins on top row
+      boardCellOne === "O" &&
+      boardCellTwo === "O" &&
+      boardCellThree === "O"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player Two wins on middle row
+      boardCellFour === "O" &&
+      boardCellFive === "O" &&
+      boardCellSix === "O"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player Two wins on bottom row
+      boardCellSeven === "O" &&
+      boardCellEight === "O" &&
+      boardCellNine === "O"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player Two wins on left column
+      boardCellOne === "O" &&
+      boardCellFour === "O" &&
+      boardCellSeven === "O"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player Two wins on middle column
+      boardCellTwo === "O" &&
+      boardCellFive === "O" &&
+      boardCellEight === "O"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player Two wins on right column
+      boardCellThree === "O" &&
+      boardCellSix === "O" &&
+      boardCellNine === "O"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player Two wins on ascending diagonal
+      boardCellSeven === "O" &&
+      boardCellFive === "O" &&
+      boardCellThree === "O"
+    ) {
+      winner = true;
+    } else if (
+      // Check if Player Two wins on descending diagonal
+      boardCellOne === "O" &&
+      boardCellFive === "O" &&
+      boardCellNine === "O"
+    ) {
+      winner = true;
+    }
+  }
 
   // Run a turn
   const runTurn = () => {
-    while (breakLoop === false) {
-      let i = 0;
-      while (i < board.length) {
-        let j = 0;
-        while (j < board[i].length) {
-          console.log(breakLoop);
-          makeSelection(board[i][j].getValue());
-          console.log(board[i][j].getValue());
-          j++;
-        }
-        i++;
-      }
-      breakLoop = true;
+    while (emptyCells === true && winner === false) {
+      makeSelection();
+      console.log(
+        `${boardCellOne}|${boardCellTwo}|${boardCellThree}\n${boardCellFour}|${boardCellFive}|${boardCellSix}\n${boardCellSeven}|${boardCellEight}|${boardCellNine}`
+      );
+      checkEmptyCells();
     }
   };
 
