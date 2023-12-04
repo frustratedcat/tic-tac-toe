@@ -32,7 +32,6 @@ function GameBoard() {
     const boardWithCellValues = board.map((row) =>
       row.map((cell) => cell.getValue())
     );
-    console.log(boardWithCellValues);
   };
 
   return { getBoard, dropToken, printBoard };
@@ -82,7 +81,7 @@ function GameController(
   // shows board and active player for each turn
   const printNewRound = () => {
     board.printBoard();
-    console.log(`${activePlayer.name}'s turn`);
+    // console.log(`${activePlayer.name}'s turn`);
   };
 
   // Play a round
@@ -108,12 +107,9 @@ function GameController(
 
 // Create function to put game on screen
 function ScreenController() {
-  console.log("start the game");
-
   const game = GameController();
   const board = game.getBoard();
   const activePlayer = () => game.getActivePlayer();
-  console.log(activePlayer().name);
 
   let emptyCells = true;
   let winner = false;
@@ -143,6 +139,9 @@ function ScreenController() {
   // Make player selection
   function makeSelection() {
     getBoardCellValues();
+    console.log(
+      `${boardCellOne}|${boardCellTwo}|${boardCellThree}\n${boardCellFour}|${boardCellFive}|${boardCellSix}\n${boardCellSeven}|${boardCellEight}|${boardCellNine}`
+    );
 
     let selectedRow;
     let selectedColumn;
@@ -283,7 +282,7 @@ function ScreenController() {
         selectedColumn = 2;
       }
     }
-    console.log(selectedCell, selectedRow, selectedColumn);
+
     game.playRound(selectedCell, selectedRow, selectedColumn);
     getBoardCellValues();
   }
@@ -436,12 +435,13 @@ function ScreenController() {
   // Run a turn
   const runTurn = () => {
     while (emptyCells === true && winner === false) {
+      console.log(`${activePlayer().name}'s turn`);
       makeSelection();
-      console.log(
-        `${boardCellOne}|${boardCellTwo}|${boardCellThree}\n${boardCellFour}|${boardCellFive}|${boardCellSix}\n${boardCellSeven}|${boardCellEight}|${boardCellNine}`
-      );
       checkEmptyCells();
     }
+    console.log(
+      `${boardCellOne}|${boardCellTwo}|${boardCellThree}\n${boardCellFour}|${boardCellFive}|${boardCellSix}\n${boardCellSeven}|${boardCellEight}|${boardCellNine}`
+    );
   };
 
   runTurn();
