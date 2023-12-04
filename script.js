@@ -309,6 +309,7 @@ function ScreenController() {
     ) {
       emptyCells = false;
       console.log(`Empty Cells: ${emptyCells}`);
+      console.log("It's a draw!");
     } else {
       console.log(`Empty Cells: ${emptyCells}`);
     }
