@@ -136,34 +136,32 @@ function ScreenController() {
     boardCellNine = board[2][2].getValue();
   }
 
+  function showBoard() {
+    return `${boardCellOne === 0 ? [1] : boardCellOne} | ${
+      boardCellTwo === 0 ? [2] : boardCellTwo
+    } | ${boardCellThree === 0 ? [3] : boardCellThree}\n${
+      boardCellFour === 0 ? [4] : boardCellFour
+    } | ${boardCellFive === 0 ? [5] : boardCellFive} | ${
+      boardCellSix === 0 ? [6] : boardCellSix
+    }\n${boardCellSeven === 0 ? [7] : boardCellSeven} | ${
+      boardCellEight === 0 ? [8] : boardCellEight
+    } | ${boardCellNine === 0 ? [9] : boardCellNine}`;
+  }
+
   // Make player selection
   function makeSelection() {
     getBoardCellValues();
-    console.log(
-      `${boardCellOne}|${boardCellTwo}|${boardCellThree}\n${boardCellFour}|${boardCellFive}|${boardCellSix}\n${boardCellSeven}|${boardCellEight}|${boardCellNine}`
-    );
+    console.log(`${showBoard()}`);
 
     let selectedRow;
     let selectedColumn;
     let selectedCell = Number(
-      prompt(
-        `${activePlayer().name}:\nChoose a cell:\n${
-          boardCellOne === 0 ? [1] : boardCellOne
-        } | ${boardCellTwo === 0 ? [2] : boardCellTwo} | ${
-          boardCellThree === 0 ? [3] : boardCellThree
-        }\n${boardCellFour === 0 ? [4] : boardCellFour} | ${
-          boardCellFive === 0 ? [5] : boardCellFive
-        } | ${boardCellSix === 0 ? [6] : boardCellSix}\n${
-          boardCellSeven === 0 ? [7] : boardCellSeven
-        } | ${boardCellEight === 0 ? [8] : boardCellEight} | ${
-          boardCellNine === 0 ? [9] : boardCellNine
-        }`
-      )
+      prompt(`${activePlayer().name}:\nChoose a cell:\n${showBoard()}`)
     );
 
     // Evaluate player selection
     if (!selectedCell || selectedCell > 9 || selectedCell < 1) {
-      console.log(`Invalid input given\nStill ${activePlayer.name}'s turn`);
+      console.log(`Invalid input given`);
       return;
     } else if (
       (selectedCell === 1 && boardCellOne === "X") ||
@@ -249,7 +247,7 @@ function ScreenController() {
               ? "Player Two"
               : "Player One";
           }
-        })()}, please select again\n\nStill ${activePlayer().name}'s turn`
+        })()}, please select again`
       );
       return;
     } else {
@@ -439,9 +437,7 @@ function ScreenController() {
       makeSelection();
       checkEmptyCells();
     }
-    console.log(
-      `${boardCellOne}|${boardCellTwo}|${boardCellThree}\n${boardCellFour}|${boardCellFive}|${boardCellSix}\n${boardCellSeven}|${boardCellEight}|${boardCellNine}`
-    );
+    console.log(`${showBoard()}`);
   };
 
   runTurn();
