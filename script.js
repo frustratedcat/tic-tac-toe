@@ -27,14 +27,14 @@ function GameBoard() {
     board[row][column].addToken(player);
   };
 
-  // Log the board to check things
-  const printBoard = () => {
-    const boardWithCellValues = board.map((row) =>
-      row.map((cell) => cell.getValue())
-    );
-  };
+  // // Log the board to check things
+  // const printBoard = () => {
+  //   const boardWithCellValues = board.map((row) =>
+  //     row.map((cell) => cell.getValue())
+  //   );
+  // };
 
-  return { getBoard, dropToken, printBoard };
+  return { getBoard, dropToken };
 }
 
 // Create function to take player selection and put on board
@@ -78,12 +78,6 @@ function GameController(
 
   const getActivePlayer = () => activePlayer;
 
-  // shows board and active player for each turn
-  const printNewRound = () => {
-    board.printBoard();
-    // console.log(`${activePlayer.name}'s turn`);
-  };
-
   // Play a round
   const playRound = (cell, row, column) => {
     console.log(
@@ -92,11 +86,7 @@ function GameController(
     board.dropToken(row, column, activePlayer.token);
 
     switchPlayerTurn();
-    printNewRound();
   };
-
-  // Initial round for game. Will run one time
-  printNewRound();
 
   return {
     playRound,
