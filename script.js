@@ -95,6 +95,15 @@ function GameController(
   };
 }
 
+// Create function to make random choice for AI
+function GetRandomChoice(min = 1, max = 9) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  const result = Math.floor(Math.random() * (max - min + 1) + min);
+
+  return result;
+}
+
 // Create function to put game on screen
 function ScreenController() {
   const game = GameController();
@@ -140,6 +149,9 @@ function ScreenController() {
 
   // Make player selection
   function makeSelection() {
+    const computerChoice = GetRandomChoice();
+    console.log(computerChoice);
+
     getBoardCellValues();
     console.log(`${showBoard()}`);
 
