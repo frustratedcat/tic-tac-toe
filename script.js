@@ -100,7 +100,6 @@ function GetRandomChoice(min = 1, max = 9) {
   min = Math.ceil(min);
   max = Math.floor(max);
   const result = Math.floor(Math.random() * (max - min + 1) + min);
-
   return result;
 }
 
@@ -149,140 +148,268 @@ function ScreenController() {
 
   // Make player selection
   function makeSelection() {
-    const computerChoice = GetRandomChoice();
-    console.log(computerChoice);
-
     getBoardCellValues();
     console.log(`${showBoard()}`);
 
     let selectedRow;
     let selectedColumn;
-    let selectedCell = Number(
-      prompt(`${activePlayer().name}:\nChoose a cell:\n${showBoard()}`)
-    );
+    let selectedCell;
 
-    // Evaluate player selection
-    if (!selectedCell || selectedCell > 9 || selectedCell < 1) {
-      console.log(`Invalid input given`);
-      return;
-    } else if (
-      (selectedCell === 1 && boardCellOne === "X") ||
-      (selectedCell === 1 && boardCellOne === "O") ||
-      (selectedCell === 2 && boardCellTwo === "X") ||
-      (selectedCell === 2 && boardCellTwo === "O") ||
-      (selectedCell === 3 && boardCellThree === "X") ||
-      (selectedCell === 3 && boardCellThree === "O") ||
-      (selectedCell === 4 && boardCellFour === "X") ||
-      (selectedCell === 4 && boardCellFour === "O") ||
-      (selectedCell === 5 && boardCellFive === "X") ||
-      (selectedCell === 5 && boardCellFive === "O") ||
-      (selectedCell === 6 && boardCellSix === "X") ||
-      (selectedCell === 6 && boardCellSix === "O") ||
-      (selectedCell === 7 && boardCellSeven === "X") ||
-      (selectedCell === 7 && boardCellSeven === "O") ||
-      (selectedCell === 8 && boardCellEight === "X") ||
-      (selectedCell === 8 && boardCellEight === "O") ||
-      (selectedCell === 9 && boardCellNine === "X") ||
-      (selectedCell === 9 && boardCellNine === "O")
-    ) {
-      console.log(
-        `Cell ${selectedCell} has already been selected by ${(function () {
-          if (
-            (activePlayer().token === "X" &&
-              selectedCell === 1 &&
-              boardCellOne === "X") ||
-            (activePlayer().token === "X" &&
-              selectedCell === 2 &&
-              boardCellTwo === "X") ||
-            (activePlayer().token === "X" &&
-              selectedCell === 3 &&
-              boardCellThree === "X") ||
-            (activePlayer().token === "X" &&
-              selectedCell === 4 &&
-              boardCellFour === "X") ||
-            (activePlayer().token === "X" &&
-              selectedCell === 5 &&
-              boardCellFive === "X") ||
-            (activePlayer().token === "X" &&
-              selectedCell === 6 &&
-              boardCellSix === "X") ||
-            (activePlayer().token === "X" &&
-              selectedCell === 7 &&
-              boardCellSeven === "X") ||
-            (activePlayer().token === "X" &&
-              selectedCell === 8 &&
-              boardCellEight === "X") ||
-            (activePlayer().token === "X" &&
-              selectedCell === 9 &&
-              boardCellNine === "X") ||
-            (activePlayer().token === "O" &&
-              selectedCell === 1 &&
-              boardCellOne === "O") ||
-            (activePlayer().token === "O" &&
-              selectedCell === 2 &&
-              boardCellTwo === "O") ||
-            (activePlayer().token === "O" &&
-              selectedCell === 3 &&
-              boardCellThree === "O") ||
-            (activePlayer().token === "O" &&
-              selectedCell === 4 &&
-              boardCellFour === "O") ||
-            (activePlayer().token === "O" &&
-              selectedCell === 5 &&
-              boardCellFive === "O") ||
-            (activePlayer().token === "O" &&
-              selectedCell === 6 &&
-              boardCellSix === "O") ||
-            (activePlayer().token === "O" &&
-              selectedCell === 7 &&
-              boardCellSeven === "O") ||
-            (activePlayer().token === "O" &&
-              selectedCell === 8 &&
-              boardCellEight === "O") ||
-            (activePlayer().token === "O" &&
-              selectedCell === 9 &&
-              boardCellNine === "O")
-          ) {
-            return activePlayer().name;
-          } else {
-            return activePlayer().name === "Player One"
-              ? "Player Two"
-              : "Player One";
-          }
-        })()}, please select again`
+    // Get user selection
+    if (activePlayer().name === "Player One") {
+      selectedCell = Number(
+        prompt(`${activePlayer().name}:\nChoose a cell:\n${showBoard()}`)
       );
-      return;
-    } else {
-      if (selectedCell === 1) {
-        selectedRow = 0;
-        selectedColumn = 0;
-      } else if (selectedCell === 2) {
-        selectedRow = 0;
-        selectedColumn = 1;
-      } else if (selectedCell === 3) {
-        selectedRow = 0;
-        selectedColumn = 2;
-      } else if (selectedCell === 4) {
-        selectedRow = 1;
-        selectedColumn = 0;
-      } else if (selectedCell === 5) {
-        selectedRow = 1;
-        selectedColumn = 1;
-      } else if (selectedCell === 6) {
-        selectedRow = 1;
-        selectedColumn = 2;
-      } else if (selectedCell === 7) {
-        selectedRow = 2;
-        selectedColumn = 0;
-      } else if (selectedCell === 8) {
-        selectedRow = 2;
-        selectedColumn = 1;
-      } else if (selectedCell === 9) {
-        selectedRow = 2;
-        selectedColumn = 2;
+      // Evaluate player selection
+      if (!selectedCell || selectedCell > 9 || selectedCell < 1) {
+        console.log(`Invalid input given`);
+        return;
+      } else if (
+        (selectedCell === 1 && boardCellOne === "X") ||
+        (selectedCell === 1 && boardCellOne === "O") ||
+        (selectedCell === 2 && boardCellTwo === "X") ||
+        (selectedCell === 2 && boardCellTwo === "O") ||
+        (selectedCell === 3 && boardCellThree === "X") ||
+        (selectedCell === 3 && boardCellThree === "O") ||
+        (selectedCell === 4 && boardCellFour === "X") ||
+        (selectedCell === 4 && boardCellFour === "O") ||
+        (selectedCell === 5 && boardCellFive === "X") ||
+        (selectedCell === 5 && boardCellFive === "O") ||
+        (selectedCell === 6 && boardCellSix === "X") ||
+        (selectedCell === 6 && boardCellSix === "O") ||
+        (selectedCell === 7 && boardCellSeven === "X") ||
+        (selectedCell === 7 && boardCellSeven === "O") ||
+        (selectedCell === 8 && boardCellEight === "X") ||
+        (selectedCell === 8 && boardCellEight === "O") ||
+        (selectedCell === 9 && boardCellNine === "X") ||
+        (selectedCell === 9 && boardCellNine === "O")
+      ) {
+        console.log(
+          `Cell ${selectedCell} has already been selected by ${(function () {
+            if (
+              (activePlayer().token === "X" &&
+                selectedCell === 1 &&
+                boardCellOne === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 2 &&
+                boardCellTwo === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 3 &&
+                boardCellThree === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 4 &&
+                boardCellFour === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 5 &&
+                boardCellFive === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 6 &&
+                boardCellSix === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 7 &&
+                boardCellSeven === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 8 &&
+                boardCellEight === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 9 &&
+                boardCellNine === "X") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 1 &&
+                boardCellOne === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 2 &&
+                boardCellTwo === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 3 &&
+                boardCellThree === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 4 &&
+                boardCellFour === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 5 &&
+                boardCellFive === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 6 &&
+                boardCellSix === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 7 &&
+                boardCellSeven === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 8 &&
+                boardCellEight === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 9 &&
+                boardCellNine === "O")
+            ) {
+              return activePlayer().name;
+            } else {
+              return activePlayer().name === "Player One"
+                ? "Player Two"
+                : "Player One";
+            }
+          })()}, please select again`
+        );
+        return;
+      } else {
+        if (selectedCell === 1) {
+          selectedRow = 0;
+          selectedColumn = 0;
+        } else if (selectedCell === 2) {
+          selectedRow = 0;
+          selectedColumn = 1;
+        } else if (selectedCell === 3) {
+          selectedRow = 0;
+          selectedColumn = 2;
+        } else if (selectedCell === 4) {
+          selectedRow = 1;
+          selectedColumn = 0;
+        } else if (selectedCell === 5) {
+          selectedRow = 1;
+          selectedColumn = 1;
+        } else if (selectedCell === 6) {
+          selectedRow = 1;
+          selectedColumn = 2;
+        } else if (selectedCell === 7) {
+          selectedRow = 2;
+          selectedColumn = 0;
+        } else if (selectedCell === 8) {
+          selectedRow = 2;
+          selectedColumn = 1;
+        } else if (selectedCell === 9) {
+          selectedRow = 2;
+          selectedColumn = 2;
+        }
+      }
+    } else if (activePlayer().name === "Player Two") {
+      // Get computer selection
+      const computerChoice = GetRandomChoice();
+      console.log(computerChoice);
+
+      // Evaluate player selection
+      if (
+        (computerChoice === 1 && boardCellOne === "X") ||
+        (computerChoice === 1 && boardCellOne === "O") ||
+        (computerChoice === 2 && boardCellTwo === "X") ||
+        (computerChoice === 2 && boardCellTwo === "O") ||
+        (computerChoice === 3 && boardCellThree === "X") ||
+        (computerChoice === 3 && boardCellThree === "O") ||
+        (computerChoice === 4 && boardCellFour === "X") ||
+        (computerChoice === 4 && boardCellFour === "O") ||
+        (computerChoice === 5 && boardCellFive === "X") ||
+        (computerChoice === 5 && boardCellFive === "O") ||
+        (computerChoice === 6 && boardCellSix === "X") ||
+        (computerChoice === 6 && boardCellSix === "O") ||
+        (computerChoice === 7 && boardCellSeven === "X") ||
+        (computerChoice === 7 && boardCellSeven === "O") ||
+        (computerChoice === 8 && boardCellEight === "X") ||
+        (computerChoice === 8 && boardCellEight === "O") ||
+        (computerChoice === 9 && boardCellNine === "X") ||
+        (computerChoice === 9 && boardCellNine === "O")
+      ) {
+        console.log(
+          `Cell ${computerChoice} has already been selected by ${(function () {
+            if (
+              (activePlayer().token === "X" &&
+                selectedCell === 1 &&
+                boardCellOne === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 2 &&
+                boardCellTwo === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 3 &&
+                boardCellThree === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 4 &&
+                boardCellFour === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 5 &&
+                boardCellFive === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 6 &&
+                boardCellSix === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 7 &&
+                boardCellSeven === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 8 &&
+                boardCellEight === "X") ||
+              (activePlayer().token === "X" &&
+                selectedCell === 9 &&
+                boardCellNine === "X") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 1 &&
+                boardCellOne === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 2 &&
+                boardCellTwo === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 3 &&
+                boardCellThree === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 4 &&
+                boardCellFour === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 5 &&
+                boardCellFive === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 6 &&
+                boardCellSix === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 7 &&
+                boardCellSeven === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 8 &&
+                boardCellEight === "O") ||
+              (activePlayer().token === "O" &&
+                selectedCell === 9 &&
+                boardCellNine === "O")
+            ) {
+              return activePlayer().name;
+            } else {
+              return activePlayer().name === "Player One"
+                ? "Player Two"
+                : "Player One";
+            }
+          })()}, please select again`
+        );
+        return;
+      } else {
+        console.log(`the computer chose cell ${computerChoice}`);
+        selectedCell = computerChoice;
+
+        if (selectedCell === 1) {
+          selectedRow = 0;
+          selectedColumn = 0;
+        } else if (selectedCell === 2) {
+          selectedRow = 0;
+          selectedColumn = 1;
+        } else if (selectedCell === 3) {
+          selectedRow = 0;
+          selectedColumn = 2;
+        } else if (selectedCell === 4) {
+          selectedRow = 1;
+          selectedColumn = 0;
+        } else if (selectedCell === 5) {
+          selectedRow = 1;
+          selectedColumn = 1;
+        } else if (selectedCell === 6) {
+          selectedRow = 1;
+          selectedColumn = 2;
+        } else if (selectedCell === 7) {
+          selectedRow = 2;
+          selectedColumn = 0;
+        } else if (selectedCell === 8) {
+          selectedRow = 2;
+          selectedColumn = 1;
+        } else if (selectedCell === 9) {
+          selectedRow = 2;
+          selectedColumn = 2;
+        }
       }
     }
 
+    // Pass choice data to playRound()
     game.playRound(selectedCell, selectedRow, selectedColumn);
     getBoardCellValues();
   }
