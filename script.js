@@ -18,17 +18,18 @@ function GameBoard() {
 
   // Place token on board
   const dropToken = (row, column, player) => {
-    const availableCells = board
-      .filter((row) => row[column].getValue() === 0)
-      .map((row) => row[column]);
-
-    if (!availableCells.length) return;
-
     board[row][column].addToken(player);
-    console.log(board[row][column].getValue());
   };
 
-  return { getBoard, dropToken };
+  // Print board to screen
+  const printBoard = () => {
+    const boardWithCellValues = board.map((row) =>
+      row.map((cell) => cell.getValue())
+    );
+    return boardWithCellValues;
+  };
+
+  return { getBoard, dropToken, printBoard };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,459 +78,184 @@ function GameController(
   const getActivePlayer = () => activePlayer;
 
   // Play a round
-  const playRound = (cell, row, column) => {
+  const playTurn = (cell, row, column) => {
     console.log(
       `Placing ${activePlayer.name}'s ${activePlayer.token} in cell ${cell}`
     );
     board.dropToken(row, column, activePlayer.token);
-
     switchPlayerTurn();
   };
 
   return {
-    playRound,
+    players,
+    playTurn,
     getActivePlayer,
     getBoard: board.getBoard,
+    printBoard: board.printBoard,
   };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Create function to get computer choice
-function GetComputerChoice() {
-  // Create function to make random choice for AI
-  function getRandomChoice(min = 1, max = 9) {
+// Get player and computer choices
+function GetChoice() {
+  // Get random choice from computer
+  const getComputerEasyMode = (min = 1, max = 9) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     const result = Math.floor(Math.random() * (max - min + 1) + min);
     return result;
-  }
+  };
 
-  // Create function to create rational AI
-  function getRationalChoice() {}
+  // Get a somewhat rational choice from computer
+  const getComputerMediumMode = () => {};
 
-  return { getRandomChoice, getRationalChoice };
-}
+  // Get rational choice from computer
+  const getComputerHardMode = () => {};
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Create function to get the board
-function GetBoardValues() {
-  console.log("getting the board");
-  const game = GameController();
-  const board = game.getBoard();
-
-  let boardCellOne,
-    boardCellTwo,
-    boardCellThree,
-    boardCellFour,
-    boardCellFive,
-    boardCellSix,
-    boardCellSeven,
-    boardCellEight,
-    boardCellNine;
-
-  function getBoardCellValues() {
-    boardCellOne = board[0][0].getValue();
-    boardCellTwo = board[0][1].getValue();
-    boardCellThree = board[0][2].getValue();
-    boardCellFour = board[1][0].getValue();
-    boardCellFive = board[1][1].getValue();
-    boardCellSix = board[1][2].getValue();
-    boardCellSeven = board[2][0].getValue();
-    boardCellEight = board[2][1].getValue();
-    boardCellNine = board[2][2].getValue();
-    return {
-      boardCellOne,
-      boardCellTwo,
-      boardCellThree,
-      boardCellFour,
-      boardCellFive,
-      boardCellSix,
-      boardCellSeven,
-      boardCellEight,
-      boardCellNine,
-    };
-  }
-
-  function showBoard() {
-    return `${boardCellOne === 0 ? [1] : boardCellOne} | ${
-      boardCellTwo === 0 ? [2] : boardCellTwo
-    } | ${boardCellThree === 0 ? [3] : boardCellThree}\n${
-      boardCellFour === 0 ? [4] : boardCellFour
-    } | ${boardCellFive === 0 ? [5] : boardCellFive} | ${
-      boardCellSix === 0 ? [6] : boardCellSix
-    }\n${boardCellSeven === 0 ? [7] : boardCellSeven} | ${
-      boardCellEight === 0 ? [8] : boardCellEight
-    } | ${boardCellNine === 0 ? [9] : boardCellNine}`;
-  }
+  // Get player choice
+  const getPlayerChoice = () => {
+    const result = +prompt("Select a number between 1 and 9");
+    return result;
+  };
 
   return {
-    getBoard: game.getBoard,
-    getActivePlayer: game.getActivePlayer,
-    playRound: game.playRound,
-    getBoardCellValues,
-    showBoard,
+    getComputerEasyMode,
+    getComputerMediumMode,
+    getComputerHardMode,
+    getPlayerChoice,
   };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Create function to run each turn of the game
-function playTurn() {
-  const game = GetBoardValues();
-  const activePlayer = () => game.getActivePlayer();
-  const getBoardCellValues = () => game.getBoardCellValues();
-  const showBoard = () => game.showBoard();
+// Play a round of the game
+function PlayTurn() {
+  const gameController = GameController();
+  const getActivePlayer = () => gameController.getActivePlayer();
+  const getPlayers = () => gameController.players;
+  const printBoard = () => gameController.printBoard();
 
-  const computerChoice = GetComputerChoice();
-  const randomComputerChoice = () => computerChoice.getRandomChoice();
-  const rationalComputerChoice = () => computerChoice.getRationalChoice();
+  const getChoice = GetChoice();
+  const getComputerEasyMode = () => getChoice.getComputerEasyMode();
+  const getComputerMediumMode = () => getChoice.getComputerMediumMode();
+  const getComputerHardMode = () => getChoice.getComputerHardMode();
+  const getPlayerChoice = () => getChoice.getPlayerChoice();
 
-  // Make player selection
-  function makeSelection() {
-    getBoardCellValues();
-    console.log(`${showBoard()}`);
+  let row;
+  let column;
+  let cell;
 
-    let selectedRow;
-    let selectedColumn;
-    let selectedCell;
+  for (let i = 0; i < 9; i++) {
+    console.log(`Turn number: ${i + 1}`);
+    console.log(printBoard());
+    console.log(getActivePlayer().name);
 
-    // Get user selection
-    if (activePlayer().name === "Player One") {
-      console.log("running for player one");
-      selectedCell = Number(
-        prompt(`${activePlayer().name}:\nChoose a cell:\n${showBoard()}`)
-      );
+    getActivePlayer().name === "Player One"
+      ? (cell = getPlayerChoice())
+      : (cell = getComputerEasyMode());
 
-      console.log(selectedCell);
-
-      // Evaluate player selection
-      if (!selectedCell || selectedCell > 9 || selectedCell < 1) {
-        console.log(`Invalid input given`);
-        return;
-      } else {
-        checkBoardCells();
-        if (selectedRow === undefined) {
-          return;
-        }
-      }
-    } else if (activePlayer().name === "Player Two") {
-      console.log("running for player two");
-      // Get computer selection
-      selectedCell = randomComputerChoice();
-
-      // Evaluate computer selection
-      checkBoardCells();
-      if (selectedRow === undefined) {
-        return;
-      }
-    }
-    console.log(selectedCell, selectedRow, selectedColumn);
-
-    //Check board values
-    function checkBoardCells() {
-      console.log("checking board cells");
-      if (
-        (selectedCell === 1 && getBoardCellValues().boardCellOne === "X") ||
-        (selectedCell === 1 && getBoardCellValues().boardCellOne === "O") ||
-        (selectedCell === 2 && getBoardCellValues().boardCellTwo === "X") ||
-        (selectedCell === 2 && getBoardCellValues().boardCellTwo === "O") ||
-        (selectedCell === 3 && getBoardCellValues().boardCellThree === "X") ||
-        (selectedCell === 3 && getBoardCellValues().boardCellThree === "O") ||
-        (selectedCell === 4 && getBoardCellValues().boardCellFour === "X") ||
-        (selectedCell === 4 && getBoardCellValues().boardCellFour === "O") ||
-        (selectedCell === 5 && getBoardCellValues().boardCellFive === "X") ||
-        (selectedCell === 5 && getBoardCellValues().boardCellFive === "O") ||
-        (selectedCell === 6 && getBoardCellValues().boardCellSix === "X") ||
-        (selectedCell === 6 && getBoardCellValues().boardCellSix === "O") ||
-        (selectedCell === 7 && getBoardCellValues().boardCellSeven === "X") ||
-        (selectedCell === 7 && getBoardCellValues().boardCellSeven === "O") ||
-        (selectedCell === 8 && getBoardCellValues().boardCellEight === "X") ||
-        (selectedCell === 8 && getBoardCellValues().boardCellEight === "O") ||
-        (selectedCell === 9 && getBoardCellValues().boardCellNine === "X") ||
-        (selectedCell === 9 && getBoardCellValues().boardCellNine === "O")
-      ) {
-        console.log(
-          `Cell ${selectedCell} has already been selected by ${(function () {
-            if (
-              (activePlayer().token === "X" &&
-                selectedCell === 1 &&
-                getBoardCellValues().boardCellOne === "X") ||
-              (activePlayer().token === "X" &&
-                selectedCell === 2 &&
-                getBoardCellValues().boardCellTwo === "X") ||
-              (activePlayer().token === "X" &&
-                selectedCell === 3 &&
-                getBoardCellValues().boardCellThree === "X") ||
-              (activePlayer().token === "X" &&
-                selectedCell === 4 &&
-                getBoardCellValues().boardCellFour === "X") ||
-              (activePlayer().token === "X" &&
-                selectedCell === 5 &&
-                getBoardCellValues().boardCellFive === "X") ||
-              (activePlayer().token === "X" &&
-                selectedCell === 6 &&
-                getBoardCellValues().boardCellSix === "X") ||
-              (activePlayer().token === "X" &&
-                selectedCell === 7 &&
-                getBoardCellValues().boardCellSeven === "X") ||
-              (activePlayer().token === "X" &&
-                selectedCell === 8 &&
-                getBoardCellValues().boardCellEight === "X") ||
-              (activePlayer().token === "X" &&
-                selectedCell === 9 &&
-                getBoardCellValues().boardCellNine === "X") ||
-              (activePlayer().token === "O" &&
-                selectedCell === 1 &&
-                getBoardCellValues().boardCellOne === "O") ||
-              (activePlayer().token === "O" &&
-                selectedCell === 2 &&
-                getBoardCellValues().boardCellTwo === "O") ||
-              (activePlayer().token === "O" &&
-                selectedCell === 3 &&
-                getBoardCellValues().boardCellThree === "O") ||
-              (activePlayer().token === "O" &&
-                selectedCell === 4 &&
-                getBoardCellValues().boardCellFour === "O") ||
-              (activePlayer().token === "O" &&
-                selectedCell === 5 &&
-                getBoardCellValues().boardCellFive === "O") ||
-              (activePlayer().token === "O" &&
-                selectedCell === 6 &&
-                getBoardCellValues().boardCellSix === "O") ||
-              (activePlayer().token === "O" &&
-                selectedCell === 7 &&
-                getBoardCellValues().boardCellSeven === "O") ||
-              (activePlayer().token === "O" &&
-                selectedCell === 8 &&
-                getBoardCellValues().boardCellEight === "O") ||
-              (activePlayer().token === "O" &&
-                selectedCell === 9 &&
-                getBoardCellValues().boardCellNine === "O")
-            ) {
-              return activePlayer().name;
-            } else {
-              return activePlayer().name === "Player One"
-                ? "Player Two"
-                : "Player One";
-            }
-          })()}, please select again`
-        );
-        return;
-      } else {
-        if (selectedCell === 1) {
-          selectedRow = 0;
-          selectedColumn = 0;
-        } else if (selectedCell === 2) {
-          selectedRow = 0;
-          selectedColumn = 1;
-        } else if (selectedCell === 3) {
-          selectedRow = 0;
-          selectedColumn = 2;
-        } else if (selectedCell === 4) {
-          selectedRow = 1;
-          selectedColumn = 0;
-        } else if (selectedCell === 5) {
-          selectedRow = 1;
-          selectedColumn = 1;
-        } else if (selectedCell === 6) {
-          selectedRow = 1;
-          selectedColumn = 2;
-        } else if (selectedCell === 7) {
-          selectedRow = 2;
-          selectedColumn = 0;
-        } else if (selectedCell === 8) {
-          selectedRow = 2;
-          selectedColumn = 1;
-        } else if (selectedCell === 9) {
-          selectedRow = 2;
-          selectedColumn = 2;
-        }
-      }
-      console.log(selectedCell, selectedRow, selectedColumn);
+    if (cell === 1) {
+      row = 0;
+      column = 0;
+    } else if (cell === 2) {
+      row = 0;
+      column = 1;
+    } else if (cell === 3) {
+      row = 0;
+      column = 2;
+    } else if (cell === 4) {
+      row = 1;
+      column = 0;
+    } else if (cell === 5) {
+      row = 1;
+      column = 1;
+    } else if (cell === 6) {
+      row = 1;
+      column = 2;
+    } else if (cell === 7) {
+      row = 2;
+      column = 0;
+    } else if (cell === 8) {
+      row = 2;
+      column = 1;
+    } else if (cell === 9) {
+      row = 2;
+      column = 2;
     }
 
-    console.log(selectedCell, selectedRow, selectedColumn);
-    // Pass choice data to playRound()
-    game.playRound(selectedCell, selectedRow, selectedColumn);
-  }
+    if (printBoard()[row][column] !== 0) {
+      console.log(`Cell ${cell} has already been chosen`);
+      i--;
+    } else {
+      gameController.playTurn(cell, row, column);
+    }
 
-  let emptyCells = true;
-  let winner = false;
+    let invertedPlayer;
+    getActivePlayer().name === "Player One"
+      ? (invertedPlayer = getPlayers()[1])
+      : (invertedPlayer = getPlayers()[0]);
 
-  // Check for empty cells
-  function checkEmptyCells() {
-    console.log(getBoardCellValues());
-    checkForWinner();
-    if (winner === true) {
-      console.log(
-        `${(function () {
-          return activePlayer().name === "Player One"
-            ? "Player Two"
-            : "Player One";
-        })()} wins!`
-      );
-      return;
-    } else if (
-      getBoardCellValues().boardCellOne !== 0 &&
-      getBoardCellValues().boardCellTwo !== 0 &&
-      getBoardCellValues().boardCellThree !== 0 &&
-      getBoardCellValues().boardCellFour !== 0 &&
-      getBoardCellValues().boardCellFive !== 0 &&
-      getBoardCellValues().boardCellSix !== 0 &&
-      getBoardCellValues().boardCellSeven !== 0 &&
-      getBoardCellValues().boardCellEight !== 0 &&
-      getBoardCellValues().boardCellNine !== 0
+    if (
+      (printBoard()[0][0] === invertedPlayer.token &&
+        printBoard()[0][1] === invertedPlayer.token &&
+        printBoard()[0][2] === invertedPlayer.token) ||
+      (printBoard()[1][0] === invertedPlayer.token &&
+        printBoard()[1][1] === invertedPlayer.token &&
+        printBoard()[1][2] === invertedPlayer.token) ||
+      (printBoard()[2][0] === invertedPlayer.token &&
+        printBoard()[2][1] === invertedPlayer.token &&
+        printBoard()[2][2] === invertedPlayer.token) ||
+      (printBoard()[0][0] === invertedPlayer.token &&
+        printBoard()[1][0] === invertedPlayer.token &&
+        printBoard()[2][0] === invertedPlayer.token) ||
+      (printBoard()[0][1] === invertedPlayer.token &&
+        printBoard()[1][1] === invertedPlayer.token &&
+        printBoard()[2][1] === invertedPlayer.token) ||
+      (printBoard()[0][2] === invertedPlayer.token &&
+        printBoard()[1][2] === invertedPlayer.token &&
+        printBoard()[2][2] === invertedPlayer.token) ||
+      (printBoard()[0][0] === invertedPlayer.token &&
+        printBoard()[1][1] === invertedPlayer.token &&
+        printBoard()[2][2] === invertedPlayer.token) ||
+      (printBoard()[0][2] === invertedPlayer.token &&
+        printBoard()[1][1] === invertedPlayer.token &&
+        printBoard()[2][0] === invertedPlayer.token)
     ) {
-      console.log(
-        getBoardCellValues().boardCellOne,
-        getBoardCellValues().boardCellTwo,
-        getBoardCellValues().boardCellThree,
-        getBoardCellValues().boardCellFour,
-        getBoardCellValues().boardCellFive,
-        getBoardCellValues().boardCellSix,
-        getBoardCellValues().boardCellSeven,
-        getBoardCellValues().boardCellEight,
-        getBoardCellValues().boardCellNine
-      );
-      emptyCells = false;
+      console.log(`${invertedPlayer.name} wins!`);
+      i = 9;
+    } else if (
+      printBoard()[0][0] !== 0 &&
+      printBoard()[0][1] !== 0 &&
+      printBoard()[0][2] !== 0 &&
+      printBoard()[1][0] !== 0 &&
+      printBoard()[1][1] !== 0 &&
+      printBoard()[1][2] !== 0 &&
+      printBoard()[2][0] !== 0 &&
+      printBoard()[2][1] !== 0 &&
+      printBoard()[2][2] !== 0 &&
+      printBoard()[0][0] !== 0 &&
+      printBoard()[1][0] !== 0 &&
+      printBoard()[2][0] !== 0 &&
+      printBoard()[0][1] !== 0 &&
+      printBoard()[1][1] !== 0 &&
+      printBoard()[2][1] !== 0 &&
+      printBoard()[0][2] !== 0 &&
+      printBoard()[1][2] !== 0 &&
+      printBoard()[2][2] !== 0 &&
+      printBoard()[0][0] !== 0 &&
+      printBoard()[1][1] !== 0 &&
+      printBoard()[2][2] !== 0 &&
+      printBoard()[0][2] !== 0 &&
+      printBoard()[1][1] !== 0 &&
+      printBoard()[2][0] !== 0
+    ) {
       console.log("It's a draw!");
     }
   }
-
-  // Check if a player has won the game
-  function checkForWinner() {
-    if (
-      // Check if Player One wins on top row
-      getBoardCellValues().boardCellOne === "X" &&
-      getBoardCellValues().boardCellTwo === "X" &&
-      getBoardCellValues().boardCellThree === "X"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player One wins on middle row
-      getBoardCellValues().boardCellFour === "X" &&
-      getBoardCellValues().boardCellFive === "X" &&
-      getBoardCellValues().boardCellSix === "X"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player One wins on bottom row
-      getBoardCellValues().boardCellSeven === "X" &&
-      getBoardCellValues().boardCellEight === "X" &&
-      getBoardCellValues().boardCellNine === "X"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player One wins on left column
-      getBoardCellValues().boardCellOne === "X" &&
-      getBoardCellValues().boardCellFour === "X" &&
-      getBoardCellValues().boardCellSeven === "X"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player One wins on middle column
-      getBoardCellValues().boardCellTwo === "X" &&
-      getBoardCellValues().boardCellFive === "X" &&
-      getBoardCellValues().boardCellEight === "X"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player One wins on right column
-      getBoardCellValues().boardCellThree === "X" &&
-      getBoardCellValues().boardCellSix === "X" &&
-      getBoardCellValues().boardCellNine === "X"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player One wins on ascending diagonal
-      getBoardCellValues().boardCellSeven === "X" &&
-      getBoardCellValues().boardCellFive === "X" &&
-      getBoardCellValues().boardCellThree === "X"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player One wins on descending diagonal
-      getBoardCellValues().boardCellOne === "X" &&
-      getBoardCellValues().boardCellFive === "X" &&
-      getBoardCellValues().boardCellNine === "X"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player Two wins on top row
-      getBoardCellValues().boardCellOne === "O" &&
-      getBoardCellValues().boardCellTwo === "O" &&
-      getBoardCellValues().boardCellThree === "O"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player Two wins on middle row
-      getBoardCellValues().boardCellFour === "O" &&
-      getBoardCellValues().boardCellFive === "O" &&
-      getBoardCellValues().boardCellSix === "O"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player Two wins on bottom row
-      getBoardCellValues().boardCellSeven === "O" &&
-      getBoardCellValues().boardCellEight === "O" &&
-      getBoardCellValues().boardCellNine === "O"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player Two wins on left column
-      getBoardCellValues().boardCellOne === "O" &&
-      getBoardCellValues().boardCellFour === "O" &&
-      getBoardCellValues().boardCellSeven === "O"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player Two wins on middle column
-      getBoardCellValues().boardCellTwo === "O" &&
-      getBoardCellValues().boardCellFive === "O" &&
-      getBoardCellValues().boardCellEight === "O"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player Two wins on right column
-      getBoardCellValues().boardCellThree === "O" &&
-      getBoardCellValues().boardCellSix === "O" &&
-      getBoardCellValues().boardCellNine === "O"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player Two wins on ascending diagonal
-      getBoardCellValues().boardCellSeven === "O" &&
-      getBoardCellValues().boardCellFive === "O" &&
-      getBoardCellValues().boardCellThree === "O"
-    ) {
-      winner = true;
-    } else if (
-      // Check if Player Two wins on descending diagonal
-      getBoardCellValues().boardCellOne === "O" &&
-      getBoardCellValues().boardCellFive === "O" &&
-      getBoardCellValues().boardCellNine === "O"
-    ) {
-      winner = true;
-    }
-  }
-
-  // Run a turn
-  const runTurn = () => {
-    while (emptyCells === true && winner === false) {
-      console.log(`${activePlayer().name}'s turn`);
-      makeSelection();
-      checkEmptyCells();
-    }
-    console.log(`${showBoard()}`);
-  };
-
-  runTurn();
-  return { getBoardCellValues };
+  console.log(printBoard());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Run game
-playTurn();
+PlayTurn();
