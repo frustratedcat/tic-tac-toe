@@ -3,3 +3,25 @@
   margin: 0;
   padding: 0;
 }
+
+.main-section-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.active-player-style {
+  margin-bottom: 20px;
+}
+
+.btn-container-grid {
+  width: 380px;
+  height: 380px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.board-cell {
+}
