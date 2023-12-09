@@ -146,15 +146,18 @@ function PlayTurn() {
   let column;
   let cell;
 
+  // Loop through each turn
   for (let i = 0; i < 9; i++) {
     console.log(`Turn number: ${i + 1}`);
     console.log(printBoard());
     console.log(getActivePlayer().name);
 
+    // Get selections
     getActivePlayer().name === "Player One"
       ? (cell = getPlayerChoice())
       : (cell = getComputerEasyMode());
 
+    // Assign row and column values
     if (cell === 1) {
       row = 0;
       column = 0;
@@ -184,6 +187,7 @@ function PlayTurn() {
       column = 2;
     }
 
+    // Check if cell has already been selected
     if (printBoard()[row][column] !== 0) {
       console.log(`Cell ${cell} has already been chosen`);
       i--;
@@ -191,11 +195,13 @@ function PlayTurn() {
       gameController.playTurn(cell, row, column);
     }
 
+    // Invert players to handle the active player switch when playTurn() is invoked
     let invertedPlayer;
     getActivePlayer().name === "Player One"
       ? (invertedPlayer = getPlayers()[1])
       : (invertedPlayer = getPlayers()[0]);
 
+    // Check for finished game
     if (
       (printBoard()[0][0] === invertedPlayer.token &&
         printBoard()[0][1] === invertedPlayer.token &&
