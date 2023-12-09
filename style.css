@@ -4,6 +4,12 @@
   padding: 0;
 }
 
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .main-section-flex {
   display: flex;
   flex-direction: column;
@@ -12,7 +18,7 @@
 }
 
 .active-player-style {
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
 .btn-container-grid {
@@ -21,7 +27,4 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-}
-
-.board-cell {
 }

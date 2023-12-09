@@ -113,8 +113,43 @@ function GetChoice() {
   // Get rational choice from computer
   const getComputerHardMode = () => {};
 
+  // Define variables for cells
+  let cellBtns = document.querySelectorAll(".board-cell");
+  const cellBtn1 = document.getElementById("cell-1");
+  const cellBtn2 = document.getElementById("cell-2");
+  const cellBtn3 = document.getElementById("cell-3");
+  const cellBtn4 = document.getElementById("cell-4");
+  const cellBtn5 = document.getElementById("cell-5");
+  const cellBtn6 = document.getElementById("cell-6");
+  const cellBtn7 = document.getElementById("cell-7");
+  const cellBtn8 = document.getElementById("cell-8");
+  const cellBtn9 = document.getElementById("cell-9");
+
   // Get player choice
   const getPlayerChoice = () => {
+    for (let i = 0; i < cellBtns.length; i++) {
+      cellBtns[i].addEventListener("click", (e) => {
+        if (e.target === cellBtn1) {
+          console.log(cellBtn1);
+        } else if (e.target === cellBtn2) {
+          console.log(cellBtn2);
+        } else if (e.target === cellBtn3) {
+          console.log(cellBtn3);
+        } else if (e.target === cellBtn4) {
+          console.log(cellBtn4);
+        } else if (e.target === cellBtn5) {
+          console.log(cellBtn5);
+        } else if (e.target === cellBtn6) {
+          console.log(cellBtn6);
+        } else if (e.target === cellBtn7) {
+          console.log(cellBtn7);
+        } else if (e.target === cellBtn8) {
+          console.log(cellBtn8);
+        } else if (e.target === cellBtn9) {
+          console.log(cellBtn9);
+        }
+      });
+    }
     const result = +prompt("Select a number between 1 and 9");
     return result;
   };
