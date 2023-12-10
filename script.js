@@ -128,18 +128,19 @@ function GetChoice() {
   const cellBtn9 = document.getElementById("cell-9");
 
   // Get player choice
-  const getPlayerChoice = new Promise((resolve) => {
-    cellBtns.forEach((i) => {
-      i.addEventListener("click", (e) => {
-        resolve(e.target);
+  const getPlayerChoice = () =>
+    new Promise((resolve) => {
+      cellBtns.forEach((i) => {
+        i.addEventListener("click", (e) => {
+          resolve(e.target);
+        });
       });
     });
-  });
 
   async function handlePlayerChoice() {
     let result;
     try {
-      const val = await getPlayerChoice;
+      const val = await getPlayerChoice();
       if (val === cellBtn1) {
         result = 1;
       } else if (val === cellBtn2) {
@@ -186,9 +187,8 @@ function PlayGame() {
   const getComputerEasyMode = () => getChoice.getComputerEasyMode();
   const getComputerMediumMode = () => getChoice.getComputerMediumMode();
   const getComputerHardMode = () => getChoice.getComputerHardMode();
-  const handlePlayerChoice = new Promise((resolve) =>
-    resolve(getChoice.handlePlayerChoice())
-  );
+  const handlePlayerChoice = () =>
+    new Promise((resolve) => resolve(getChoice.handlePlayerChoice()));
 
   let row;
   let column;
@@ -199,7 +199,7 @@ function PlayGame() {
   // Get selections
   const handleChoices = async function getChoices() {
     getActivePlayer().name === "Player One"
-      ? (cell = await handlePlayerChoice)
+      ? (cell = await handlePlayerChoice())
       : (cell = getComputerEasyMode());
     console.log(cell);
   };
@@ -321,9 +321,13 @@ function PlayGame() {
   }
 
   async function playTurn() {
+    while (gameOver === false) {
+      console.log(printBoard());
+      console.log(`${getActivePlayer().name}'s turn`);
+      await checkFinishedGame();
+    }
+
     console.log(printBoard());
-    console.log(`${getActivePlayer().name}'s turn`);
-    checkFinishedGame();
   }
 
   playTurn();
