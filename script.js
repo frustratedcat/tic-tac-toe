@@ -137,23 +137,23 @@ function GetChoice() {
     try {
       const val = await getPlayerChoice();
       if (val === cellBtn1) {
-        result = 1;
+        result = +cellBtn1.value;
       } else if (val === cellBtn2) {
-        result = 2;
+        result = +cellBtn2.value;
       } else if (val === cellBtn3) {
-        result = 3;
+        result = +cellBtn3.value;
       } else if (val === cellBtn4) {
-        result = 4;
+        result = +cellBtn4.value;
       } else if (val === cellBtn5) {
-        result = 5;
+        result = +cellBtn5.value;
       } else if (val === cellBtn6) {
-        result = 6;
+        result = +cellBtn6.value;
       } else if (val === cellBtn7) {
-        result = 7;
+        result = +cellBtn7.value;
       } else if (val === cellBtn8) {
-        result = 8;
+        result = +cellBtn8.value;
       } else if (val === cellBtn9) {
-        result = 9;
+        result = +cellBtn9.value;
       }
       return result;
     } catch (err) {
