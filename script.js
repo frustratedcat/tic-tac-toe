@@ -13,9 +13,6 @@ function GameBoard() {
     }
   }
 
-  // Get board to pass to UI to render
-  const getBoard = () => board;
-
   // Place token on board
   const dropToken = (row, column, player) => {
     board[row][column].addToken(player);
@@ -29,7 +26,7 @@ function GameBoard() {
     return boardWithCellValues;
   };
 
-  return { getBoard, dropToken, printBoard };
+  return { dropToken, printBoard };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +88,6 @@ function GameController(
     players,
     playTurn,
     getActivePlayer,
-    getBoard: board.getBoard,
     printBoard: board.printBoard,
   };
 }
@@ -115,21 +111,10 @@ function GetChoice() {
   // Get rational choice from computer
   const getComputerHardMode = () => {};
 
-  // Define variables for cells
-  let cellBtns = document.querySelectorAll(".board-cell");
-  const cellBtn1 = document.getElementById("cell-1");
-  const cellBtn2 = document.getElementById("cell-2");
-  const cellBtn3 = document.getElementById("cell-3");
-  const cellBtn4 = document.getElementById("cell-4");
-  const cellBtn5 = document.getElementById("cell-5");
-  const cellBtn6 = document.getElementById("cell-6");
-  const cellBtn7 = document.getElementById("cell-7");
-  const cellBtn8 = document.getElementById("cell-8");
-  const cellBtn9 = document.getElementById("cell-9");
-
   // Get player choice
   const getPlayerChoice = () =>
     new Promise((resolve) => {
+      let cellBtns = document.querySelectorAll(".board-cell");
       cellBtns.forEach((i) => {
         i.addEventListener("click", (e) => {
           resolve(e.target);
@@ -138,7 +123,17 @@ function GetChoice() {
     });
 
   async function handlePlayerChoice() {
+    const cellBtn1 = document.getElementById("cell-1");
+    const cellBtn2 = document.getElementById("cell-2");
+    const cellBtn3 = document.getElementById("cell-3");
+    const cellBtn4 = document.getElementById("cell-4");
+    const cellBtn5 = document.getElementById("cell-5");
+    const cellBtn6 = document.getElementById("cell-6");
+    const cellBtn7 = document.getElementById("cell-7");
+    const cellBtn8 = document.getElementById("cell-8");
+    const cellBtn9 = document.getElementById("cell-9");
     let result;
+
     try {
       const val = await getPlayerChoice();
       if (val === cellBtn1) {
@@ -183,30 +178,33 @@ function PlayGame() {
   const getPlayers = () => gameController.players;
   const printBoard = () => gameController.printBoard();
 
-  const getChoice = GetChoice();
-  const getComputerEasyMode = () => getChoice.getComputerEasyMode();
-  const getComputerMediumMode = () => getChoice.getComputerMediumMode();
-  const getComputerHardMode = () => getChoice.getComputerHardMode();
-  const handlePlayerChoice = () =>
-    new Promise((resolve) => resolve(getChoice.handlePlayerChoice()));
-
-  let row;
-  let column;
-  let cell;
-  let invertedPlayer;
   let gameOver = false;
 
   // Get selections
   const handleChoices = async function getChoices() {
+    const getChoice = GetChoice();
+    const getComputerEasyMode = () => getChoice.getComputerEasyMode();
+    const getComputerMediumMode = () => getChoice.getComputerMediumMode();
+    const getComputerHardMode = () => getChoice.getComputerHardMode();
+    const handlePlayerChoice = () =>
+      new Promise((resolve) => resolve(getChoice.handlePlayerChoice()));
+    let cell;
+
     getActivePlayer().name === "Player One"
       ? (cell = await handlePlayerChoice())
       : (cell = getComputerEasyMode());
     console.log(cell);
+    return { cell };
   };
 
   // Assign row and column values
   const handleAssignments = async function assignRowColumnValues() {
-    await handleChoices();
+    const getCell = await handleChoices();
+    let row;
+    let column;
+    const cell = getCell.cell;
+    console.log(cell);
+
     if (cell === 1) {
       row = 0;
       column = 0;
@@ -236,12 +234,16 @@ function PlayGame() {
       column = 2;
     }
     console.log(row, column);
-    return row, column;
+    return { cell, row, column };
   };
 
   // Check if cell has already been selected
   const handleCellCheck = async function checkCells() {
-    await handleAssignments();
+    const getCellRowColumn = await handleAssignments();
+    const cell = getCellRowColumn.cell;
+    const row = getCellRowColumn.row;
+    const column = getCellRowColumn.column;
+
     if (printBoard()[row][column] !== 0) {
       console.log(`Cell ${cell} has already been chosen`);
     } else {
@@ -252,15 +254,20 @@ function PlayGame() {
   // Invert players to handle the active player switch when playTurn() is invoked
   const handleInvertedPlayerNames = async function invertPlayerNames() {
     await handleCellCheck();
+    let invertedPlayer;
+
     getActivePlayer().name === "Player One"
       ? (invertedPlayer = getPlayers()[1])
       : (invertedPlayer = getPlayers()[0]);
     console.log(`Inverted Player = ${invertedPlayer.name}`);
+    return { invertedPlayer };
   };
 
   // Check for finished game
   async function checkFinishedGame() {
-    await handleInvertedPlayerNames();
+    const getInvertedPlayer = await handleInvertedPlayerNames();
+    const invertedPlayer = getInvertedPlayer.invertedPlayer;
+
     if (
       (printBoard()[0][0] === invertedPlayer.token &&
         printBoard()[0][1] === invertedPlayer.token &&
