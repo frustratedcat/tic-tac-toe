@@ -106,14 +106,18 @@ function GetChoice() {
   const cellBtn8 = document.getElementById("cell-8");
   const cellBtn9 = document.getElementById("cell-9");
 
+  const delayComputerChoice = () =>
+    new Promise((resolve) => setTimeout(resolve, 1000));
+
   // Get random choice from computer
-  const getComputerEasyMode = (min = 1, max = 9) => {
+  async function getComputerEasyMode(min = 1, max = 9) {
+    await delayComputerChoice();
     console.log("Getting computer choice");
     min = Math.ceil(min);
     max = Math.floor(max);
     const result = Math.floor(Math.random() * (max - min + 1) + min);
     return result;
-  };
+  }
 
   // Get a somewhat rational choice from computer
   const getComputerMediumMode = () => {};
@@ -198,6 +202,7 @@ function PlayGame() {
     const getComputerHardMode = () => getChoice.getComputerHardMode();
     const handlePlayerChoice = () =>
       new Promise((resolve) => resolve(getChoice.handlePlayerChoice()));
+
     const cellBtn1 = getChoice.cellBtn1;
     const cellBtn2 = getChoice.cellBtn2;
     const cellBtn3 = getChoice.cellBtn3;
@@ -212,7 +217,7 @@ function PlayGame() {
 
     getActivePlayer().name === "Player One"
       ? (cell = await handlePlayerChoice())
-      : (cell = getComputerEasyMode());
+      : (cell = await getComputerEasyMode());
     console.log(cell);
     return {
       cell,
@@ -400,9 +405,11 @@ function PlayGame() {
   }
 
   async function playTurn() {
+    const activePlayerOnBoard = document.getElementById("active-player");
     while (gameOver === false) {
       console.log(printBoard());
-      console.log(`${getActivePlayer().name}'s turn`);
+      activePlayerOnBoard.textContent = `${getActivePlayer().name}'s turn`;
+      console.log(activePlayerOnBoard.textContent);
       await checkFinishedGame();
     }
 
