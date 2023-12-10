@@ -84,6 +84,7 @@ function GameController(
     );
     board.dropToken(row, column, activePlayer.token);
     switchPlayerTurn();
+    console.log(`Active Player = ${activePlayer.name}`);
   };
 
   return {
@@ -101,6 +102,7 @@ function GameController(
 function GetChoice() {
   // Get random choice from computer
   const getComputerEasyMode = (min = 1, max = 9) => {
+    console.log("Getting computer choice");
     min = Math.ceil(min);
     max = Math.floor(max);
     const result = Math.floor(Math.random() * (max - min + 1) + min);
@@ -126,46 +128,55 @@ function GetChoice() {
   const cellBtn9 = document.getElementById("cell-9");
 
   // Get player choice
-  const getPlayerChoice = () => {
-    for (let i = 0; i < cellBtns.length; i++) {
-      cellBtns[i].addEventListener("click", (e) => {
-        if (e.target === cellBtn1) {
-          console.log(cellBtn1);
-        } else if (e.target === cellBtn2) {
-          console.log(cellBtn2);
-        } else if (e.target === cellBtn3) {
-          console.log(cellBtn3);
-        } else if (e.target === cellBtn4) {
-          console.log(cellBtn4);
-        } else if (e.target === cellBtn5) {
-          console.log(cellBtn5);
-        } else if (e.target === cellBtn6) {
-          console.log(cellBtn6);
-        } else if (e.target === cellBtn7) {
-          console.log(cellBtn7);
-        } else if (e.target === cellBtn8) {
-          console.log(cellBtn8);
-        } else if (e.target === cellBtn9) {
-          console.log(cellBtn9);
-        }
+  const getPlayerChoice = new Promise((resolve) => {
+    cellBtns.forEach((i) => {
+      i.addEventListener("click", (e) => {
+        resolve(e.target);
       });
+    });
+  });
+
+  async function handlePlayerChoice() {
+    let result;
+    try {
+      const val = await getPlayerChoice;
+      if (val === cellBtn1) {
+        result = 1;
+      } else if (val === cellBtn2) {
+        result = 2;
+      } else if (val === cellBtn3) {
+        result = 3;
+      } else if (val === cellBtn4) {
+        result = 4;
+      } else if (val === cellBtn5) {
+        result = 5;
+      } else if (val === cellBtn6) {
+        result = 6;
+      } else if (val === cellBtn7) {
+        result = 7;
+      } else if (val === cellBtn8) {
+        result = 8;
+      } else if (val === cellBtn9) {
+        result = 9;
+      }
+      return result;
+    } catch (err) {
+      console.error(err);
     }
-    const result = +prompt("Select a number between 1 and 9");
-    return result;
-  };
+  }
 
   return {
     getComputerEasyMode,
     getComputerMediumMode,
     getComputerHardMode,
-    getPlayerChoice,
+    handlePlayerChoice,
   };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Play a round of the game
-function PlayTurn() {
+function PlayGame() {
   const gameController = GameController();
   const getActivePlayer = () => gameController.getActivePlayer();
   const getPlayers = () => gameController.players;
@@ -175,24 +186,27 @@ function PlayTurn() {
   const getComputerEasyMode = () => getChoice.getComputerEasyMode();
   const getComputerMediumMode = () => getChoice.getComputerMediumMode();
   const getComputerHardMode = () => getChoice.getComputerHardMode();
-  const getPlayerChoice = () => getChoice.getPlayerChoice();
+  const handlePlayerChoice = new Promise((resolve) =>
+    resolve(getChoice.handlePlayerChoice())
+  );
 
   let row;
   let column;
   let cell;
+  let invertedPlayer;
+  let gameOver = false;
 
-  // Loop through each turn
-  for (let i = 0; i < 9; i++) {
-    console.log(`Turn number: ${i + 1}`);
-    console.log(printBoard());
-    console.log(getActivePlayer().name);
-
-    // Get selections
+  // Get selections
+  const handleChoices = async function getChoices() {
     getActivePlayer().name === "Player One"
-      ? (cell = getPlayerChoice())
+      ? (cell = await handlePlayerChoice)
       : (cell = getComputerEasyMode());
+    console.log(cell);
+  };
 
-    // Assign row and column values
+  // Assign row and column values
+  const handleAssignments = async function assignRowColumnValues() {
+    await handleChoices();
     if (cell === 1) {
       row = 0;
       column = 0;
@@ -221,22 +235,32 @@ function PlayTurn() {
       row = 2;
       column = 2;
     }
+    console.log(row, column);
+    return row, column;
+  };
 
-    // Check if cell has already been selected
+  // Check if cell has already been selected
+  const handleCellCheck = async function checkCells() {
+    await handleAssignments();
     if (printBoard()[row][column] !== 0) {
       console.log(`Cell ${cell} has already been chosen`);
-      i--;
     } else {
       gameController.playTurn(cell, row, column);
     }
+  };
 
-    // Invert players to handle the active player switch when playTurn() is invoked
-    let invertedPlayer;
+  // Invert players to handle the active player switch when playTurn() is invoked
+  const handleInvertedPlayerNames = async function invertPlayerNames() {
+    await handleCellCheck();
     getActivePlayer().name === "Player One"
       ? (invertedPlayer = getPlayers()[1])
       : (invertedPlayer = getPlayers()[0]);
+    console.log(`Inverted Player = ${invertedPlayer.name}`);
+  };
 
-    // Check for finished game
+  // Check for finished game
+  async function checkFinishedGame() {
+    await handleInvertedPlayerNames();
     if (
       (printBoard()[0][0] === invertedPlayer.token &&
         printBoard()[0][1] === invertedPlayer.token &&
@@ -264,7 +288,7 @@ function PlayTurn() {
         printBoard()[2][0] === invertedPlayer.token)
     ) {
       console.log(`${invertedPlayer.name} wins!`);
-      i = 9;
+      gameOver = true;
     } else if (
       printBoard()[0][0] !== 0 &&
       printBoard()[0][1] !== 0 &&
@@ -292,11 +316,19 @@ function PlayTurn() {
       printBoard()[2][0] !== 0
     ) {
       console.log("It's a draw!");
+      gameOver = true;
     }
   }
-  console.log(printBoard());
+
+  async function playTurn() {
+    console.log(printBoard());
+    console.log(`${getActivePlayer().name}'s turn`);
+    checkFinishedGame();
+  }
+
+  playTurn();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// PlayTurn();
+PlayGame();
