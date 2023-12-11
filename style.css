@@ -40,6 +40,18 @@ body {
   border: 1px solid black;
 }
 
+.hide-intro-section {
+  display: none;
+}
+
+.hide-main-section {
+  display: none;
+}
+
+.hide-result-section {
+  display: none;
+}
+
 footer {
   position: fixed;
   bottom: 0;

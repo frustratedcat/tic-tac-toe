@@ -202,7 +202,7 @@ function PlayGame() {
   const getActivePlayer = () => gameController.getActivePlayer();
   const getPlayers = () => gameController.players;
   const printBoard = () => gameController.printBoard();
-  const getBoard = () => gameController.getBoard();
+  const getBoard = gameController.getBoard();
 
   let gameOver = false;
 
@@ -343,19 +343,41 @@ function PlayGame() {
       }
       gameController.playTurn(cell, row, column);
     }
+    return {
+      cellBtn1,
+      cellBtn2,
+      cellBtn3,
+      cellBtn4,
+      cellBtn5,
+      cellBtn6,
+      cellBtn7,
+      cellBtn8,
+      cellBtn9,
+    };
   };
 
   // Invert players to handle the active player switch when playTurn() is invoked
-  const handleInvertedPlayerNames = async function invertPlayerNames() {
-    await handleCellCheck();
+  async function handleInvertedPlayerNames() {
+    const handleCheck = await handleCellCheck();
     let invertedPlayer;
 
     getActivePlayer().name === "Player One"
       ? (invertedPlayer = getPlayers()[1])
       : (invertedPlayer = getPlayers()[0]);
     console.log(`Inverted Player = ${invertedPlayer.name}`);
-    return { invertedPlayer };
-  };
+    return {
+      invertedPlayer,
+      cellBtn1: handleCheck.cellBtn1,
+      cellBtn2: handleCheck.cellBtn2,
+      cellBtn3: handleCheck.cellBtn3,
+      cellBtn4: handleCheck.cellBtn4,
+      cellBtn5: handleCheck.cellBtn5,
+      cellBtn6: handleCheck.cellBtn6,
+      cellBtn7: handleCheck.cellBtn7,
+      cellBtn8: handleCheck.cellBtn8,
+      cellBtn9: handleCheck.cellBtn9,
+    };
+  }
 
   // Check for finished game
   async function checkFinishedGame() {
@@ -390,9 +412,13 @@ function PlayGame() {
         printBoard()[2][0] === invertedPlayer.token)
     ) {
       gameOver = true;
-      gameResult = `${invertedPlayer.name} wins!`;
-      console.log(gameResult);
-      return gameResult;
+      if (invertedPlayer.name === "Player One") {
+        gameResult = "Human";
+        // return gameResult;
+      } else {
+        gameResult = "Computer";
+        // return gameResult;
+      }
     } else if (
       printBoard()[0][0] !== 0 &&
       printBoard()[0][1] !== 0 &&
@@ -420,35 +446,120 @@ function PlayGame() {
       printBoard()[2][0] !== 0
     ) {
       gameOver = true;
-      gameResult = "It's a draw!";
-      console.log(gameResult);
-      return gameResult;
+      gameResult = "Draw";
     }
+
+    return {
+      gameResult,
+      cellBtn1: getInvertedPlayer.cellBtn1,
+      cellBtn2: getInvertedPlayer.cellBtn2,
+      cellBtn3: getInvertedPlayer.cellBtn3,
+      cellBtn4: getInvertedPlayer.cellBtn4,
+      cellBtn5: getInvertedPlayer.cellBtn5,
+      cellBtn6: getInvertedPlayer.cellBtn6,
+      cellBtn7: getInvertedPlayer.cellBtn7,
+      cellBtn8: getInvertedPlayer.cellBtn8,
+      cellBtn9: getInvertedPlayer.cellBtn9,
+    };
   }
 
-  async function playTurn() {
+  async function PlayTurn() {
     const activePlayerOnBoard = document.getElementById("active-player");
+    let finalResult;
+    let cellBtn1;
+    let cellBtn2;
+    let cellBtn3;
+    let cellBtn4;
+    let cellBtn5;
+    let cellBtn6;
+    let cellBtn7;
+    let cellBtn8;
+    let cellBtn9;
+
     while (gameOver === false) {
       console.log(printBoard());
       activePlayerOnBoard.textContent = `${getActivePlayer().name}'s turn`;
       console.log(activePlayerOnBoard.textContent);
-      await checkFinishedGame();
+      const awaitCheckFinishedGame = await checkFinishedGame();
+
+      if (
+        awaitCheckFinishedGame.gameResult === "Human" ||
+        awaitCheckFinishedGame.gameResult === "Computer" ||
+        awaitCheckFinishedGame.gameResult === "Draw"
+      ) {
+        finalResult = awaitCheckFinishedGame.gameResult;
+        cellBtn1 = awaitCheckFinishedGame.cellBtn1;
+        cellBtn2 = awaitCheckFinishedGame.cellBtn2;
+        cellBtn3 = awaitCheckFinishedGame.cellBtn3;
+        cellBtn4 = awaitCheckFinishedGame.cellBtn4;
+        cellBtn5 = awaitCheckFinishedGame.cellBtn5;
+        cellBtn6 = awaitCheckFinishedGame.cellBtn6;
+        cellBtn7 = awaitCheckFinishedGame.cellBtn7;
+        cellBtn8 = awaitCheckFinishedGame.cellBtn8;
+        cellBtn9 = awaitCheckFinishedGame.cellBtn9;
+      }
     }
 
     console.log(printBoard());
+    return {
+      finalResult,
+      cellBtn1,
+      cellBtn2,
+      cellBtn3,
+      cellBtn4,
+      cellBtn5,
+      cellBtn6,
+      cellBtn7,
+      cellBtn8,
+      cellBtn9,
+    };
   }
 
-  playTurn();
+  async function GetFinalResult() {
+    const playingTurn = await PlayTurn();
+    const playingTurnResult = playingTurn.finalResult;
+    return {
+      playingTurnResult,
+      cellBtn1: playingTurn.cellBtn1,
+      cellBtn2: playingTurn.cellBtn2,
+      cellBtn3: playingTurn.cellBtn3,
+      cellBtn4: playingTurn.cellBtn4,
+      cellBtn5: playingTurn.cellBtn5,
+      cellBtn6: playingTurn.cellBtn6,
+      cellBtn7: playingTurn.cellBtn7,
+      cellBtn8: playingTurn.cellBtn8,
+      cellBtn9: playingTurn.cellBtn9,
+    };
+  }
+
+  return { getBoard, GetFinalResult };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function gameStory() {
+  const introSection = document.getElementById("intro-section");
+  const mainSection = document.getElementById("main-section");
+  const resultSection = document.getElementById("result-section");
+  const playGame = () => PlayGame();
+
   const playGameBtn = document.getElementById("play-game-btn");
-  playGameBtn.addEventListener("click", PlayGame);
+  playGameBtn.addEventListener("click", async function () {
+    introSection.classList.add("hide-intro-section");
+    mainSection.classList.remove("hide-main-section");
+
+    const finalResult = await playGame().GetFinalResult();
+
+    if (finalResult.playingTurnResult === "Human" || "Computer" || "Draw") {
+      resultSection.classList.remove("hide-result-section");
+      console.log(finalResult.playingTurnResult);
+    }
+  });
 
   const playAgainBtn = document.getElementById("play-again");
-  playAgainBtn.addEventListener("click", PlayGame);
+  playAgainBtn.addEventListener("click", () => {
+    console.log("hi");
+  });
 }
 
 gameStory();
