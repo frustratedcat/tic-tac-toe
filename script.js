@@ -106,18 +106,14 @@ function GetChoice() {
   const cellBtn8 = document.getElementById("cell-8");
   const cellBtn9 = document.getElementById("cell-9");
 
-  const delayComputerChoice = () =>
-    new Promise((resolve) => setTimeout(resolve, 1000));
-
   // Get random choice from computer
-  async function getComputerEasyMode(min = 1, max = 9) {
-    await delayComputerChoice();
+  const getComputerEasyMode = (min = 1, max = 9) => {
     console.log("Getting computer choice");
     min = Math.ceil(min);
     max = Math.floor(max);
     const result = Math.floor(Math.random() * (max - min + 1) + min);
     return result;
-  }
+  };
 
   // Get a somewhat rational choice from computer
   const getComputerMediumMode = () => {};
@@ -217,7 +213,7 @@ function PlayGame() {
 
     getActivePlayer().name === "Player One"
       ? (cell = await handlePlayerChoice())
-      : (cell = await getComputerEasyMode());
+      : (cell = getComputerEasyMode());
     console.log(cell);
     return {
       cell,
@@ -302,9 +298,15 @@ function PlayGame() {
     const cellBtn8 = getCellRowColumn.cellBtn8;
     const cellBtn9 = getCellRowColumn.cellBtn9;
 
+    const delayComputerChoice = () =>
+      new Promise((resolve) => setTimeout(resolve, 1000));
+
     if (printBoard()[row][column] !== 0) {
       console.log(`Cell ${cell} has already been chosen`);
     } else {
+      if (getActivePlayer().name === "Player Two") {
+        await delayComputerChoice();
+      }
       if (cell === 1) {
         cellBtn1.textContent = getActivePlayer().token;
       } else if (cell === 2) {
