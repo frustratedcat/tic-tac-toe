@@ -13,6 +13,8 @@ function GameBoard() {
     }
   }
 
+  const getBoard = () => board;
+
   // Place token on board
   const dropToken = (row, column, player) => {
     board[row][column].addToken(player);
@@ -26,7 +28,7 @@ function GameBoard() {
     return boardWithCellValues;
   };
 
-  return { dropToken, printBoard };
+  return { dropToken, printBoard, getBoard };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,6 +91,7 @@ function GameController(
     playTurn,
     getActivePlayer,
     printBoard: board.printBoard,
+    getBoard: board.getBoard,
   };
 }
 
@@ -96,6 +99,12 @@ function GameController(
 
 // Get player and computer choices
 function GetChoice() {
+  const gameController = () => GameController();
+  const getActivePlayer = () => gameController.getActivePlayer();
+  const getPlayers = () => gameController.players;
+  const printBoard = () => gameController.printBoard();
+  const getBoard = () => gameController.getBoard();
+
   const cellBtn1 = document.getElementById("cell-1");
   const cellBtn2 = document.getElementById("cell-2");
   const cellBtn3 = document.getElementById("cell-3");
@@ -163,6 +172,11 @@ function GetChoice() {
   }
 
   return {
+    gameController,
+    getActivePlayer,
+    getPlayers,
+    printBoard,
+    getBoard,
     getComputerEasyMode,
     getComputerMediumMode,
     getComputerHardMode,
@@ -183,16 +197,17 @@ function GetChoice() {
 
 // Play a round of the game
 function PlayGame() {
-  const gameController = GameController();
+  const getChoice = GetChoice();
+  const gameController = getChoice.gameController();
   const getActivePlayer = () => gameController.getActivePlayer();
   const getPlayers = () => gameController.players;
   const printBoard = () => gameController.printBoard();
+  const getBoard = () => gameController.getBoard();
 
   let gameOver = false;
 
   // Get selections
   const handleChoices = async function getChoices() {
-    const getChoice = GetChoice();
     const getComputerEasyMode = () => getChoice.getComputerEasyMode();
     const getComputerMediumMode = () => getChoice.getComputerMediumMode();
     const getComputerHardMode = () => getChoice.getComputerHardMode();
@@ -346,6 +361,7 @@ function PlayGame() {
   async function checkFinishedGame() {
     const getInvertedPlayer = await handleInvertedPlayerNames();
     const invertedPlayer = getInvertedPlayer.invertedPlayer;
+    let gameResult;
 
     if (
       (printBoard()[0][0] === invertedPlayer.token &&
@@ -373,8 +389,10 @@ function PlayGame() {
         printBoard()[1][1] === invertedPlayer.token &&
         printBoard()[2][0] === invertedPlayer.token)
     ) {
-      console.log(`${invertedPlayer.name} wins!`);
       gameOver = true;
+      gameResult = `${invertedPlayer.name} wins!`;
+      console.log(gameResult);
+      return gameResult;
     } else if (
       printBoard()[0][0] !== 0 &&
       printBoard()[0][1] !== 0 &&
@@ -401,8 +419,10 @@ function PlayGame() {
       printBoard()[1][1] !== 0 &&
       printBoard()[2][0] !== 0
     ) {
-      console.log("It's a draw!");
       gameOver = true;
+      gameResult = "It's a draw!";
+      console.log(gameResult);
+      return gameResult;
     }
   }
 
@@ -423,4 +443,12 @@ function PlayGame() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-PlayGame();
+function gameStory() {
+  const playGameBtn = document.getElementById("play-game-btn");
+  playGameBtn.addEventListener("click", PlayGame);
+
+  const playAgainBtn = document.getElementById("play-again");
+  playAgainBtn.addEventListener("click", PlayGame);
+}
+
+gameStory();

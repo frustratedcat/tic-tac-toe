@@ -17,9 +17,6 @@ body {
   align-items: center;
 }
 
-.intro-section {
-}
-
 .main-section-flex {
   display: flex;
   flex-direction: column;
@@ -32,11 +29,15 @@ body {
 }
 
 .btn-container-grid {
-  width: 380px;
-  height: 380px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  border: 1px solid black;
+}
+
+.board-cell {
+  height: 120px;
+  width: 120px;
+  border: 1px solid black;
 }
 
 footer {
