@@ -40,7 +40,7 @@ body {
   border: 1px solid black;
 }
 
-.hide-intro-section {
+.hide-start-game {
   display: none;
 }
 
@@ -48,7 +48,34 @@ body {
   display: none;
 }
 
-.hide-result-section {
+.intro-section-intro-1-hidden {
+  display: none;
+}
+.intro-section-intro-2-hidden {
+  display: none;
+}
+.intro-section-intro-3-hidden {
+  display: none;
+}
+.intro-section-intro-4-hidden {
+  display: none;
+}
+.intro-section-intro-5-hidden {
+  display: none;
+}
+.intro-section-intro-6-hidden {
+  display: none;
+}
+.intro-section-intro-7-hidden {
+  display: none;
+}
+.intro-section-intro-8-hidden {
+  display: none;
+}
+.intro-section-intro-9-hidden {
+  display: none;
+}
+.play-game-btn-hidden {
   display: none;
 }
 

@@ -414,10 +414,8 @@ function PlayGame() {
       gameOver = true;
       if (invertedPlayer.name === "Player One") {
         gameResult = "Human";
-        // return gameResult;
       } else {
         gameResult = "Computer";
-        // return gameResult;
       }
     } else if (
       printBoard()[0][0] !== 0 &&
@@ -538,27 +536,109 @@ function PlayGame() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function gameStory() {
-  const introSection = document.getElementById("intro-section");
+  const startGame = document.getElementById("start-game");
+  const startGameBtn = document.getElementById("start-game-btn");
   const mainSection = document.getElementById("main-section");
-  const resultSection = document.getElementById("result-section");
+  const introSectionIntro1 = document.getElementById("intro-section-intro-1");
+  const introSectionIntro2 = document.getElementById("intro-section-intro-2");
+  const introSectionIntro3 = document.getElementById("intro-section-intro-3");
+  const introSectionIntro4 = document.getElementById("intro-section-intro-4");
+  const introSectionIntro5 = document.getElementById("intro-section-intro-5");
+  const introSectionIntro6 = document.getElementById("intro-section-intro-6");
+  const introSectionIntro7 = document.getElementById("intro-section-intro-7");
+  const introSectionIntro8 = document.getElementById("intro-section-intro-8");
+  const introSectionIntro9 = document.getElementById("intro-section-intro-9");
+  const playGameBtn = document.getElementById("play-game-btn");
   const playGame = () => PlayGame();
 
-  const playGameBtn = document.getElementById("play-game-btn");
-  playGameBtn.addEventListener("click", async function () {
-    introSection.classList.add("hide-intro-section");
-    mainSection.classList.remove("hide-main-section");
+  const hideAllIntro = () => {
+    introSectionIntro1.classList.add("intro-section-intro-1-hidden");
+    introSectionIntro2.classList.add("intro-section-intro-2-hidden");
+    introSectionIntro3.classList.add("intro-section-intro-3-hidden");
+    introSectionIntro4.classList.add("intro-section-intro-4-hidden");
+    introSectionIntro5.classList.add("intro-section-intro-5-hidden");
+    introSectionIntro6.classList.add("intro-section-intro-6-hidden");
+    introSectionIntro7.classList.add("intro-section-intro-7-hidden");
+    introSectionIntro8.classList.add("intro-section-intro-8-hidden");
+    introSectionIntro9.classList.add("intro-section-intro-9-hidden");
+    playGameBtn.classList.add("play-game-btn-hidden");
+  };
 
-    const finalResult = await playGame().GetFinalResult();
+  const delayIntroItems = () =>
+    new Promise((resolve) => setTimeout(resolve, 3000));
 
-    if (finalResult.playingTurnResult === "Human" || "Computer" || "Draw") {
-      resultSection.classList.remove("hide-result-section");
-      console.log(finalResult.playingTurnResult);
-    }
-  });
+  async function showIntro() {
+    introSectionIntro1.classList.remove("intro-section-intro-1-hidden");
+    await delayIntroItems();
+    introSectionIntro1.classList.add("intro-section-intro-1-hidden");
+    introSectionIntro2.classList.remove("intro-section-intro-2-hidden");
+    await delayIntroItems();
+    introSectionIntro2.classList.add("intro-section-intro-2-hidden");
+    introSectionIntro3.classList.remove("intro-section-intro-3-hidden");
+    await delayIntroItems();
+    introSectionIntro3.classList.add("intro-section-intro-3-hidden");
+    introSectionIntro4.classList.remove("intro-section-intro-4-hidden");
+    await delayIntroItems();
+    introSectionIntro4.classList.add("intro-section-intro-4-hidden");
+    introSectionIntro5.classList.remove("intro-section-intro-5-hidden");
+    await delayIntroItems();
+    introSectionIntro5.classList.add("intro-section-intro-5-hidden");
+    introSectionIntro6.classList.remove("intro-section-intro-6-hidden");
+    await delayIntroItems();
+    introSectionIntro6.classList.add("intro-section-intro-6-hidden");
+    playGameBtn.classList.remove("play-game-btn-hidden");
+  }
 
-  const playAgainBtn = document.getElementById("play-again");
-  playAgainBtn.addEventListener("click", () => {
-    console.log("hi");
+  const showResultHuman = () => {
+    introSectionIntro7.classList.remove("intro-section-intro-7-hidden");
+    playGameBtn.classList.remove("play-game-btn-hidden");
+  };
+  const showResultComputer = () => {
+    introSectionIntro8.classList.remove("intro-section-intro-8-hidden");
+    playGameBtn.classList.remove("play-game-btn-hidden");
+  };
+
+  const showResultDraw = () => {
+    introSectionIntro9.classList.remove("intro-section-intro-9-hidden");
+    playGameBtn.classList.remove("play-game-btn-hidden");
+  };
+
+  const run = () => {
+    showIntro();
+    playGameBtn.addEventListener("click", async function () {
+      hideAllIntro();
+      mainSection.classList.remove("hide-main-section");
+
+      const finalResult = await playGame().GetFinalResult();
+
+      if (finalResult.playingTurnResult === "Human") {
+        console.log(finalResult.playingTurnResult);
+        mainSection.classList.add("hide-main-section");
+        showResultHuman();
+      } else if (finalResult.playingTurnResult === "Computer") {
+        console.log(finalResult.playingTurnResult);
+        mainSection.classList.add("hide-main-section");
+        showResultComputer();
+      } else if (finalResult.playingTurnResult === "Draw") {
+        console.log(finalResult.playingTurnResult);
+        mainSection.classList.add("hide-main-section");
+        showResultDraw();
+      }
+      finalResult.cellBtn1.textContent = "";
+      finalResult.cellBtn2.textContent = "";
+      finalResult.cellBtn3.textContent = "";
+      finalResult.cellBtn4.textContent = "";
+      finalResult.cellBtn5.textContent = "";
+      finalResult.cellBtn6.textContent = "";
+      finalResult.cellBtn7.textContent = "";
+      finalResult.cellBtn8.textContent = "";
+      finalResult.cellBtn9.textContent = "";
+    });
+  };
+
+  startGameBtn.addEventListener("click", () => {
+    startGame.classList.add("hide-start-game");
+    run();
   });
 }
 
