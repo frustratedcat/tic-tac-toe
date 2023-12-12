@@ -77,13 +77,9 @@ function GameController(
   const getActivePlayer = () => activePlayer;
 
   // Play a round
-  const playTurn = (cell, row, column) => {
-    console.log(
-      `Placing ${activePlayer.name}'s ${activePlayer.token} in cell ${cell}`
-    );
+  const playTurn = (row, column) => {
     board.dropToken(row, column, activePlayer.token);
     switchPlayerTurn();
-    console.log(`Active Player = ${activePlayer.name}`);
   };
 
   return {
@@ -117,7 +113,6 @@ function GetChoice() {
 
   // Get random choice from computer
   const getComputerEasyMode = (min = 1, max = 9) => {
-    console.log("Getting computer choice");
     min = Math.ceil(min);
     max = Math.floor(max);
     const result = Math.floor(Math.random() * (max - min + 1) + min);
@@ -229,7 +224,6 @@ function PlayGame() {
     getActivePlayer().name === "Player One"
       ? (cell = await handlePlayerChoice())
       : (cell = getComputerEasyMode());
-    console.log(cell);
     return {
       cell,
       cellBtn1,
@@ -250,7 +244,6 @@ function PlayGame() {
     let row;
     let column;
     const cell = getCell.cell;
-    console.log(cell);
 
     if (cell === 1) {
       row = 0;
@@ -280,7 +273,6 @@ function PlayGame() {
       row = 2;
       column = 2;
     }
-    console.log(row, column);
     return {
       cell,
       row,
@@ -317,7 +309,6 @@ function PlayGame() {
       new Promise((resolve) => setTimeout(resolve, 1000));
 
     if (printBoard()[row][column] !== 0) {
-      console.log(`Cell ${cell} has already been chosen`);
     } else {
       if (getActivePlayer().name === "Player Two") {
         await delayComputerChoice();
@@ -341,7 +332,7 @@ function PlayGame() {
       } else if (cell === 9) {
         cellBtn9.textContent = getActivePlayer().token;
       }
-      gameController.playTurn(cell, row, column);
+      gameController.playTurn(row, column);
     }
     return {
       cellBtn1,
@@ -364,7 +355,6 @@ function PlayGame() {
     getActivePlayer().name === "Player One"
       ? (invertedPlayer = getPlayers()[1])
       : (invertedPlayer = getPlayers()[0]);
-    console.log(`Inverted Player = ${invertedPlayer.name}`);
     return {
       invertedPlayer,
       cellBtn1: handleCheck.cellBtn1,
@@ -475,9 +465,7 @@ function PlayGame() {
     let cellBtn9;
 
     while (gameOver === false) {
-      console.log(printBoard());
       activePlayerOnBoard.textContent = `${getActivePlayer().name}'s turn`;
-      console.log(activePlayerOnBoard.textContent);
       const awaitCheckFinishedGame = await checkFinishedGame();
 
       if (
@@ -498,7 +486,6 @@ function PlayGame() {
       }
     }
 
-    console.log(printBoard());
     return {
       finalResult,
       cellBtn1,
@@ -610,15 +597,12 @@ function gameStory() {
       const finalResult = await playGame().GetFinalResult();
 
       if (finalResult.playingTurnResult === "Human") {
-        console.log(finalResult.playingTurnResult);
         mainSection.classList.add("hide-main-section");
         showResultHuman();
       } else if (finalResult.playingTurnResult === "Computer") {
-        console.log(finalResult.playingTurnResult);
         mainSection.classList.add("hide-main-section");
         showResultComputer();
       } else if (finalResult.playingTurnResult === "Draw") {
-        console.log(finalResult.playingTurnResult);
         mainSection.classList.add("hide-main-section");
         showResultDraw();
       }
