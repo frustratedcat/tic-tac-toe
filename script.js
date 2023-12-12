@@ -584,8 +584,6 @@ function gameStory() {
     await delayIntroItems();
     introSectionIntro5.classList.add("intro-section-intro-5-hidden");
     introSectionIntro6.classList.remove("intro-section-intro-6-hidden");
-    await delayIntroItems();
-    introSectionIntro6.classList.add("intro-section-intro-6-hidden");
     playGameBtn.classList.remove("play-game-btn-hidden");
   }
 
