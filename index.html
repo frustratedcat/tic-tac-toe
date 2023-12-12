@@ -8,56 +8,58 @@
       content="A simple, web-based tic tac toe game to play online"
     />
 
+    <title>Tic Tac Toe</title>
+
     <script src="./script.js" defer></script>
     <link rel="stylesheet" href="./style.css" />
-
-    <title>Tic Tac Toe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <header id="header" class="header">
-      <h1>frustratedcat</h1>
-    </header>
-
     <div class="main">
       <section id="start-game">
-        <h1>Welcome to Tic Tac Toe!</h1>
+        <h1>Initiate System</h1>
         <button type="button" id="start-game-btn">Start</button>
       </section>
 
-      <section id="intro-section">
-        <p id="intro-section-intro-1" class="intro-section-intro-1-hidden">
+      <section id="intro-section" class="intro-section hidden-item">
+        <p id="intro-section-intro-1" class="hidden-item">
           Greetings, weary traveler!
         </p>
-        <p id="intro-section-intro-2" class="intro-section-intro-2-hidden">
+        <p id="intro-section-intro-2" class="hidden-item">
           I am the frustrated cat
         </p>
-        <p id="intro-section-intro-3" class="intro-section-intro-3-hidden">
+        <p id="intro-section-intro-3" class="hidden-item">
           It's 2037 and the machines have taken over
         </p>
-        <p id="intro-section-intro-4" class="intro-section-intro-4-hidden">
+        <p id="intro-section-intro-4" class="hidden-item">
           For some reason, they want us to play simple games with them
         </p>
-        <p id="intro-section-intro-5" class="intro-section-intro-5-hidden">
+        <p id="intro-section-intro-5" class="hidden-item">
           We have chosen you to represent us in the game of Tic Tac Toe
         </p>
-        <p id="intro-section-intro-6" class="intro-section-intro-6-hidden">
+        <p id="intro-section-intro-6" class="hidden-item">
           If you win, we all live to play another game, but if you lose...
         </p>
-        <p id="intro-section-intro-7" class="intro-section-intro-7-hidden">
+        <p id="intro-section-intro-7" class="hidden-item">
           You won! We're all saved to see another game!
         </p>
-        <p id="intro-section-intro-8" class="intro-section-intro-8-hidden">
+        <p id="intro-section-intro-8" class="hidden-item">
           Well, I guess you gave it your best...
         </p>
-        <p id="intro-section-intro-9" class="intro-section-intro-9-hidden">
+        <p id="intro-section-intro-9" class="hidden-item">
           A draw, you get another chance!
         </p>
-        <button type="button" id="play-game-btn" class="play-game-btn-hidden">
+        <button type="button" id="play-game-btn" class="hidden-item">
           Begin
         </button>
       </section>
 
-      <section id="main-section" class="main-section-flex hide-main-section">
+      <section id="main-section" class="main-section hidden-item">
         <h2 id="active-player" class="active-player-style">Active Player</h2>
 
         <div id="btn-container" class="btn-container-grid">
@@ -119,6 +121,13 @@
       </section>
     </div>
 
-    <footer id="footer">frustratedcat</footer>
+    <footer id="footer">
+      <a
+        href="https://github.com/frustratedcat"
+        target="blank"
+        alt="Link to frustratedcat's github"
+        >frustratedcat</a
+      >
+    </footer>
   </body>
 </html>

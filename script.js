@@ -526,6 +526,7 @@ function gameStory() {
   const startGame = document.getElementById("start-game");
   const startGameBtn = document.getElementById("start-game-btn");
   const mainSection = document.getElementById("main-section");
+  const introSection = document.getElementById("intro-section");
   const introSectionIntro1 = document.getElementById("intro-section-intro-1");
   const introSectionIntro2 = document.getElementById("intro-section-intro-2");
   const introSectionIntro3 = document.getElementById("intro-section-intro-3");
@@ -539,71 +540,75 @@ function gameStory() {
   const playGame = () => PlayGame();
 
   const hideAllIntro = () => {
-    introSectionIntro1.classList.add("intro-section-intro-1-hidden");
-    introSectionIntro2.classList.add("intro-section-intro-2-hidden");
-    introSectionIntro3.classList.add("intro-section-intro-3-hidden");
-    introSectionIntro4.classList.add("intro-section-intro-4-hidden");
-    introSectionIntro5.classList.add("intro-section-intro-5-hidden");
-    introSectionIntro6.classList.add("intro-section-intro-6-hidden");
-    introSectionIntro7.classList.add("intro-section-intro-7-hidden");
-    introSectionIntro8.classList.add("intro-section-intro-8-hidden");
-    introSectionIntro9.classList.add("intro-section-intro-9-hidden");
-    playGameBtn.classList.add("play-game-btn-hidden");
+    introSectionIntro1.classList.add("hidden-item");
+    introSectionIntro2.classList.add("hidden-item");
+    introSectionIntro3.classList.add("hidden-item");
+    introSectionIntro4.classList.add("hidden-item");
+    introSectionIntro5.classList.add("hidden-item");
+    introSectionIntro6.classList.add("hidden-item");
+    introSectionIntro7.classList.add("hidden-item");
+    introSectionIntro8.classList.add("hidden-item");
+    introSectionIntro9.classList.add("hidden-item");
+    playGameBtn.classList.add("hidden-item");
   };
 
   const delayIntroItems = () =>
     new Promise((resolve) => setTimeout(resolve, 3000));
 
   async function showIntro() {
-    introSectionIntro1.classList.remove("intro-section-intro-1-hidden");
+    introSectionIntro1.classList.remove("hidden-item");
     await delayIntroItems();
-    introSectionIntro1.classList.add("intro-section-intro-1-hidden");
-    introSectionIntro2.classList.remove("intro-section-intro-2-hidden");
+    introSectionIntro1.classList.add("hidden-item");
+    introSectionIntro2.classList.remove("hidden-item");
     await delayIntroItems();
-    introSectionIntro2.classList.add("intro-section-intro-2-hidden");
-    introSectionIntro3.classList.remove("intro-section-intro-3-hidden");
+    introSectionIntro2.classList.add("hidden-item");
+    introSectionIntro3.classList.remove("hidden-item");
     await delayIntroItems();
-    introSectionIntro3.classList.add("intro-section-intro-3-hidden");
-    introSectionIntro4.classList.remove("intro-section-intro-4-hidden");
+    introSectionIntro3.classList.add("hidden-item");
+    introSectionIntro4.classList.remove("hidden-item");
     await delayIntroItems();
-    introSectionIntro4.classList.add("intro-section-intro-4-hidden");
-    introSectionIntro5.classList.remove("intro-section-intro-5-hidden");
+    introSectionIntro4.classList.add("hidden-item");
+    introSectionIntro5.classList.remove("hidden-item");
     await delayIntroItems();
-    introSectionIntro5.classList.add("intro-section-intro-5-hidden");
-    introSectionIntro6.classList.remove("intro-section-intro-6-hidden");
-    playGameBtn.classList.remove("play-game-btn-hidden");
+    introSectionIntro5.classList.add("hidden-item");
+    introSectionIntro6.classList.remove("hidden-item");
+    playGameBtn.classList.remove("hidden-item");
   }
 
   const showResultHuman = () => {
-    introSectionIntro7.classList.remove("intro-section-intro-7-hidden");
-    playGameBtn.classList.remove("play-game-btn-hidden");
+    introSectionIntro7.classList.remove("hidden-item");
+    playGameBtn.classList.remove("hidden-item");
   };
   const showResultComputer = () => {
-    introSectionIntro8.classList.remove("intro-section-intro-8-hidden");
-    playGameBtn.classList.remove("play-game-btn-hidden");
+    introSectionIntro8.classList.remove("hidden-item");
+    playGameBtn.classList.remove("hidden-item");
   };
 
   const showResultDraw = () => {
-    introSectionIntro9.classList.remove("intro-section-intro-9-hidden");
-    playGameBtn.classList.remove("play-game-btn-hidden");
+    introSectionIntro9.classList.remove("hidden-item");
+    playGameBtn.classList.remove("hidden-item");
   };
 
   const run = () => {
     showIntro();
     playGameBtn.addEventListener("click", async function () {
+      introSection.classList.add("hidden-item");
       hideAllIntro();
-      mainSection.classList.remove("hide-main-section");
+      mainSection.classList.remove("hidden-item");
 
       const finalResult = await playGame().GetFinalResult();
 
       if (finalResult.playingTurnResult === "Human") {
-        mainSection.classList.add("hide-main-section");
+        mainSection.classList.add("hidden-item");
+        introSection.classList.remove("hidden-item");
         showResultHuman();
       } else if (finalResult.playingTurnResult === "Computer") {
-        mainSection.classList.add("hide-main-section");
+        mainSection.classList.add("hidden-item");
+        introSection.classList.remove("hidden-item");
         showResultComputer();
       } else if (finalResult.playingTurnResult === "Draw") {
-        mainSection.classList.add("hide-main-section");
+        mainSection.classList.add("hidden-item");
+        introSection.classList.remove("hidden-item");
         showResultDraw();
       }
       finalResult.cellBtn1.textContent = "";
@@ -619,7 +624,8 @@ function gameStory() {
   };
 
   startGameBtn.addEventListener("click", () => {
-    startGame.classList.add("hide-start-game");
+    startGame.classList.add("hidden-item");
+    introSection.classList.remove("hidden-item");
     run();
   });
 }
