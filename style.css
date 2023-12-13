@@ -27,7 +27,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--main-dark-gray);
-  color: var(--main-green);
+  color: var(--main-light-gray);
 }
 
 .main {
@@ -49,26 +49,28 @@ body {
   align-items: center;
 }
 
-.start-game {
-  font-size: 1rem;
-}
-
-.intro-section {
-  font-size: 1.5rem;
-}
-
 .intro-section,
 .start-game {
+  font-size: 1.7rem;
   width: 100%;
   height: 100%;
-  padding: 50px;
+  padding: 20px;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .user {
-  color: var(--main-purple);
+  color: var(--main-green);
+}
+
+.colon-dollar {
+  color: var(--main-light-gray);
+  margin-right: 15px;
+}
+
+.squiggle {
+  color: var(--lighter-blue);
 }
 
 .active-player-style {
