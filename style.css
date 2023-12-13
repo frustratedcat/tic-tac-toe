@@ -51,11 +51,12 @@ body {
 
 .intro-section,
 .start-game {
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   width: 100%;
   height: 100%;
   padding: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 }
@@ -71,6 +72,28 @@ body {
 
 .squiggle {
   color: var(--lighter-blue);
+}
+
+.cursor {
+  display: inline-block;
+  margin: auto;
+  background-color: var(--main-light-gray);
+  height: 22px;
+  width: 12px;
+  animation: blink-animation 1.2s steps(1) infinite;
+}
+
+.cursor:active {
+  animation-play-state: running;
+}
+
+@keyframes blink-animation {
+  50% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
 }
 
 .active-player-style {
