@@ -210,7 +210,8 @@ a:hover {
   color: var(--main-purple);
 }
 
-a:active {
+a:active,
+a:visited {
   color: var(--main-dark-gray);
 }
 
