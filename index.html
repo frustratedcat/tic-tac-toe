@@ -20,7 +20,7 @@
     />
   </head>
   <body>
-    <div class="main">
+    <div id="main" class="main">
       <section id="start-game" class="start-game">
         <p>
           <span class="user"
@@ -30,11 +30,13 @@
           ><span>Initiate System</span>
           <span class="cursor"></span>
         </p>
-        <button type="button" id="start-game-btn">Start</button>
+        <button type="button" id="start-game-btn" class="press-start-btn">
+          enter
+        </button>
       </section>
 
       <section id="intro-section" class="intro-section hidden-item">
-        <div>
+        <div class="intro-section-items-container">
           <p id="intro-section-intro-1" class="hidden-item">
             <span class="user"
               >player@one<span class="colon-dollar"
@@ -115,15 +117,674 @@
               >player@one<span class="colon-dollar"
                 >:<span class="squiggle">~</span>$</span
               > </span
-            ><span>A draw, you get another chance!</span
+            ><span>A draw! You get another chance!</span
             ><span class="cursor"></span>
           </p>
         </div>
 
-        <button type="button" id="play-game-btn" class="hidden-item">
-          Begin
+        <button
+          type="button"
+          id="play-game-btn"
+          class="hidden-item press-start-btn"
+        >
+          enter
         </button>
       </section>
+
+      <section id="ascii-section" class="ascii-section">
+          <div id="ascii-1" class="ascii ascii-hidden">
+              _-o#&&*''''?d:>bo_
+          _o/"`''  '',, dMF9MMMMMHo_
+       .o&#'        `"MbHMMMMMMMMMMMHo.
+     .o"" '         vodM*$&&HMMMMMMMMMM?.
+    ,'              $M&ood,~'`/&##MMMMMMH\
+   /               ,MMMMMMM#b?#bobMMMMHMMML
+  &              ?MMMMMMMMMMMMMMMMM7MMM$R*Hk
+ ?$.            :MMMMMMMMMMMMMMMMMMM/HMMM|`*L
+|               |MMMMMMMMMMMMMMMMMMMMbMH'   T,
+$H#:            `*MMMMMMMMMMMMMMMMMMMMb#\'  `?
+]MMH#             ""*""""*#MMMMMMMMMMMMM'    -
+MMMMMb_                   |MMMMMMMMMMMP'     :
+HMMMMMMMHo                 `MMMMMMMMMT       .
+?MMMMMMMMP                  9MMMMMMMM\       -
+-?MMMMMMM                  |MMMMMMMMM?,d-    '
+ :|MMMMMM-                 `MMMMMMMT .M|.   :
+  .9MMM[                    &MMMMM*' `'    .
+   :9MMk                    `MMM#"        -
+     &M\                     `          .-
+      `&.                             .
+        `~,   .                     ./
+            . _                  .-
+              '`--._,dd###pp=""'
+          </div>
+
+          <div id="ascii-2" class="ascii ascii-hidden">
+              _v->#H#P? "':o->o_
+          .,dP` `''  "'-o.+H6&MMMHo_
+        oHMH9'         `?&bHMHMMMMMMHo.
+      oMP"' '           ooMP*#&HMMMMMMM?.
+    ,M*          -     `*MSdob//`^&##MMMH\
+   d*'                .,MMMMMMH#o>#ooMMMMMb
+  HM-                :HMMMMMMMMMMMMMMM&HM[R\
+ d"Z\.               9MMMMMMMMMMMMMMMMM[HMM|:
+-H    -              MMMMMMMMMMMMMMMMMMMbMP' :
+:??Mb#               `9MMMMMMMMMMMMMMMMMMH#! .
+: MMMMH#,              "*""""`#HMMMMMMMMMMH  -
+||MMMMMM6\.                    {MMMMMMMMMH'  :
+:|MMMMMMMMMMHo                 `9MMMMMMMM'   .
+. HMMMMMMMMMMP'                 !MMMMMMMM    `
+- `#MMMMMMMMM                   HMMMMMMM*,/  :
+ :  ?MMMMMMMF                   HMMMMMM',P' :
+  .  HMMMMR'                    {MMMMP' ^' -
+   : `HMMMT                     iMMH'     .'
+    -.`HMH                               .
+      -:*H                            . '
+        -`\,,    .                  .-
+          ' .  _                 .-`
+              '`~\.__,obb#q==~'''
+          </div>
+
+          <div id="ascii-3" class="ascii ascii-hidden">
+              .ovr:HMM#?:`' >bo_
+          .,:&Hi' `'   "' \\|&bSMHo_
+        oHMMM#*}          `?&dMMMMMMHo.
+     .dMMMH"''''           ,oHH*&&9MMMM?.
+    ,MMM*'                 `*M\bd-|"*&#MH\
+   dHH?'                   :MMMMMM#bd#odMML
+  H' |\                  `dMMMMMMMMMMMMMM9Mk
+ JL/"7+,.                `MMMMMMMMMMMMMMMH9ML
+-`Hp     '               |MMMMMMMMMMMMMMMMHH|:
+:  \\#M#d?                `HMMMMMMMMMMMMMMMMH.
+.   JMMMMM##,              ``*""'"*#MMMMMMMMH
+-. ,MMMMMMMM6o_                    |MMMMMMMM':
+:  |MMMMMMMMMMMMMb\                 TMMMMMMT :
+.   ?MMMMMMMMMMMMM'                 :MMMMMM|.`
+-    ?HMMMMMMMMMM:                  HMMMMMM\|:
+ :     9MMMMMMMMH'                 `MMMMMP.P.
+  .    `MMMMMMT''                   HMMM*''-
+   -    TMMMMM'                     MM*'  -
+    '.   HMM#                            -
+      -. `9M:                          .'
+        -. `b,,    .                . '
+          '-\   .,               .-`
+              '-:b~\\_,oddq==--"
+          </div>
+
+          <div id="ascii-4" class="ascii ascii-hidden">
+              _oo##'9MMHb':'-,o_
+          .oH":HH$' ""'  "' -\7*R&o_
+       .oHMMMHMH#9:          "\bMMMMHo.
+      dMMMMMM*""'`'           .oHM"H9MM?.
+    ,MMMMMM'                   "HLbd-|?&H\
+   JMMH#H'                     |MMMMM#b>bHb
+  :MH  ."\                   `|MMMMMMMMMMMM&
+ .:M:d-"|:b..                 9MMMMMMMMMMMMM+
+:  "*H|      -                &MMMMMMMMMMMMMH:
+.    `LvdHH#d?                `?MMMMMMMMMMMMMb
+:      iMMMMMMH#b               `"*"'"#HMMMMMM
+.   . ,MMMMMMMMMMb\.                   {MMMMMH
+-     |MMMMMMMMMMMMMMHb,               `MMMMM|
+:      |MMMMMMMMMMMMMMH'                &MMMM,
+-       `#MMMMMMMMMMMM                 |MMMM6-
+ :        `MMMMMMMMMM+                 ]MMMT/
+  .       `MMMMMMMP"                   HMM*`
+   -       |MMMMMH'                   ,M#'-
+    '.     :MMMH|                       .-
+      .     |MM                        -
+       ` .   `#?..    .             ..'
+           -.     _.             .-
+              '-|.#qo__,,ob=~~-''
+          </div>
+
+          <div id="ascii-5" class="ascii ascii-hidden">
+              _oo##'9MMHb':'-,o_
+          .oHMMMR:"&MZ\ `"'  "  |$-_
+       ..dMMMMMMMMdMMM#9\        `'HHo.
+     . ,dMMMMMMMMMMM"`' `           ?MP?.
+    . |MMMMMMMMMMM'                 `"$b&\
+   -  |MMMMHH##M'                     HMMH?
+  -   TTMM|    >..                   \MMMMMH
+ :     |MM\,#-""$~b\.                `MMMMMM+
+.       ``"H&#        -               &MMMMMM|
+:            *\v,#MHddc.              `9MMMMMb
+.               MMMMMMMM##\             `"":HM
+-          .  .HMMMMMMMMMMRo_.              |M
+:             |MMMMMMMMMMMMMMMM#\           :M
+-              `HMMMMMMMMMMMMMMM'           |T
+:               `*HMMMMMMMMMMMM'            H'
+ :                 MMMMMMMMMMM|            |T
+  .                MMMMMMMM?'             ./
+  `.               MMMMMMH'              ./
+    -.            |MMMH#'                .
+      .           `MM*                . '
+        -.         #M: .    .       .-
+          ` .         .,         .-
+              '-.-~ooHH__,,v~--`
+          </div>
+
+          <div id="ascii-6" class="ascii ascii-hidden">
+              _ood>H&H&Z?#M#b-o.
+          .\HMMMMMR?`\M6b."`' ''``v.
+       .. .MMMMMMMMMMHMMM#&.      ``~o.
+     .   ,HMMMMMMMMMMMM*"'-`          &b.
+    .   .MMMMMMMMMMMMH'               `"&\
+   -     RMMMMM#H##R'                   4Mb
+  -      |7MMM'    ?::                 `|MMb
+ /         HMM__#|`"\>?v..              `MMML
+.           `"'#Hd|       `              9MMM:
+-                |\,\?HH#bbL             `9MMb
+:                   !MMMMMMMH#b,          `""T
+.              .   ,MMMMMMMMMMMbo.           |
+:                  4MMMMMMMMMMMMMMMHo        |
+:                   ?MMMMMMMMMMMMMMM?        :
+-.                   `#MMMMMMMMMMMM:        .-
+ :                     |MMMMMMMMMM?         .
+  -                    JMMMMMMMT'          :
+  `.                   MMMMMMH'           -
+    -.                |MMM#*`            -
+      .               HMH'            . '
+        -.            #H:.          .-
+          ` .           .\       .-
+              '-..-+oodHL_,--/-`
+          </div>
+
+           <div id="ascii-7" class="ascii ascii-hidden">
+              _,\?dZkMHF&$*q#b..
+          .//9MMMMMMM?:'HM\\"`-''`..
+       ..`  :MMMMMMMMMMHMMMMH?_    `-\
+     .     .dMMMMMMMMMMMMMM'"'"       `\.
+    .      |MMMMMMMMMMMMMR              \\
+   -        T9MMMMMHH##M"                `?
+  :          \9MMM'    !':.               &k
+ .:            HMM\_?p "":-b\.            `ML
+-                "'"H&#,       :           |M|
+:                     ?\,\dMH#b#.           9b
+:                        |MMMMMMM##,        `*
+:                   .   +MMMMMMMMMMMo_       -
+:                       HMMMMMMMMMMMMMM#,    :
+:                        9MMMMMMMMMMMMMH'    .
+: .                       *HMMMMMMMMMMP     .'
+ :                          MMMMMMMMMH'     .
+  -                        :MMMMMMM'`      .
+  `.                       9MMMMM*'       -
+    -.                    {MMM#'         :
+      -                  |MM"          .'
+       `.                &M'..  .   ..'
+          ' .             ._     .-
+              '-. -voboo#&:,-.-`
+          </div>
+
+          <div id="ascii-8" class="ascii ascii-hidden">
+               _oo:\bk99M[-$$+bo.
+           .$*"MMMMMMMM[:"\Mb\?^" .
+       . '`    HMMMMMMMMMMHMMMM+?.  `.
+     .        .HMMMMMMMMMMMMMMP"''     .
+    .         `MMMMMMMMMMMMMM|         -`.
+   -           `&MMMMMMHH##H:             :
+  :             `\*MMM}    `|\             |
+ : `-              ?MMb__#|""`|+v..         \
+.                    `''*H#b       -        :|
+:                         `*\v,#M#b#,        \
+.                             9MMMMMMHb.     :
+:                        .   #MMMMMMMMMb\    -
+-                           .HMMMMMMMMMMMMb  :
+:                            `MMMMMMMMMMMMH  .
+-:  .                         `#MMMMMMMMMP   '
+ :                              ]MMMMMMMH'  :
+  -                            ,MMMMMM?'   .
+  `:                           HMMMMH"    -
+    -.                       .HMM#*     .-
+     `.                     .HH*'     .
+       `-.                  &R".    .-
+           -.               ._   .-
+              '-. .voodoodc?..-``
+          </div>
+
+          <div id="ascii-9" class="ascii ascii-hidden">
+              _\oo\?ddk9MRbS>vo_
+          ..:>*""MMMMMMMMM:?|H?$?-.
+       ..- -     "HMMMMMMMMMMHMMMH\_-.
+     .            dMMMMMMMMMMMMMMT"    .
+    .             TMMMMMMMMMMMMMM       `.
+   -               `&HMMMMMM#H#H:         .
+  -                 `\7HMMH     |\.        .
+ :    `                 HMM\_?c`""+?\..     :
+-                         "``#&#|      .     -
+:                              `?,\#MHdb.    .
+:                                 |MMMMMH#.  :
+:                            .   ,HMMMMMMMb, -
+: '                              4MMMMMMMMMMH`
+:   .                             9MMMMMMMMMT-
+:.`                               `#MMMMMMMH '
+ :      '                           HMMMMMH':
+  -                                |MMMMH" -
+  `:                              |MMMH*' .'
+    '?                           dMM#'   .
+      \.                       .dH"    .'
+        -.                    ,M'-  ..'
+          ` .                .. ..-`
+              '-. .\ooooboo-^.-``
+          </div>
+
+          <div id="ascii-10" class="ascii ascii-hidden">
+              _o,:o?\?dM&MHcc~,.
+          ..^':&#""HMMMMMMMM$:?&&?.
+        .`  -`      'HMMMMMMMMMHMMMp\.
+     . '             |MMMMMMMMMMMMMM"' .
+    .                `9MMMMMMMMMMMMM    -.
+   -                   `*9MMMMMHH##[      .
+  -                     `\Z9MMM    `~\     .
+ :       '|                 ?MMb_?p""-?v..  :
+-                             `"'*&#,    -   .
+:                                  `?,oHH#?  .
+--                                    |MMMMH,:
+:                                 .  |MMMMMM6,
+:   -                                |MMMMMMMM
+?                                     HMMMMMMP
+-- . '                                |HMMMMM'
+ :.`     .  '                          JMMMM+
+  \                                   ,MMMP:
+   :                                 |MMH?:
+    -:\.                            dM#" .
+       \                          ,H*' .'
+        -.                       d':..'
+          ` .                  .,.-
+              '-.. .\oooodov~^-`
+          </div>
+
+          <div id="ascii-11" class="ascii ascii-hidden">
+              _o\:,??\??MR9#cbo_
+          .v/''':&#""#HMMMMMMM$?*d\.
+       ..~' - -`      `"#MMMMMMMMMMMHv.
+     .-'                 HMMMMMMMMMMMR!.
+    :                    `9MMMMMMMMMMM| -.
+   .                       `*9MMMMMH##|   .
+  -                          `\#MMH   `:,  .
+ :           '|                 `HMb_>/"|\,.:
+.'                                `"'#&b   - .
+:                                      ?\oHH?.
+:                                        !MMM&
+:  .                                  .  HMMMM
+/.      -                               -MMMMM
+\`.                                      9MMMP
+:. .  . -                                |MMM'
+ \... '                                  .MMT
+  &.                                    .dMP
+   \,                                  .HM*
+    \. `\.                            ,H&'
+     `- `| -                        ,&':
+       `.                         ,/\ '
+          '-..                  _.-
+              "---.._\o,oov+--'"
+          </div>
+
+          <div id="ascii-12" class="ascii ascii-hidden">
+              _,d?,:?o?:?HM>#bo_
+          ..H*"''`'H#*"**MMMMMM6$$v_
+        v//"   - ``      `'#MMMMMMMMHo.
+      /"`                   |MMMMMMMMMM:.
+    ,>                       `HMMMMMMMMH:.
+   :                           `#HMMMMHH\ -
+  '                              `Z#MM,  `,:
+ :               '\                 ?HH_>:`\,
+:                                     "'*&| `:
+.                                         -\Hb
+:                                           MM
+:                                        . iMM
+Mb\.                                       {MM
+::.`-       -                              !MP
+`&.   .  .  -                              :M'
+ 9H,  \  '                                 |T
+  HM?                                     ,P
+   *ML                                   ??
+    :&.   `o                           .d'
+      ':  |T                          /"
+        -.                         .-''
+          `...                  ..-
+              "`-=.,_,,,oov-~.-`
+          </div>
+
+          <div id="ascii-13" class="ascii ascii-hidden">
+              _,oc>?_:b?o?HH#bo_
+          .v/99*""" '*H#""*HMMMMMZ,_
+        oH* /"   -   '      "`#MMMMM#o.
+     ./*>-                     `MMMMMMMb
+    ,b/'                        `#MMMMMMM\
+   :'                             ``HMMMMb:
+  /-                                `|&MH `\
+ /                   `-.               |Hb??\
+,-  '                                    "`&,.
+1                                           \}
+!.                                           T
+$,.                                        . 1
+?`M??.                                       M
+?.::| '\        -                            ?
+ M?&.    .   .  -                           ,'
+ 9MMH\   ..  '           `                  .
+  HMMM#.                                   :'
+   9#MMb                                 ..
+    -:"#     `b.                        .-
+      . `    {!                        /
+        -                           ,-'
+          ' .                    .-
+             ```^==\_.,,,ov--\-`
+          </div>
+
+          <div id="ascii-14" class="ascii ascii-hidden">
+              _\o##??,:io??$#bo_
+          .oH#"H9*""" "`#H*"*#MMMHo_
+        oHMM- -'    -  ''     ``*HMMHo.
+      dM#S>-`                     ?MMMM?.
+    ,&&,/'                         "#MMMH\
+   d?-"                              `*HMMb
+  H?                                   "ZHb:
+ /:                        \              H?L
+|:|   .                                    `*:
+:?:                                          \
+>"                                           :
+M|\,_                                        |
+!|":HH?-'.                                   :
+:^'_:?"\ `--         -                       .
+- |ML?b      .   ..  -                       -
+ :HMMMMH\    \               `              :
+  >MMMMMM#.                                .
+   ^M*HMMM|                               -
+    `. `"#+     `?v                     .`
+      .   `-    +?'                    -
+       ` .                          ..'
+           - .                   .-
+              "`\b=p?.._\\vv---`
+          </div>
+
+          <div id="ascii-15" class="ascii ascii-hidden">
+              _,o#bH\??::?o?cbo_
+          .o#MH#**SH""' "`*H#"*#MHo_
+        oHMMMH^  ^"    -  `      '*HHo.
+     .dMMM#">>-                     `HM?.
+    ,MH:R_o/                         `*MH\
+   dMM' '                               "ML
+  HMR! '                                 `#k
+ d&'.                          -.          `L
+:M ::     `                                 `-
+/| !|                                        -
+k.$-"                                        :
+}9R:!,,_.                                    .
+\::\':`*M#\-'.                               -
+: "''..:"!`\  '-          -                  `
+-   ,HMb.H|      .    _   -                 .'
+ : ,MMMMMMMb.    ..                         .
+  .`HMMMMMMMM?                             .
+  `.`9M#*HMMMM                            :
+    -.'   "##*      `b,                  .
+      .      `     ,/'                 .'
+       ` .                          ..'
+           - .                  ..-
+              "`*#d##c.._\v----`
+          </div>
+
+          <div id="ascii-16" class="ascii ascii-hidden">
+              _,o#&oHb?\o::d?>o_
+          .oHHMMM#**$M""` "`*HH"#&o_
+        oHMMMMMMD' .''    -  '    ``bo.
+     .dMMMMMH*'/|-                   `\b.
+    ,MMMM?T|_o/                        `\\
+   dMMMMP  ''                            `|
+  HMMMH& -                                `\
+ /MH7' :                          --        :
+-:MM  {.      .                              .
+:i?' .!&                                     .
+:{, o| '                                     :
+-T?9M\:-'o,_                                 .
+: \?::``"`?9MHo./..                          -
+.  '"`'^ _.`"!"^.  `-         -              `
+-      ,bMM?.M\       .    .  -      .      .'
+ :   .oMMMMMMMMb.    ..   `                 .
+  .  `HMMMMMMMMMMb                         -
+   -   9MH*#HMMMMH                        .'
+    '.  '   `"*##'      `b.              :
+      .         `     .d''             .'
+        -.                          . '
+           -.                    .-`
+              "`*##H###:._\--.-`
+          </div>
+
+          <div id="ascii-17" class="ascii ascii-hidden">
+              _oo#H&d#b?\b:_>>o_
+          .oHMMMMMMH*"*9R"'-``*#P\-_
+        oHMMMMMMMMM$  ."       '   `^-
+     .dMMMMMMMMH*",?-                 '\.
+    ,MMMMMMM:?}.,d'                     `.
+   dMMMMMMMH  /''                         :
+  HMMMMMMM&' -                             -
+ dPTMMP>' :                           -.    :
+|? -MM}  .\                                  .
+J' ::*'  -$L                                 .
+:  ?b .,H- '                                 :
+-  |6.&MP:: !.,_.                            -
+:   `\:: "' "`:"MM#,-^,            -         :
+-     ````:' _.:"?``\   `-                   .
+:         .?bMML.]#        -   _  `      .  .'
+ -      .o#MMMMMMMMH\     \.          .     .
+  -     `HMMMMMMMMMMMH                     :
+  `.     `HMM#*#MMMMMH'                   -
+    -.     '    ``##*'      i+           :
+      -            `'     v/'          .'
+       `-                           ..'
+          ' .                    .-
+              "`*##HMH##:__,-.-`
+          </div>
+
+          <div id="ascii-18" class="ascii ascii-hidden">
+              _oo##Mbb&bo??o_>o_
+          .oHMMMMMMMMM**#?M*' "?*&..
+        oHMMMMMMMMMMMM4  `"      -  `.
+     .dMMMMMMMMMMMM#"\?.-              .
+    ,MMMMMMMMMM}"9:_,d'                 -.
+   dMMMMMMMMMMM|  ^''                     .
+  &MMMMMMMMMMH\  -                         .
+ :{M*"MMMPT"' :                         `-. :
+.'M'  'MMM.  -T,       .                     .
+- k   i:?''  -|&                             .
+: `  -o&  .,H- "                             :
+-     `M:`HMP|:'!.o._.                       .
+:      "-:::'-^ '"``9MH#,-^ .                -
+-         '''``''._.`"?`^|   ^        -      :
+:              ?#dMM_.M?       .   .  -    ..'
+ :          ,ddMMMMMMMMMb.    ..   '        .
+  .         TMMMMMMMMMMMMM,                :
+   -         ?MMH**#MMMMMH'               :
+    '.        '     "`##*'      &.       :
+      -.               `'    ,~"       .'
+        -.                          ..'
+          ` .                    .-
+             ```*##HMMMH#-:,..-`
+          </div>
+
+          <div id="ascii-19" class="ascii ascii-hidden">
+              _,dd#HMb&dHo?\?:o_
+          .oHMMMMMMMMMMMH***9P'`"\v.
+        oHMMMMMMMMMMMMMMM>  `'      -.
+     .dMMMMMMMMMMMMMMMH*'|~-'          .
+    ,MMMMMMMMMMMMM6>`H._,&              -.
+   dMMMMMMMMMMMMMMM|  `"                  .
+  H*MMMMMMMMMMMMMH&. -                     .
+ d' HMM""&MMMPT'' :.                      `.-
+,'  MP   `TMMM,   |:        .                -
+|   #:    ? *"   : &L                        :
+!   `'   /?H   ,#r `'                        :
+.         ?M: HMM^-~->,o._                   :
+:          `9:::'`*-``':`9MHb,|-,         '  :
+.             `"''':' :_ ""!"^.  `|          :
+`.                 _dbHM6_|H.      .   . '  .'
+ \              _odHMMMMMMMMH,    ..  `     :
+ `-             |MMMMMMMMMMMMM|            :
+  `.             9MMH**#MMMMMH'           :
+    -.            '     "?##"      d     :
+      .                    '    ,/"    .'
+       `..                          ..'
+          `  .                   .-
+              '`"#HHMMMMM#->..-`
+          </div>
+
+          <div id="ascii-20" class="ascii ascii-hidden">
+              _oo##bHMb&d#bd,>o_
+          .oHMMMMMMMMMMMMMM***9R"-..
+        oHMMMMMMMMMMMMMMMMMH\  ?   `-.
+     .dMMMMMMMMMMMMMMMMMMM#".}-'       .
+    ,MMMMMMMMMMMMMMMMM6/`H _o}          -.
+   dMMMMMMMMMMMMMMMMMMML  `''             .
+  HbP*HMMMMMMMMMMMMMMM*: -                 ,
+ dMH' `MMMP'"HMMMR'T"  :                    :
+|H'   -MR'   `?MMMb    P,       .            .
+1&     *|     |.`*"  .-`&|                   .
+M'      "    |\&|  .,#~ "'                   :
+T             :HL.|HMH\c~`|v,\_              :
+|              `"|:::':`-`` '"MM#\-'.       -:
+%                 ``'``'`' :_ '?'`| ``.      :
+||,                     ,#dMM?.M?      .  .` -
+ ?\                 .,odMMMMMMMMM?    \  `  :
+  /                 |MMMMMMMMMMMMM:        .'
+  `.                 TMMH#*9MMMMM*        :
+    -.               `      "*#*'    ,:  .
+      .                       `   .v'' .'
+       `.                           ..'
+          '- .                   .-
+              "`\+HHMMMMMMHr~.-`
+          </div>
+
+          <div id="ascii-21" class="ascii ascii-hidden">
+              _,,>#b&HMHd&&bb>o_
+          _oHMMMMMMMMMMMMMMMMH**H:.
+        oHMMMMMMMMMMMMMMMMMMMM#v`?  `.
+     .dMMMMMMMMMMMMMMMMMMMMMMH*`+|     .
+    ,MMMMMMMMMMMMMMMMMMMMMb|?+.,H       -.
+   ddHMMMMMMMMMMMMMMMMMMMMMb  `'          .
+  HMMkZ**HMMMMMMMMMMMMMMMMH\  -   .        :
+ dTMMM*  `9MMMP'"*MMMMPT"` ..               :
+|M6H''    4MP'   `"HMMM|   !|.      .        .
+1MHp'      #L      $ *"'  .-:&.              .
+MMM'        "     q:H.  .o#-``'              :
+MM'                ?H?.|MMH::::-o,_.         -
+M[                  `*?:::'|` `"`:9MH\~-.    `
+&M.                     ""'`'^'.:.`?'`. '|  -:
+`M|d,                       .dbHM[.1?     .. :
+ 9||| .                  _obMMMMMMMMH,   .  :
+  H.^                    MMMMMMMMMMMM/     -
+   \                     |MMH#*HMMMMH'    .'
+    .                    `      `#*'   ,:-
+     `                           '' .-'.
+       `.                           .-
+          '- .                   .-`
+              '`\bqHMMMMMMHHb--`
+          </div>
+
+          <div id="ascii-22" class="ascii ascii-hidden">
+              .,:,#&6dHHHb&##oo_
+          .oHHMMMMMMMMMMMMMMMMMH*\,.
+        oHMMMMMMMMMMMMMMMMMMMMMMHb:'-.
+     .dMMMMMMMMMMMMMMMMMMMMMMMMMH|\/'  .
+    ,&HMMMMMMMMMMMMMMMMMMMMMMM/"&.,d.   -.
+   dboMMHMMMMMMMMMMMMMMMMMMMMMML `'       .
+  HMHMMM$Z***MMMMMMMMMMMMMMMMMM|.-         .
+ dMM\MMMM#'  `9MMMH?"`MMMMR'T'  _           :
+|MMMbM#''     |MM"    ``MMMH.   -_           .
+dMMMM#&        *&.     .?`*"   .'&:          .
+MMMMMH-         `'    -v/H   .dD "'  '       :
+MMMM*                  `*M: 4MM*::-!v,_      :
+MMMM                     `*?::" "'``"?9Mb::. :
+&MMM,                       `"'"'|"._ "?`| - :
+`MMM\.H                          ,#dM[_H   ..:
+ 9MMi`M: .                   .ooHMMMMMMM,  ..
+  9Mb `-                     1MMMMMMMMMM|  :
+   ?M                        |MM#*#MMMM*  .
+    -.                       `     |#"' ,'
+      .                            -" v`
+        -.                          .-
+           - .                   . `
+              '-*#d#HHMMMMHH#"-'
+          </div>
+
+          <div id="ascii-23" class="ascii ascii-hidden">
+              _,-_:&S6dHHHb&bbo_
+          .odHMMMMMMMMMMMMMMMMMMM\-_
+       .oHMMMMMMMMMMMMMMMMMMMMMMMM#d:.
+      ?9MMMMMMMMMMMMMMMMMMMMMMMMMMMH-$ .
+    ,::dHMMMMMMMMMMMMMMMMMMMMMMMMH:\.?? -.
+   dMdboHMMHMMMMMMMMMMMMMMMMMMMMMMH, '    .
+  HMMMM7MMMb$R***MMMMMMMMMMMMMMMMMH\ -     .
+ dMMMMM/MMMMM*   `$MMMM*'"*MMMM?&'  .       :
+|MMMMMMb1H*'       HMP'    '9MMM|   &.    .  .
+dMMMMMMM##~`       `#\      |.`*"  .-9.      :
+9MMMMMMMM*           `     |v7?  .,H `' `    :
+SMMMMMMH'                   '9M_-MMH::-\v_   :
+:HMMMMM                       `\_:"'|'`':9Mv\.
+-|MMMMM,                         ""`'`':.`?\ \
+`:MMMMM\.d\                         .?bM6,|  |
+ :?MMM6  M|  .                   .,oHMMMMM| /
+  .?MMM- `'                      &MMMMMMMM|.
+   -`HM-                         HMH#*MMM?:
+    '.                           '   `#*:`
+      -                              -'/
+       ` .                          . '
+          ` .                    . `
+              '--##HH#HMMMHH#""`
+          </div>
+
+          <div id="ascii-24" class="ascii ascii-hidden">
+              _o,d_?dZdoHHHb#bo_
+          .vdMMMMMMMMMMMMMMMMMMMMH\.
+       .,HHMMMMMMMMMMMMMMMMMMMMMMMMH&,.
+      /?RMMMMMMMMMMMMMMMMMMMMMMMMMMMMH|..
+    ,\?>`T#RMMMMMMMMMMMMMMMMMMMMMMMM6`\|/
+   dMMbd#ooHMMMHMMMMMMMMMMMMMMMMMMMMMH,`' '
+  HMMMMMMMTMMMMb$ZP**HMMMMMMMMMMMMMMMM|.   :
+ dMMMMMMMM\$MMMMMH'   `HMMMH?"`MMMM?T' .    :
+|MMMMMMMMMMoMH*''      `MM?    ``MMM|  +\    .
+1MMMMMMMMMMMb#/         ?#?      |`#"  -T:   :
+*'HMMMMMMMMMM*'           "     ~?&  .?\ ' ' .
+- 4MMMMMMMMP"                    `M? HMTc:\\.:
+: `MMMMMMM[                       "#:::`>`"?M{
+.  |MMMMMMH.                        ``'``'_`:-
+-  |MMMMMMM|.dD                         ,#Mb\'
+ :  *MMMMM: iM|  .                   _oHMMMM:
+  .  ?MMMM'  "'                     ,MMMMMMP
+   :  `HMH                          JM#*MMT
+    -.  '                           `   #'
+      .                                /
+        -.            -              .'
+           -.                    . `
+              '--=&&MH##HMHH#"""
+          </div>
+
+          <div id="ascii-25" class="ascii ascii-hidden">
+               .-:?,Z?:&$dHH##bo_
+           ,:bqRMMMMMMMMMMMMMMMMMHo.
+        .?HHHMMMMMMMMMMMMMMMMMMMMMMMHo.
+      -o/*M9MMMMMMMMMMMMMMMMMMMMMMMMMMMv
+    .:H\b\'|?#HHMMMMMMMMMMMMMMMMMMMMMM6?Z\
+   .?MMMHbdbbodMMMMHMMMMMMMMMMMMMMMMMMMM\':
+  :MMMMMMMMMMM7MMMMb?6P**#MMMMMMMMMMMMMMM_ :
+ \MMMMMMMMMMMMb^MMMMMM?   `*MMMM*"`MMMR-' . -
+.1MMMMMMMMMMMMMb]M#""       9MR'   `?MMb  \. :
+-MMMMMMMMMMMMMMMH##|`        *&.     |`*' .\ .
+-?""*MMMMMMMMMMMMM'            '    |?b  ,}" :
+:    MMMMMMMMMMH'                    `M_|M\r\?
+.    `MMMMMMMMM'                      `$_:`'"H
+-     TMMMMMMMM,                        '"``::
+:     \MMMMMMMM| oH|                      .#M-
+ :    `9MMMMMM' .MP   .                 ,oMMT
+  .     HMMMMP'  `'                    ,MMMP
+   -     `MMH'                         HH9*
+    '.    `                           ` .'
+      -                               . '
+       ` .               -          .-
+          ` .                    .-
+              ' -==pHMMH##HH#"""
+          </div>
+        </section>
+
+      
+       
 
       <section id="main-section" class="main-section hidden-item">
         <h2 id="active-player" class="active-player-style">Active Player</h2>

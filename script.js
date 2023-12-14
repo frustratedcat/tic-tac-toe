@@ -16,7 +16,7 @@ function GameBoard() {
   const getBoard = () => board;
 
   // Place token on board
-  const dropToken = (row, column, player) => {
+  const dropToken = (row, column, player, color) => {
     board[row][column].addToken(player);
   };
 
@@ -49,10 +49,7 @@ function Cell() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Create function to control the game
-function GameController(
-  playerOneName = "Player One",
-  playerTwoName = "Player Two"
-) {
+function GameController(playerOneName = "Human", playerTwoName = "Machine") {
   const board = GameBoard();
 
   // Create initial players
@@ -60,10 +57,14 @@ function GameController(
     {
       name: playerOneName,
       token: "X",
+      backgroundColor: "#39ff14",
+      color: "#212529",
     },
     {
       name: playerTwoName,
       token: "O",
+      backgroundColor: "#4700b3",
+      color: "#e9ecef",
     },
   ];
 
@@ -78,7 +79,7 @@ function GameController(
 
   // Play a round
   const playTurn = (row, column) => {
-    board.dropToken(row, column, activePlayer.token);
+    board.dropToken(row, column, activePlayer.token, activePlayer.color);
     switchPlayerTurn();
   };
 
@@ -95,7 +96,7 @@ function GameController(
 
 // Get player and computer choices
 function GetChoice() {
-  const gameController = () => GameController();
+  const gameController = GameController();
   const getActivePlayer = () => gameController.getActivePlayer();
   const getPlayers = () => gameController.players;
   const printBoard = () => gameController.printBoard();
@@ -193,7 +194,7 @@ function GetChoice() {
 // Play a round of the game
 function PlayGame() {
   const getChoice = GetChoice();
-  const gameController = getChoice.gameController();
+  const gameController = getChoice.gameController;
   const getActivePlayer = () => gameController.getActivePlayer();
   const getPlayers = () => gameController.players;
   const printBoard = () => gameController.printBoard();
@@ -221,7 +222,7 @@ function PlayGame() {
 
     let cell;
 
-    getActivePlayer().name === "Player One"
+    getActivePlayer().name === "Human"
       ? (cell = await handlePlayerChoice())
       : (cell = getComputerEasyMode());
     return {
@@ -310,30 +311,85 @@ function PlayGame() {
 
     if (printBoard()[row][column] !== 0) {
     } else {
-      if (getActivePlayer().name === "Player Two") {
+      if (getActivePlayer().name === "Machine") {
         await delayComputerChoice();
       }
       if (cell === 1) {
         cellBtn1.textContent = getActivePlayer().token;
+        cellBtn1.setAttribute(
+          "style",
+          `background-color: ${getActivePlayer().backgroundColor}; color: ${
+            getActivePlayer().color
+          }`
+        );
       } else if (cell === 2) {
         cellBtn2.textContent = getActivePlayer().token;
+        cellBtn2.setAttribute(
+          "style",
+          `background-color: ${getActivePlayer().backgroundColor}; color: ${
+            getActivePlayer().color
+          }`
+        );
       } else if (cell === 3) {
         cellBtn3.textContent = getActivePlayer().token;
+        cellBtn3.setAttribute(
+          "style",
+          `background-color: ${getActivePlayer().backgroundColor}; color: ${
+            getActivePlayer().color
+          }`
+        );
       } else if (cell === 4) {
         cellBtn4.textContent = getActivePlayer().token;
+        cellBtn4.setAttribute(
+          "style",
+          `background-color: ${getActivePlayer().backgroundColor}; color: ${
+            getActivePlayer().color
+          }`
+        );
       } else if (cell === 5) {
         cellBtn5.textContent = getActivePlayer().token;
+        cellBtn5.setAttribute(
+          "style",
+          `background-color: ${getActivePlayer().backgroundColor}; color: ${
+            getActivePlayer().color
+          }`
+        );
       } else if (cell === 6) {
         cellBtn6.textContent = getActivePlayer().token;
+        cellBtn6.setAttribute(
+          "style",
+          `background-color: ${getActivePlayer().backgroundColor}; color: ${
+            getActivePlayer().color
+          }`
+        );
       } else if (cell === 7) {
         cellBtn7.textContent = getActivePlayer().token;
+        cellBtn7.setAttribute(
+          "style",
+          `background-color: ${getActivePlayer().backgroundColor}; color: ${
+            getActivePlayer().color
+          }`
+        );
       } else if (cell === 8) {
         cellBtn8.textContent = getActivePlayer().token;
+        cellBtn8.setAttribute(
+          "style",
+          `background-color: ${getActivePlayer().backgroundColor}; color: ${
+            getActivePlayer().color
+          }`
+        );
       } else if (cell === 9) {
         cellBtn9.textContent = getActivePlayer().token;
+        cellBtn9.setAttribute(
+          "style",
+          `background-color: ${getActivePlayer().backgroundColor}; color: ${
+            getActivePlayer().color
+          }`
+        );
       }
       gameController.playTurn(row, column);
     }
+
     return {
       cellBtn1,
       cellBtn2,
@@ -352,7 +408,7 @@ function PlayGame() {
     const handleCheck = await handleCellCheck();
     let invertedPlayer;
 
-    getActivePlayer().name === "Player One"
+    getActivePlayer().name === "Human"
       ? (invertedPlayer = getPlayers()[1])
       : (invertedPlayer = getPlayers()[0]);
     return {
@@ -402,7 +458,7 @@ function PlayGame() {
         printBoard()[2][0] === invertedPlayer.token)
     ) {
       gameOver = true;
-      if (invertedPlayer.name === "Player One") {
+      if (invertedPlayer.name === "Human") {
         gameResult = "Human";
       } else {
         gameResult = "Computer";
@@ -453,6 +509,7 @@ function PlayGame() {
 
   async function PlayTurn() {
     const activePlayerOnBoard = document.getElementById("active-player");
+    const mainBorderColor = document.getElementById("main");
     let finalResult;
     let cellBtn1;
     let cellBtn2;
@@ -466,6 +523,15 @@ function PlayGame() {
 
     while (gameOver === false) {
       activePlayerOnBoard.textContent = `${getActivePlayer().name}'s turn`;
+      activePlayerOnBoard.setAttribute(
+        "style",
+        `color: ${getActivePlayer().backgroundColor}`
+      );
+      mainBorderColor.setAttribute(
+        "style",
+        `border-color: ${getActivePlayer().backgroundColor}`
+      );
+
       const awaitCheckFinishedGame = await checkFinishedGame();
 
       if (
@@ -473,6 +539,7 @@ function PlayGame() {
         awaitCheckFinishedGame.gameResult === "Computer" ||
         awaitCheckFinishedGame.gameResult === "Draw"
       ) {
+        mainBorderColor.setAttribute("style", "border-color: #e9ecef");
         finalResult = awaitCheckFinishedGame.gameResult;
         cellBtn1 = awaitCheckFinishedGame.cellBtn1;
         cellBtn2 = awaitCheckFinishedGame.cellBtn2;
@@ -537,6 +604,34 @@ function gameStory() {
   const introSectionIntro8 = document.getElementById("intro-section-intro-8");
   const introSectionIntro9 = document.getElementById("intro-section-intro-9");
   const playGameBtn = document.getElementById("play-game-btn");
+
+  const asciiSection = document.getElementById("ascii-section");
+  const ascii1 = document.getElementById("ascii-1");
+  const ascii2 = document.getElementById("ascii-2");
+  const ascii3 = document.getElementById("ascii-3");
+  const ascii4 = document.getElementById("ascii-4");
+  const ascii5 = document.getElementById("ascii-5");
+  const ascii6 = document.getElementById("ascii-6");
+  const ascii7 = document.getElementById("ascii-7");
+  const ascii8 = document.getElementById("ascii-8");
+  const ascii9 = document.getElementById("ascii-9");
+  const ascii10 = document.getElementById("ascii-10");
+  const ascii11 = document.getElementById("ascii-11");
+  const ascii12 = document.getElementById("ascii-12");
+  const ascii13 = document.getElementById("ascii-13");
+  const ascii14 = document.getElementById("ascii-14");
+  const ascii15 = document.getElementById("ascii-15");
+  const ascii16 = document.getElementById("ascii-16");
+  const ascii17 = document.getElementById("ascii-17");
+  const ascii18 = document.getElementById("ascii-18");
+  const ascii19 = document.getElementById("ascii-19");
+  const ascii20 = document.getElementById("ascii-20");
+  const ascii21 = document.getElementById("ascii-21");
+  const ascii22 = document.getElementById("ascii-22");
+  const ascii23 = document.getElementById("ascii-23");
+  const ascii24 = document.getElementById("ascii-24");
+  const ascii25 = document.getElementById("ascii-25");
+
   const playGame = () => PlayGame();
 
   const hideAllIntro = () => {
@@ -553,7 +648,7 @@ function gameStory() {
   };
 
   const delayIntroItems = () =>
-    new Promise((resolve) => setTimeout(resolve, 3000));
+    new Promise((resolve) => setTimeout(resolve, 4000));
 
   async function showIntro() {
     introSectionIntro1.classList.remove("hidden-item");
@@ -575,6 +670,92 @@ function gameStory() {
     playGameBtn.classList.remove("hidden-item");
   }
 
+  const delayAsciiItems = () =>
+    new Promise((resolve) => setTimeout(resolve, 1000));
+
+  let runAscii = true;
+
+  async function showAscii() {
+    runAscii = true;
+    while (runAscii === true) {
+      ascii1.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii1.classList.add("ascii-hidden");
+      ascii2.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii2.classList.add("ascii-hidden");
+      ascii3.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii3.classList.add("ascii-hidden");
+      ascii4.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii4.classList.add("ascii-hidden");
+      ascii5.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii5.classList.add("ascii-hidden");
+      ascii6.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii6.classList.add("ascii-hidden");
+      ascii7.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii7.classList.add("ascii-hidden");
+      ascii8.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii8.classList.add("ascii-hidden");
+      ascii9.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii9.classList.add("ascii-hidden");
+      ascii10.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii10.classList.add("ascii-hidden");
+      ascii11.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii11.classList.add("ascii-hidden");
+      ascii12.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii12.classList.add("ascii-hidden");
+      ascii13.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii13.classList.add("ascii-hidden");
+      ascii14.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii14.classList.add("ascii-hidden");
+      ascii15.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii15.classList.add("ascii-hidden");
+      ascii16.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii16.classList.add("ascii-hidden");
+      ascii17.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii17.classList.add("ascii-hidden");
+      ascii18.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii18.classList.add("ascii-hidden");
+      ascii19.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii19.classList.add("ascii-hidden");
+      ascii20.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii20.classList.add("ascii-hidden");
+      ascii21.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii21.classList.add("ascii-hidden");
+      ascii22.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii22.classList.add("ascii-hidden");
+      ascii23.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii23.classList.add("ascii-hidden");
+      ascii24.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii24.classList.add("ascii-hidden");
+      ascii25.classList.remove("ascii-hidden");
+      await delayAsciiItems();
+      ascii25.classList.add("ascii-hidden");
+    }
+  }
+
   const showResultHuman = () => {
     introSectionIntro7.classList.remove("hidden-item");
     playGameBtn.classList.remove("hidden-item");
@@ -594,23 +775,23 @@ function gameStory() {
     playGameBtn.addEventListener("click", async function () {
       introSection.classList.add("hidden-item");
       hideAllIntro();
+      asciiSection.classList.add("ascii-hidden");
       mainSection.classList.remove("hidden-item");
 
       const finalResult = await playGame().GetFinalResult();
 
+      asciiSection.classList.remove("ascii-hidden");
+      mainSection.classList.add("hidden-item");
+      introSection.classList.remove("hidden-item");
+
       if (finalResult.playingTurnResult === "Human") {
-        mainSection.classList.add("hidden-item");
-        introSection.classList.remove("hidden-item");
         showResultHuman();
       } else if (finalResult.playingTurnResult === "Computer") {
-        mainSection.classList.add("hidden-item");
-        introSection.classList.remove("hidden-item");
         showResultComputer();
       } else if (finalResult.playingTurnResult === "Draw") {
-        mainSection.classList.add("hidden-item");
-        introSection.classList.remove("hidden-item");
         showResultDraw();
       }
+
       finalResult.cellBtn1.textContent = "";
       finalResult.cellBtn2.textContent = "";
       finalResult.cellBtn3.textContent = "";
@@ -620,9 +801,46 @@ function gameStory() {
       finalResult.cellBtn7.textContent = "";
       finalResult.cellBtn8.textContent = "";
       finalResult.cellBtn9.textContent = "";
+      finalResult.cellBtn1.setAttribute(
+        "style",
+        "background-color: #e9ecef; color: #212529"
+      );
+      finalResult.cellBtn2.setAttribute(
+        "style",
+        "background-color: #e9ecef; color: #212529"
+      );
+      finalResult.cellBtn3.setAttribute(
+        "style",
+        "background-color: #e9ecef; color: #212529"
+      );
+      finalResult.cellBtn4.setAttribute(
+        "style",
+        "background-color: #e9ecef; color: #212529"
+      );
+      finalResult.cellBtn5.setAttribute(
+        "style",
+        "background-color: #e9ecef; color: #212529"
+      );
+      finalResult.cellBtn6.setAttribute(
+        "style",
+        "background-color: #e9ecef; color: #212529"
+      );
+      finalResult.cellBtn7.setAttribute(
+        "style",
+        "background-color: #e9ecef; color: #212529"
+      );
+      finalResult.cellBtn8.setAttribute(
+        "style",
+        "background-color: #e9ecef; color: #212529"
+      );
+      finalResult.cellBtn9.setAttribute(
+        "style",
+        "background-color: #e9ecef; color: #212529"
+      );
     });
   };
 
+  showAscii();
   startGameBtn.addEventListener("click", () => {
     startGame.classList.add("hidden-item");
     introSection.classList.remove("hidden-item");
