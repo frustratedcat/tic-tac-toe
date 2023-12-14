@@ -125,7 +125,8 @@ body {
   border-radius: 10px;
 }
 
-.press-start-btn:hover {
+.press-start-btn:hover,
+.press-start-btn:focus {
   background-color: var(--main-purple);
   color: var(--main-light-gray);
   border-color: var(--main-light-gray);
@@ -176,7 +177,8 @@ body {
   font-family: inherit;
 }
 
-.board-cell:hover {
+.board-cell:hover,
+.board-cell:focus {
   background-color: var(--lightest-blue);
 }
 

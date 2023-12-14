@@ -16,7 +16,7 @@ function GameBoard() {
   const getBoard = () => board;
 
   // Place token on board
-  const dropToken = (row, column, player, color) => {
+  const dropToken = (row, column, player) => {
     board[row][column].addToken(player);
   };
 
@@ -539,7 +539,7 @@ function PlayGame() {
         awaitCheckFinishedGame.gameResult === "Computer" ||
         awaitCheckFinishedGame.gameResult === "Draw"
       ) {
-        mainBorderColor.setAttribute("style", "border-color: #e9ecef");
+        mainBorderColor.removeAttribute("style", "border-color");
         finalResult = awaitCheckFinishedGame.gameResult;
         cellBtn1 = awaitCheckFinishedGame.cellBtn1;
         cellBtn2 = awaitCheckFinishedGame.cellBtn2;
@@ -801,42 +801,15 @@ function gameStory() {
       finalResult.cellBtn7.textContent = "";
       finalResult.cellBtn8.textContent = "";
       finalResult.cellBtn9.textContent = "";
-      finalResult.cellBtn1.setAttribute(
-        "style",
-        "background-color: #e9ecef; color: #212529"
-      );
-      finalResult.cellBtn2.setAttribute(
-        "style",
-        "background-color: #e9ecef; color: #212529"
-      );
-      finalResult.cellBtn3.setAttribute(
-        "style",
-        "background-color: #e9ecef; color: #212529"
-      );
-      finalResult.cellBtn4.setAttribute(
-        "style",
-        "background-color: #e9ecef; color: #212529"
-      );
-      finalResult.cellBtn5.setAttribute(
-        "style",
-        "background-color: #e9ecef; color: #212529"
-      );
-      finalResult.cellBtn6.setAttribute(
-        "style",
-        "background-color: #e9ecef; color: #212529"
-      );
-      finalResult.cellBtn7.setAttribute(
-        "style",
-        "background-color: #e9ecef; color: #212529"
-      );
-      finalResult.cellBtn8.setAttribute(
-        "style",
-        "background-color: #e9ecef; color: #212529"
-      );
-      finalResult.cellBtn9.setAttribute(
-        "style",
-        "background-color: #e9ecef; color: #212529"
-      );
+      finalResult.cellBtn1.removeAttribute("style", "background-color; color");
+      finalResult.cellBtn2.removeAttribute("style", "background-color; color");
+      finalResult.cellBtn3.removeAttribute("style", "background-color; color");
+      finalResult.cellBtn4.removeAttribute("style", "background-color; color");
+      finalResult.cellBtn5.removeAttribute("style", "background-color; color");
+      finalResult.cellBtn6.removeAttribute("style", "background-color; color");
+      finalResult.cellBtn7.removeAttribute("style", "background-color; color");
+      finalResult.cellBtn8.removeAttribute("style", "background-color; color");
+      finalResult.cellBtn9.removeAttribute("style", "background-color; color");
     });
   };
 
