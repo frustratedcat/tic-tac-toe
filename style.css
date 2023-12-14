@@ -32,6 +32,7 @@ body {
 }
 
 .main {
+  position: relative;
   width: 800px;
   height: 550px;
   margin: auto;
@@ -106,7 +107,7 @@ body {
 
 .press-start-btn {
   position: absolute;
-  top: 57%;
+  top: 63%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin: auto;
@@ -236,7 +237,7 @@ a:active {
   }
 
   .press-start-btn {
-    top: 59%;
+    top: 65%;
   }
 
   .active-player-style {
