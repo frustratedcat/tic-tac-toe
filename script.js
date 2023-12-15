@@ -780,6 +780,8 @@ function gameStory() {
 
       const finalResult = await playGame().GetFinalResult();
 
+      await delayAsciiItems();
+
       asciiSection.classList.remove("ascii-hidden");
       mainSection.classList.add("hidden-item");
       introSection.classList.remove("hidden-item");
