@@ -471,6 +471,144 @@ function GetChoice() {
           }
         }
       });
+    } else if (
+      checkForPlayerTwoRowTokens[0].length === 1 &&
+      checkForPlayerOneRowTokens[0].length === 0
+    ) {
+      const resultRowOne = printBoard()[0];
+      resultRowOne.forEach((i) => {
+        if (i === 0) {
+          console.log(resultRowOne.indexOf(i));
+          if (resultRowOne.indexOf(i) === 0) {
+            result = 1;
+          } else if (resultRowOne.indexOf(i) === 1) {
+            result = 2;
+          } else if (resultRowOne.indexOf(i) === 2) {
+            result = 3;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[1].length === 1 &&
+      checkForPlayerOneRowTokens[1].length === 0
+    ) {
+      const resultRowTwo = printBoard()[1];
+      resultRowTwo.forEach((i) => {
+        if (i === 0) {
+          console.log(resultRowTwo.indexOf(i));
+          if (resultRowTwo.indexOf(i) === 0) {
+            result = 4;
+          } else if (resultRowTwo.indexOf(i) === 1) {
+            result = 5;
+          } else if (resultRowTwo.indexOf(i) === 2) {
+            result = 6;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[2].length === 1 &&
+      checkForPlayerOneRowTokens[2].length === 0
+    ) {
+      const resultRowThree = printBoard()[2];
+      resultRowThree.forEach((i) => {
+        if (i === 0) {
+          console.log(resultRowThree.indexOf(i));
+          if (resultRowThree.indexOf(i) === 0) {
+            result = 7;
+          } else if (resultRowThree.indexOf(i) === 1) {
+            result = 8;
+          } else if (resultRowThree.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnOne.length === 1 &&
+      playerOneColumnOne.length === 0
+    ) {
+      const columnOneResult = checkForColumnOne.map((cell) => cell === 0);
+      columnOneResult.forEach((i) => {
+        if (i === true) {
+          console.log(columnOneResult.indexOf(i));
+          if (columnOneResult.indexOf(i) === 0) {
+            result = 1;
+          } else if (columnOneResult.indexOf(i) === 1) {
+            result = 4;
+          } else if (columnOneResult.indexOf(i) === 2) {
+            result = 7;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnTwo.length === 1 &&
+      playerOneColumnTwo.length === 0
+    ) {
+      const columnTwoResult = checkForColumnTwo.map((cell) => cell === 0);
+      columnTwoResult.forEach((i) => {
+        if (i === true) {
+          console.log(columnTwoResult.indexOf(i));
+          if (columnTwoResult.indexOf(i) === 0) {
+            result = 2;
+          } else if (columnTwoResult.indexOf(i) === 1) {
+            result = 5;
+          } else if (columnTwoResult.indexOf(i) === 2) {
+            result = 8;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnThree.length === 1 &&
+      playerOneColumnThree.length === 0
+    ) {
+      const columnThreeResult = checkForColumnThree.map((cell) => cell === 0);
+      columnThreeResult.forEach((i) => {
+        if (i === true) {
+          console.log(columnThreeResult.indexOf(i));
+          if (columnThreeResult.indexOf(i) === 0) {
+            result = 3;
+          } else if (columnThreeResult.indexOf(i) === 1) {
+            result = 6;
+          } else if (columnThreeResult.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      checkPlayerTwoClosingDiagonal.length === 1 &&
+      checkPlayerOneClosingDiagonal.length === 0
+    ) {
+      const getClosingDiagonal = printBoard().map((row, column) => row[column]);
+      getClosingDiagonal.forEach((i) => {
+        if (i === 0) {
+          console.log(getClosingDiagonal.indexOf(i));
+          if (getClosingDiagonal.indexOf(i) === 0) {
+            result = 1;
+          } else if (getClosingDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getClosingDiagonal.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      checkPlayerTwoOpeningDiagonal.length === 1 &&
+      checkPlayerOneOpeningDiagonal.length === 0
+    ) {
+      const getOpeningDiagonal = printBoard()
+        .reverse()
+        .map((row, column) => row[column]);
+      getOpeningDiagonal.forEach((i) => {
+        if (i === 0) {
+          console.log(getOpeningDiagonal.indexOf(i));
+          if (getOpeningDiagonal.indexOf(i) === 0) {
+            result = 7;
+          } else if (getOpeningDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getOpeningDiagonal.indexOf(i) === 2) {
+            result = 3;
+          }
+        }
+      });
     }
     return result;
   };
