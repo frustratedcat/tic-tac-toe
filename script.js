@@ -682,7 +682,7 @@ function PlayGame() {
     let cell;
 
     // Pass each choice to associated cell
-    getActivePlayer().name === "Human"
+    getActivePlayer().name === getPlayers()[0].name
       ? (cell = await handlePlayerChoice())
       : (cell = computerMode());
     return {
@@ -868,7 +868,7 @@ function PlayGame() {
     const handleCheck = await handleCellCheck(chosenMode);
     let invertedPlayer;
 
-    getActivePlayer().name === "Human"
+    getActivePlayer().name === getPlayers()[0].name
       ? (invertedPlayer = getPlayers()[1])
       : (invertedPlayer = getPlayers()[0]);
     return {
@@ -918,10 +918,10 @@ function PlayGame() {
         printBoard()[2][0] === invertedPlayer.token)
     ) {
       gameOver = true;
-      if (invertedPlayer.name === "Human") {
-        gameResult = "Human";
+      if (invertedPlayer.name === getPlayers()[0].name) {
+        gameResult = getPlayers()[0].name;
       } else {
-        gameResult = "Computer";
+        gameResult = getPlayers()[1].name;
       }
     } else if (
       printBoard()[0][0] !== 0 &&
@@ -996,8 +996,8 @@ function PlayGame() {
       const awaitCheckFinishedGame = await checkFinishedGame(chosenMode);
 
       if (
-        awaitCheckFinishedGame.gameResult === "Human" ||
-        awaitCheckFinishedGame.gameResult === "Computer" ||
+        awaitCheckFinishedGame.gameResult === getPlayers()[0].name ||
+        awaitCheckFinishedGame.gameResult === getPlayers()[1].name ||
         awaitCheckFinishedGame.gameResult === "Draw"
       ) {
         mainBorderColor.removeAttribute("style", "border-color");
@@ -1046,7 +1046,7 @@ function PlayGame() {
     };
   }
 
-  return { GetFinalResult };
+  return { GetFinalResult, getPlayers };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1233,12 +1233,12 @@ function gameStory() {
   }
 
   // Show game results
-  const showResultHuman = () => {
+  const showResultPlayerOne = () => {
     introSectionIntro7.classList.remove("hidden-item");
     playGameEasyModeBtn.classList.remove("hidden-item");
     playGameHardModeBtn.classList.remove("hidden-item");
   };
-  const showResultComputer = () => {
+  const showResultPlayerTwo = () => {
     introSectionIntro8.classList.remove("hidden-item");
     playGameEasyModeBtn.classList.remove("hidden-item");
     playGameHardModeBtn.classList.remove("hidden-item");
@@ -1270,17 +1270,19 @@ function gameStory() {
         asciiSection.classList.add("ascii-hidden");
         mainSection.classList.remove("hidden-item");
 
-        const finalResult = await playGame().GetFinalResult(chosenMode);
+        const play = playGame();
+        const finalResult = await play.GetFinalResult(chosenMode);
+        const getPlayers = play.getPlayers();
 
         asciiSection.classList.remove("ascii-hidden");
         mainSection.classList.add("hidden-item");
         introSection.classList.remove("hidden-item");
 
         // Handle results
-        if (finalResult.playingTurnResult === "Human") {
-          showResultHuman();
-        } else if (finalResult.playingTurnResult === "Computer") {
-          showResultComputer();
+        if (finalResult.playingTurnResult === getPlayers[0].name) {
+          showResultPlayerOne();
+        } else if (finalResult.playingTurnResult === getPlayers[1].name) {
+          showResultPlayerTwo();
         } else if (finalResult.playingTurnResult === "Draw") {
           showResultDraw();
         }
