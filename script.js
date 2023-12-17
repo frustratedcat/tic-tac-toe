@@ -124,11 +124,6 @@ function GetChoice() {
   const getComputerHardMode = () => {
     let result;
 
-    // this should be good to use
-    const getOpenRowLength = printBoard().map(
-      (row) => row.filter((cell) => cell === 0).length
-    );
-
     // ROWS
     // Get row token count for player one
     const checkForPlayerOneRowTokens = printBoard().map((row) =>
@@ -609,6 +604,8 @@ function GetChoice() {
           }
         }
       });
+    } else {
+      getComputerEasyMode();
     }
     return result;
   };
