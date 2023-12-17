@@ -6,6 +6,7 @@ function GameBoard() {
   const columns = 3;
   const board = [];
 
+  // Place cell values onto board
   for (let i = 0; i < rows; i++) {
     board[i] = [];
     for (let j = 0; j < columns; j++) {
@@ -75,7 +76,7 @@ function GameController(playerOneName = "Human", playerTwoName = "Machine") {
 
   const getActivePlayer = () => activePlayer;
 
-  // Play a round
+  // Play a turn
   const playTurn = (row, column) => {
     board.dropToken(row, column, activePlayer.token, activePlayer.color);
     switchPlayerTurn();
@@ -120,7 +121,6 @@ function GetChoice() {
   const getComputerHardMode = () => {
     let result;
 
-    // ROWS
     // Get row token count for player one
     const checkForPlayerOneRowTokens = printBoard().map((row) =>
       row.filter((cell) => cell === getPlayers()[0].token)
@@ -131,13 +131,12 @@ function GetChoice() {
       row.filter((cell) => cell === getPlayers()[1].token)
     );
 
-    // COLUMNS
     // Get each column
     const checkForColumnOne = printBoard().map((row) => row[0]);
     const checkForColumnTwo = printBoard().map((row) => row[1]);
     const checkForColumnThree = printBoard().map((row) => row[2]);
 
-    //Player One Checks
+    // Player one column checks
     const playerOneColumnOne = checkForColumnOne.filter(
       (cell) => cell === getPlayers()[0].token
     );
@@ -150,7 +149,7 @@ function GetChoice() {
       (cell) => cell === getPlayers()[0].token
     );
 
-    // Player Two Checks
+    // Player two column checks
     const playerTwoColumnOne = checkForColumnOne.filter(
       (cell) => cell === getPlayers()[1].token
     );
@@ -163,8 +162,7 @@ function GetChoice() {
       (cell) => cell === getPlayers()[1].token
     );
 
-    //DIAGONALS
-    //closing diagonals
+    // Closing diagonals
     const checkPlayerOneClosingDiagonal = printBoard()
       .map((row, column) => row[column] === getPlayers()[0].token)
       .filter((i) => i === true);
@@ -173,7 +171,7 @@ function GetChoice() {
       .map((row, column) => row[column] === getPlayers()[1].token)
       .filter((i) => i === true);
 
-    //opening diagonals
+    // Opening diagonals
     const checkPlayerOneOpeningDiagonal = printBoard()
       .reverse()
       .map((row, column) => row[column])
@@ -184,8 +182,7 @@ function GetChoice() {
       .map((row, column) => row[column])
       .filter((i) => i === getPlayers()[1].token);
 
-    //RUN EVERYTHING
-    //Run the stuff
+    // Check all
     if (
       checkForPlayerTwoRowTokens[0].length === 2 &&
       checkForPlayerOneRowTokens[0].length === 0
@@ -645,7 +642,7 @@ function GetChoice() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Play a round of the game
+// Play game
 function PlayGame() {
   const getChoice = GetChoice();
   const gameController = getChoice.gameController;
@@ -660,6 +657,7 @@ function PlayGame() {
     const getComputerEasyMode = () => getChoice.getComputerEasyMode();
     const getComputerHardMode = () => getChoice.getComputerHardMode();
 
+    // Get computer mode
     let computerMode;
     if (chosenMode === "easy") {
       computerMode = () => getComputerEasyMode();
@@ -667,6 +665,7 @@ function PlayGame() {
       computerMode = () => getComputerHardMode();
     }
 
+    // Get correct cell for player choice
     const handlePlayerChoice = () =>
       new Promise((resolve) => resolve(getChoice.handlePlayerChoice()));
 
@@ -682,6 +681,7 @@ function PlayGame() {
 
     let cell;
 
+    // Pass each choice to associated cell
     getActivePlayer().name === "Human"
       ? (cell = await handlePlayerChoice())
       : (cell = computerMode());
@@ -967,6 +967,7 @@ function PlayGame() {
     };
   }
 
+  // Handle turn changes
   async function PlayTurn(chosenMode) {
     const activePlayerOnBoard = document.getElementById("active-player");
     const mainBorderColor = document.getElementById("main");
@@ -1027,6 +1028,7 @@ function PlayGame() {
     };
   }
 
+  // Pass results forward
   async function GetFinalResult(chosenMode) {
     const playingTurn = await PlayTurn(chosenMode);
     const playingTurnResult = playingTurn.finalResult;
@@ -1049,6 +1051,7 @@ function PlayGame() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Put game story together
 function gameStory() {
   const startGame = document.getElementById("start-game");
   const startGameBtn = document.getElementById("start-game-btn");
@@ -1100,6 +1103,7 @@ function gameStory() {
 
   const playGame = () => PlayGame();
 
+  // Hide all intro items
   const hideAllIntro = () => {
     introSectionIntro1.classList.add("hidden-item");
     introSectionIntro2.classList.add("hidden-item");
@@ -1114,9 +1118,11 @@ function gameStory() {
     playGameHardModeBtn.classList.add("hidden-item");
   };
 
+  // Create delay for intro items
   const delayIntroItems = () =>
     new Promise((resolve) => setTimeout(resolve, 4000));
 
+  // Show/hide intro items
   async function showIntro() {
     introSectionIntro1.classList.remove("hidden-item");
     await delayIntroItems();
@@ -1138,11 +1144,13 @@ function gameStory() {
     playGameHardModeBtn.classList.remove("hidden-item");
   }
 
+  // Create delay for ascii rotation
   const delayAsciiItems = () =>
     new Promise((resolve) => setTimeout(resolve, 1000));
 
   let runAscii = true;
 
+  // Show ascii rotation
   async function showAscii() {
     runAscii = true;
     while (runAscii === true) {
@@ -1224,6 +1232,7 @@ function gameStory() {
     }
   }
 
+  // Show game results
   const showResultHuman = () => {
     introSectionIntro7.classList.remove("hidden-item");
     playGameEasyModeBtn.classList.remove("hidden-item");
@@ -1241,8 +1250,11 @@ function gameStory() {
     playGameHardModeBtn.classList.remove("hidden-item");
   };
 
+  // Run game
   const run = () => {
     showIntro();
+
+    // Get computer mode
     pressStartBtn.forEach((i) => {
       i.addEventListener("click", async function (e) {
         let chosenMode;
@@ -1251,6 +1263,8 @@ function gameStory() {
         } else {
           chosenMode = "hard";
         }
+
+        // Handle turns
         introSection.classList.add("hidden-item");
         hideAllIntro();
         asciiSection.classList.add("ascii-hidden");
@@ -1262,6 +1276,7 @@ function gameStory() {
         mainSection.classList.add("hidden-item");
         introSection.classList.remove("hidden-item");
 
+        // Handle results
         if (finalResult.playingTurnResult === "Human") {
           showResultHuman();
         } else if (finalResult.playingTurnResult === "Computer") {
@@ -1270,6 +1285,7 @@ function gameStory() {
           showResultDraw();
         }
 
+        // Reset board
         finalResult.cellBtn1.textContent = "";
         finalResult.cellBtn2.textContent = "";
         finalResult.cellBtn3.textContent = "";
@@ -1319,6 +1335,7 @@ function gameStory() {
     });
   };
 
+  // Run everything
   showAscii();
   startGameBtn.addEventListener("click", () => {
     startGame.classList.add("hidden-item");
