@@ -13,8 +13,6 @@ function GameBoard() {
     }
   }
 
-  const getBoard = () => board;
-
   // Place token on board
   const dropToken = (row, column, player) => {
     board[row][column].addToken(player);
@@ -28,7 +26,7 @@ function GameBoard() {
     return boardWithCellValues;
   };
 
-  return { dropToken, printBoard, getBoard };
+  return { dropToken, printBoard };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +86,6 @@ function GameController(playerOneName = "Human", playerTwoName = "Machine") {
     playTurn,
     getActivePlayer,
     printBoard: board.printBoard,
-    getBoard: board.getBoard,
   };
 }
 
@@ -100,7 +97,6 @@ function GetChoice() {
   const getActivePlayer = () => gameController.getActivePlayer();
   const getPlayers = () => gameController.players;
   const printBoard = () => gameController.printBoard();
-  const getBoard = () => gameController.getBoard();
 
   const cellBtn1 = document.getElementById("cell-1");
   const cellBtn2 = document.getElementById("cell-2");
@@ -632,7 +628,6 @@ function GetChoice() {
     getActivePlayer,
     getPlayers,
     printBoard,
-    getBoard,
     getComputerEasyMode,
     getComputerHardMode,
     handlePlayerChoice,
@@ -657,7 +652,6 @@ function PlayGame() {
   const getActivePlayer = () => gameController.getActivePlayer();
   const getPlayers = () => gameController.players;
   const printBoard = () => gameController.printBoard();
-  const getBoard = gameController.getBoard();
 
   let gameOver = false;
 
@@ -1050,7 +1044,7 @@ function PlayGame() {
     };
   }
 
-  return { getBoard, GetFinalResult };
+  return { GetFinalResult };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1249,7 +1243,6 @@ function gameStory() {
 
   const run = () => {
     showIntro();
-    ///////////////////////////////////////////////////////////
     pressStartBtn.forEach((i) => {
       i.addEventListener("click", async function (e) {
         let chosenMode;
