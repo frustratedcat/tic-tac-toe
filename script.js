@@ -120,11 +120,471 @@ function GetChoice() {
     return result;
   };
 
-  // Get a somewhat rational choice from computer
-  const getComputerMediumMode = () => {};
-
   // Get rational choice from computer
-  const getComputerHardMode = () => {};
+  const getComputerHardMode = () => {
+    let result;
+
+    // ROWS
+    // Get row token count for player one
+    const checkForPlayerOneRowTokens = printBoard().map((row) =>
+      row.filter((cell) => cell === getPlayers()[0].token)
+    );
+
+    // Get row token count for player two
+    const checkForPlayerTwoRowTokens = printBoard().map((row) =>
+      row.filter((cell) => cell === getPlayers()[1].token)
+    );
+
+    // COLUMNS
+    // Get each column
+    const checkForColumnOne = printBoard().map((row) => row[0]);
+    const checkForColumnTwo = printBoard().map((row) => row[1]);
+    const checkForColumnThree = printBoard().map((row) => row[2]);
+
+    //Player One Checks
+    const playerOneColumnOne = checkForColumnOne.filter(
+      (cell) => cell === getPlayers()[0].token
+    );
+
+    const playerOneColumnTwo = checkForColumnTwo.filter(
+      (cell) => cell === getPlayers()[0].token
+    );
+
+    const playerOneColumnThree = checkForColumnThree.filter(
+      (cell) => cell === getPlayers()[0].token
+    );
+
+    // Player Two Checks
+    const playerTwoColumnOne = checkForColumnOne.filter(
+      (cell) => cell === getPlayers()[1].token
+    );
+
+    const playerTwoColumnTwo = checkForColumnTwo.filter(
+      (cell) => cell === getPlayers()[1].token
+    );
+
+    const playerTwoColumnThree = checkForColumnThree.filter(
+      (cell) => cell === getPlayers()[1].token
+    );
+
+    //DIAGONALS
+    //closing diagonals
+    const checkPlayerOneClosingDiagonal = printBoard()
+      .map((row, column) => row[column] === getPlayers()[0].token)
+      .filter((i) => i === true);
+
+    const checkPlayerTwoClosingDiagonal = printBoard()
+      .map((row, column) => row[column] === getPlayers()[1].token)
+      .filter((i) => i === true);
+
+    //opening diagonals
+    const checkPlayerOneOpeningDiagonal = printBoard()
+      .reverse()
+      .map((row, column) => row[column])
+      .filter((i) => i === getPlayers()[0].token);
+
+    const checkPlayerTwoOpeningDiagonal = printBoard()
+      .reverse()
+      .map((row, column) => row[column])
+      .filter((i) => i === getPlayers()[1].token);
+
+    //RUN EVERYTHING
+    //Run the stuff
+    if (
+      checkForPlayerTwoRowTokens[0].length === 2 &&
+      checkForPlayerOneRowTokens[0].length === 0
+    ) {
+      const resultRowOne = printBoard()[0];
+      resultRowOne.forEach((i) => {
+        if (i === 0) {
+          if (resultRowOne.indexOf(i) === 0) {
+            result = 1;
+          } else if (resultRowOne.indexOf(i) === 1) {
+            result = 2;
+          } else if (resultRowOne.indexOf(i) === 2) {
+            result = 3;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[1].length === 2 &&
+      checkForPlayerOneRowTokens[1].length === 0
+    ) {
+      const resultRowTwo = printBoard()[1];
+      resultRowTwo.forEach((i) => {
+        if (i === 0) {
+          if (resultRowTwo.indexOf(i) === 0) {
+            result = 4;
+          } else if (resultRowTwo.indexOf(i) === 1) {
+            result = 5;
+          } else if (resultRowTwo.indexOf(i) === 2) {
+            result = 6;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[2].length === 2 &&
+      checkForPlayerOneRowTokens[2].length === 0
+    ) {
+      const resultRowThree = printBoard()[2];
+      resultRowThree.forEach((i) => {
+        if (i === 0) {
+          if (resultRowThree.indexOf(i) === 0) {
+            result = 7;
+          } else if (resultRowThree.indexOf(i) === 1) {
+            result = 8;
+          } else if (resultRowThree.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnOne.length === 2 &&
+      playerOneColumnOne.length === 0
+    ) {
+      const columnOneResult = checkForColumnOne.map((cell) => cell === 0);
+      columnOneResult.forEach((i) => {
+        if (i === true) {
+          if (columnOneResult.indexOf(i) === 0) {
+            result = 1;
+          } else if (columnOneResult.indexOf(i) === 1) {
+            result = 4;
+          } else if (columnOneResult.indexOf(i) === 2) {
+            result = 7;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnTwo.length === 2 &&
+      playerOneColumnTwo.length === 0
+    ) {
+      const columnTwoResult = checkForColumnTwo.map((cell) => cell === 0);
+      columnTwoResult.forEach((i) => {
+        if (i === true) {
+          if (columnTwoResult.indexOf(i) === 0) {
+            result = 2;
+          } else if (columnTwoResult.indexOf(i) === 1) {
+            result = 5;
+          } else if (columnTwoResult.indexOf(i) === 2) {
+            result = 8;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnThree.length === 2 &&
+      playerOneColumnThree.length === 0
+    ) {
+      const columnThreeResult = checkForColumnThree.map((cell) => cell === 0);
+      columnThreeResult.forEach((i) => {
+        if (i === true) {
+          if (columnThreeResult.indexOf(i) === 0) {
+            result = 3;
+          } else if (columnThreeResult.indexOf(i) === 1) {
+            result = 6;
+          } else if (columnThreeResult.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      checkPlayerTwoClosingDiagonal.length === 2 &&
+      checkPlayerOneClosingDiagonal.length === 0
+    ) {
+      const getClosingDiagonal = printBoard().map((row, column) => row[column]);
+      getClosingDiagonal.forEach((i) => {
+        if (i === 0) {
+          if (getClosingDiagonal.indexOf(i) === 0) {
+            result = 1;
+          } else if (getClosingDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getClosingDiagonal.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      checkPlayerTwoOpeningDiagonal.length === 2 &&
+      checkPlayerOneOpeningDiagonal.length === 0
+    ) {
+      const getOpeningDiagonal = printBoard()
+        .reverse()
+        .map((row, column) => row[column]);
+      getOpeningDiagonal.forEach((i) => {
+        if (i === 0) {
+          if (getOpeningDiagonal.indexOf(i) === 0) {
+            result = 7;
+          } else if (getOpeningDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getOpeningDiagonal.indexOf(i) === 2) {
+            result = 3;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[0].length === 0 &&
+      checkForPlayerOneRowTokens[0].length === 2
+    ) {
+      const resultRowOne = printBoard()[0];
+      resultRowOne.forEach((i) => {
+        if (i === 0) {
+          if (resultRowOne.indexOf(i) === 0) {
+            result = 1;
+          } else if (resultRowOne.indexOf(i) === 1) {
+            result = 2;
+          } else if (resultRowOne.indexOf(i) === 2) {
+            result = 3;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[1].length === 0 &&
+      checkForPlayerOneRowTokens[1].length === 2
+    ) {
+      const resultRowTwo = printBoard()[1];
+      resultRowTwo.forEach((i) => {
+        if (i === 0) {
+          if (resultRowTwo.indexOf(i) === 0) {
+            result = 4;
+          } else if (resultRowTwo.indexOf(i) === 1) {
+            result = 5;
+          } else if (resultRowTwo.indexOf(i) === 2) {
+            result = 6;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[2].length === 0 &&
+      checkForPlayerOneRowTokens[2].length === 2
+    ) {
+      const resultRowThree = printBoard()[2];
+      resultRowThree.forEach((i) => {
+        if (i === 0) {
+          if (resultRowThree.indexOf(i) === 0) {
+            result = 7;
+          } else if (resultRowThree.indexOf(i) === 1) {
+            result = 8;
+          } else if (resultRowThree.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnOne.length === 0 &&
+      playerOneColumnOne.length === 2
+    ) {
+      const columnOneResult = checkForColumnOne.map((cell) => cell === 0);
+      columnOneResult.forEach((i) => {
+        if (i === true) {
+          if (columnOneResult.indexOf(i) === 0) {
+            result = 1;
+          } else if (columnOneResult.indexOf(i) === 1) {
+            result = 4;
+          } else if (columnOneResult.indexOf(i) === 2) {
+            result = 7;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnTwo.length === 0 &&
+      playerOneColumnTwo.length === 2
+    ) {
+      const columnTwoResult = checkForColumnTwo.map((cell) => cell === 0);
+      columnTwoResult.forEach((i) => {
+        if (i === true) {
+          if (columnTwoResult.indexOf(i) === 0) {
+            result = 2;
+          } else if (columnTwoResult.indexOf(i) === 1) {
+            result = 5;
+          } else if (columnTwoResult.indexOf(i) === 2) {
+            result = 8;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnThree.length === 0 &&
+      playerOneColumnThree.length === 2
+    ) {
+      const columnThreeResult = checkForColumnThree.map((cell) => cell === 0);
+      columnThreeResult.forEach((i) => {
+        if (i === true) {
+          if (columnThreeResult.indexOf(i) === 0) {
+            result = 3;
+          } else if (columnThreeResult.indexOf(i) === 1) {
+            result = 6;
+          } else if (columnThreeResult.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      checkPlayerTwoClosingDiagonal.length === 0 &&
+      checkPlayerOneClosingDiagonal.length === 2
+    ) {
+      const getClosingDiagonal = printBoard().map((row, column) => row[column]);
+      getClosingDiagonal.forEach((i) => {
+        if (i === 0) {
+          if (getClosingDiagonal.indexOf(i) === 0) {
+            result = 1;
+          } else if (getClosingDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getClosingDiagonal.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      checkPlayerTwoOpeningDiagonal.length === 0 &&
+      checkPlayerOneOpeningDiagonal.length === 2
+    ) {
+      const getOpeningDiagonal = printBoard()
+        .reverse()
+        .map((row, column) => row[column]);
+      getOpeningDiagonal.forEach((i) => {
+        if (i === 0) {
+          if (getOpeningDiagonal.indexOf(i) === 0) {
+            result = 7;
+          } else if (getOpeningDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getOpeningDiagonal.indexOf(i) === 2) {
+            result = 3;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[0].length === 1 &&
+      checkForPlayerOneRowTokens[0].length === 0
+    ) {
+      const resultRowOne = printBoard()[0];
+      resultRowOne.forEach((i) => {
+        if (i === 0) {
+          if (resultRowOne.indexOf(i) === 0) {
+            result = 1;
+          } else if (resultRowOne.indexOf(i) === 1) {
+            result = 2;
+          } else if (resultRowOne.indexOf(i) === 2) {
+            result = 3;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[1].length === 1 &&
+      checkForPlayerOneRowTokens[1].length === 0
+    ) {
+      const resultRowTwo = printBoard()[1];
+      resultRowTwo.forEach((i) => {
+        if (i === 0) {
+          if (resultRowTwo.indexOf(i) === 0) {
+            result = 4;
+          } else if (resultRowTwo.indexOf(i) === 1) {
+            result = 5;
+          } else if (resultRowTwo.indexOf(i) === 2) {
+            result = 6;
+          }
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[2].length === 1 &&
+      checkForPlayerOneRowTokens[2].length === 0
+    ) {
+      const resultRowThree = printBoard()[2];
+      resultRowThree.forEach((i) => {
+        if (i === 0) {
+          if (resultRowThree.indexOf(i) === 0) {
+            result = 7;
+          } else if (resultRowThree.indexOf(i) === 1) {
+            result = 8;
+          } else if (resultRowThree.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnOne.length === 1 &&
+      playerOneColumnOne.length === 0
+    ) {
+      const columnOneResult = checkForColumnOne.map((cell) => cell === 0);
+      columnOneResult.forEach((i) => {
+        if (i === true) {
+          if (columnOneResult.indexOf(i) === 0) {
+            result = 1;
+          } else if (columnOneResult.indexOf(i) === 1) {
+            result = 4;
+          } else if (columnOneResult.indexOf(i) === 2) {
+            result = 7;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnTwo.length === 1 &&
+      playerOneColumnTwo.length === 0
+    ) {
+      const columnTwoResult = checkForColumnTwo.map((cell) => cell === 0);
+      columnTwoResult.forEach((i) => {
+        if (i === true) {
+          if (columnTwoResult.indexOf(i) === 0) {
+            result = 2;
+          } else if (columnTwoResult.indexOf(i) === 1) {
+            result = 5;
+          } else if (columnTwoResult.indexOf(i) === 2) {
+            result = 8;
+          }
+        }
+      });
+    } else if (
+      playerTwoColumnThree.length === 1 &&
+      playerOneColumnThree.length === 0
+    ) {
+      const columnThreeResult = checkForColumnThree.map((cell) => cell === 0);
+      columnThreeResult.forEach((i) => {
+        if (i === true) {
+          if (columnThreeResult.indexOf(i) === 0) {
+            result = 3;
+          } else if (columnThreeResult.indexOf(i) === 1) {
+            result = 6;
+          } else if (columnThreeResult.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      checkPlayerTwoClosingDiagonal.length === 1 &&
+      checkPlayerOneClosingDiagonal.length === 0
+    ) {
+      const getClosingDiagonal = printBoard().map((row, column) => row[column]);
+      getClosingDiagonal.forEach((i) => {
+        if (i === 0) {
+          if (getClosingDiagonal.indexOf(i) === 0) {
+            result = 1;
+          } else if (getClosingDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getClosingDiagonal.indexOf(i) === 2) {
+            result = 9;
+          }
+        }
+      });
+    } else if (
+      checkPlayerTwoOpeningDiagonal.length === 1 &&
+      checkPlayerOneOpeningDiagonal.length === 0
+    ) {
+      const getOpeningDiagonal = printBoard()
+        .reverse()
+        .map((row, column) => row[column]);
+      getOpeningDiagonal.forEach((i) => {
+        if (i === 0) {
+          if (getOpeningDiagonal.indexOf(i) === 0) {
+            result = 7;
+          } else if (getOpeningDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getOpeningDiagonal.indexOf(i) === 2) {
+            result = 3;
+          }
+        }
+      });
+    } else {
+      result = getComputerEasyMode();
+    }
+    return result;
+  };
 
   // Get player choice
   const getPlayerChoice = () =>
@@ -174,7 +634,6 @@ function GetChoice() {
     printBoard,
     getBoard,
     getComputerEasyMode,
-    getComputerMediumMode,
     getComputerHardMode,
     handlePlayerChoice,
     cellBtn1,
@@ -203,10 +662,17 @@ function PlayGame() {
   let gameOver = false;
 
   // Get selections
-  const handleChoices = async function getChoices() {
+  const handleChoices = async function getChoices(chosenMode) {
     const getComputerEasyMode = () => getChoice.getComputerEasyMode();
-    const getComputerMediumMode = () => getChoice.getComputerMediumMode();
     const getComputerHardMode = () => getChoice.getComputerHardMode();
+
+    let computerMode;
+    if (chosenMode === "easy") {
+      computerMode = () => getComputerEasyMode();
+    } else {
+      computerMode = () => getComputerHardMode();
+    }
+
     const handlePlayerChoice = () =>
       new Promise((resolve) => resolve(getChoice.handlePlayerChoice()));
 
@@ -224,7 +690,7 @@ function PlayGame() {
 
     getActivePlayer().name === "Human"
       ? (cell = await handlePlayerChoice())
-      : (cell = getComputerEasyMode());
+      : (cell = computerMode());
     return {
       cell,
       cellBtn1,
@@ -240,8 +706,8 @@ function PlayGame() {
   };
 
   // Assign row and column values
-  const handleAssignments = async function assignRowColumnValues() {
-    const getCell = await handleChoices();
+  const handleAssignments = async function assignRowColumnValues(chosenMode) {
+    const getCell = await handleChoices(chosenMode);
     let row;
     let column;
     const cell = getCell.cell;
@@ -291,8 +757,8 @@ function PlayGame() {
   };
 
   // Check if cell has already been selected
-  const handleCellCheck = async function checkCells() {
-    const getCellRowColumn = await handleAssignments();
+  const handleCellCheck = async function checkCells(chosenMode) {
+    const getCellRowColumn = await handleAssignments(chosenMode);
     const cell = getCellRowColumn.cell;
     const row = getCellRowColumn.row;
     const column = getCellRowColumn.column;
@@ -404,8 +870,8 @@ function PlayGame() {
   };
 
   // Invert players to handle the active player switch when playTurn() is invoked
-  async function handleInvertedPlayerNames() {
-    const handleCheck = await handleCellCheck();
+  async function handleInvertedPlayerNames(chosenMode) {
+    const handleCheck = await handleCellCheck(chosenMode);
     let invertedPlayer;
 
     getActivePlayer().name === "Human"
@@ -426,8 +892,8 @@ function PlayGame() {
   }
 
   // Check for finished game
-  async function checkFinishedGame() {
-    const getInvertedPlayer = await handleInvertedPlayerNames();
+  async function checkFinishedGame(chosenMode) {
+    const getInvertedPlayer = await handleInvertedPlayerNames(chosenMode);
     const invertedPlayer = getInvertedPlayer.invertedPlayer;
     let gameResult;
 
@@ -507,7 +973,7 @@ function PlayGame() {
     };
   }
 
-  async function PlayTurn() {
+  async function PlayTurn(chosenMode) {
     const activePlayerOnBoard = document.getElementById("active-player");
     const mainBorderColor = document.getElementById("main");
     let finalResult;
@@ -532,7 +998,7 @@ function PlayGame() {
         `border-color: ${getActivePlayer().backgroundColor}`
       );
 
-      const awaitCheckFinishedGame = await checkFinishedGame();
+      const awaitCheckFinishedGame = await checkFinishedGame(chosenMode);
 
       if (
         awaitCheckFinishedGame.gameResult === "Human" ||
@@ -567,8 +1033,8 @@ function PlayGame() {
     };
   }
 
-  async function GetFinalResult() {
-    const playingTurn = await PlayTurn();
+  async function GetFinalResult(chosenMode) {
+    const playingTurn = await PlayTurn(chosenMode);
     const playingTurnResult = playingTurn.finalResult;
     return {
       playingTurnResult,
@@ -603,7 +1069,13 @@ function gameStory() {
   const introSectionIntro7 = document.getElementById("intro-section-intro-7");
   const introSectionIntro8 = document.getElementById("intro-section-intro-8");
   const introSectionIntro9 = document.getElementById("intro-section-intro-9");
-  const playGameBtn = document.getElementById("play-game-btn");
+  let pressStartBtn = document.querySelectorAll(".press-start-btn");
+  const playGameEasyModeBtn = document.getElementById(
+    "play-game-easy-mode-btn"
+  );
+  const playGameHardModeBtn = document.getElementById(
+    "play-game-hard-mode-btn"
+  );
 
   const asciiSection = document.getElementById("ascii-section");
   const ascii1 = document.getElementById("ascii-1");
@@ -644,7 +1116,8 @@ function gameStory() {
     introSectionIntro7.classList.add("hidden-item");
     introSectionIntro8.classList.add("hidden-item");
     introSectionIntro9.classList.add("hidden-item");
-    playGameBtn.classList.add("hidden-item");
+    playGameEasyModeBtn.classList.add("hidden-item");
+    playGameHardModeBtn.classList.add("hidden-item");
   };
 
   const delayIntroItems = () =>
@@ -667,7 +1140,8 @@ function gameStory() {
     await delayIntroItems();
     introSectionIntro5.classList.add("hidden-item");
     introSectionIntro6.classList.remove("hidden-item");
-    playGameBtn.classList.remove("hidden-item");
+    playGameEasyModeBtn.classList.remove("hidden-item");
+    playGameHardModeBtn.classList.remove("hidden-item");
   }
 
   const delayAsciiItems = () =>
@@ -758,60 +1232,97 @@ function gameStory() {
 
   const showResultHuman = () => {
     introSectionIntro7.classList.remove("hidden-item");
-    playGameBtn.classList.remove("hidden-item");
+    playGameEasyModeBtn.classList.remove("hidden-item");
+    playGameHardModeBtn.classList.remove("hidden-item");
   };
   const showResultComputer = () => {
     introSectionIntro8.classList.remove("hidden-item");
-    playGameBtn.classList.remove("hidden-item");
+    playGameEasyModeBtn.classList.remove("hidden-item");
+    playGameHardModeBtn.classList.remove("hidden-item");
   };
 
   const showResultDraw = () => {
     introSectionIntro9.classList.remove("hidden-item");
-    playGameBtn.classList.remove("hidden-item");
+    playGameEasyModeBtn.classList.remove("hidden-item");
+    playGameHardModeBtn.classList.remove("hidden-item");
   };
 
   const run = () => {
     showIntro();
-    playGameBtn.addEventListener("click", async function () {
-      introSection.classList.add("hidden-item");
-      hideAllIntro();
-      asciiSection.classList.add("ascii-hidden");
-      mainSection.classList.remove("hidden-item");
+    ///////////////////////////////////////////////////////////
+    pressStartBtn.forEach((i) => {
+      i.addEventListener("click", async function (e) {
+        let chosenMode;
+        if (e.target.id === "play-game-easy-mode-btn") {
+          chosenMode = "easy";
+        } else {
+          chosenMode = "hard";
+        }
+        introSection.classList.add("hidden-item");
+        hideAllIntro();
+        asciiSection.classList.add("ascii-hidden");
+        mainSection.classList.remove("hidden-item");
 
-      const finalResult = await playGame().GetFinalResult();
+        const finalResult = await playGame().GetFinalResult(chosenMode);
 
-      await delayAsciiItems();
+        asciiSection.classList.remove("ascii-hidden");
+        mainSection.classList.add("hidden-item");
+        introSection.classList.remove("hidden-item");
 
-      asciiSection.classList.remove("ascii-hidden");
-      mainSection.classList.add("hidden-item");
-      introSection.classList.remove("hidden-item");
+        if (finalResult.playingTurnResult === "Human") {
+          showResultHuman();
+        } else if (finalResult.playingTurnResult === "Computer") {
+          showResultComputer();
+        } else if (finalResult.playingTurnResult === "Draw") {
+          showResultDraw();
+        }
 
-      if (finalResult.playingTurnResult === "Human") {
-        showResultHuman();
-      } else if (finalResult.playingTurnResult === "Computer") {
-        showResultComputer();
-      } else if (finalResult.playingTurnResult === "Draw") {
-        showResultDraw();
-      }
-
-      finalResult.cellBtn1.textContent = "";
-      finalResult.cellBtn2.textContent = "";
-      finalResult.cellBtn3.textContent = "";
-      finalResult.cellBtn4.textContent = "";
-      finalResult.cellBtn5.textContent = "";
-      finalResult.cellBtn6.textContent = "";
-      finalResult.cellBtn7.textContent = "";
-      finalResult.cellBtn8.textContent = "";
-      finalResult.cellBtn9.textContent = "";
-      finalResult.cellBtn1.removeAttribute("style", "background-color; color");
-      finalResult.cellBtn2.removeAttribute("style", "background-color; color");
-      finalResult.cellBtn3.removeAttribute("style", "background-color; color");
-      finalResult.cellBtn4.removeAttribute("style", "background-color; color");
-      finalResult.cellBtn5.removeAttribute("style", "background-color; color");
-      finalResult.cellBtn6.removeAttribute("style", "background-color; color");
-      finalResult.cellBtn7.removeAttribute("style", "background-color; color");
-      finalResult.cellBtn8.removeAttribute("style", "background-color; color");
-      finalResult.cellBtn9.removeAttribute("style", "background-color; color");
+        finalResult.cellBtn1.textContent = "";
+        finalResult.cellBtn2.textContent = "";
+        finalResult.cellBtn3.textContent = "";
+        finalResult.cellBtn4.textContent = "";
+        finalResult.cellBtn5.textContent = "";
+        finalResult.cellBtn6.textContent = "";
+        finalResult.cellBtn7.textContent = "";
+        finalResult.cellBtn8.textContent = "";
+        finalResult.cellBtn9.textContent = "";
+        finalResult.cellBtn1.removeAttribute(
+          "style",
+          "background-color; color"
+        );
+        finalResult.cellBtn2.removeAttribute(
+          "style",
+          "background-color; color"
+        );
+        finalResult.cellBtn3.removeAttribute(
+          "style",
+          "background-color; color"
+        );
+        finalResult.cellBtn4.removeAttribute(
+          "style",
+          "background-color; color"
+        );
+        finalResult.cellBtn5.removeAttribute(
+          "style",
+          "background-color; color"
+        );
+        finalResult.cellBtn6.removeAttribute(
+          "style",
+          "background-color; color"
+        );
+        finalResult.cellBtn7.removeAttribute(
+          "style",
+          "background-color; color"
+        );
+        finalResult.cellBtn8.removeAttribute(
+          "style",
+          "background-color; color"
+        );
+        finalResult.cellBtn9.removeAttribute(
+          "style",
+          "background-color; color"
+        );
+      });
     });
   };
 
