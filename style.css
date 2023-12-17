@@ -33,7 +33,7 @@ body {
 
 .main {
   position: relative;
-  bottom: 20px;
+  top: -40px;
   width: 800px;
   height: 550px;
   margin: auto;
