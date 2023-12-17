@@ -30,8 +30,6 @@ function GameBoard() {
   return { dropToken, printBoard };
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // Create function to take player selection and put on board
 function Cell() {
   let value = 0;
@@ -44,8 +42,6 @@ function Cell() {
 
   return { addToken, getValue };
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Create function to control the game
 function GameController(playerOneName = "Human", playerTwoName = "Machine") {
@@ -89,8 +85,6 @@ function GameController(playerOneName = "Human", playerTwoName = "Machine") {
     printBoard: board.printBoard,
   };
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Get player and computer choices
 function GetChoice() {
@@ -640,8 +634,6 @@ function GetChoice() {
   };
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // Play game
 function PlayGame() {
   const getChoice = GetChoice();
@@ -1048,8 +1040,6 @@ function PlayGame() {
 
   return { GetFinalResult, getPlayers };
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Put game story together
 function gameStory() {
