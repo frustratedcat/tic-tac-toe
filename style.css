@@ -225,6 +225,10 @@ a:active {
   color: var(--main-dark-gray);
 }
 
+a:visited {
+  color: var(--main-light-gray);
+}
+
 @media (max-width: 850px) {
   .main {
     width: 600px;
