@@ -210,11 +210,14 @@ footer {
   background-color: var(--main-dark-blue);
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--main-light-gray);
 }
 
 a:link {
   text-decoration: none;
+  color: var(--main-light-gray);
+}
+
+a:visited {
   color: var(--main-light-gray);
 }
 
@@ -224,10 +227,6 @@ a:hover {
 
 a:active {
   color: var(--main-dark-gray);
-}
-
-a:visited {
-  color: var(--main-light-gray);
 }
 
 @media (max-width: 850px) {
