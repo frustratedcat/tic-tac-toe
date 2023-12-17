@@ -127,11 +127,11 @@ body {
 }
 
 .easy-mode-btn {
-  top: 55%;
+  top: 54%;
 }
 
 .hard-mode-btn {
-  top: 70%;
+  top: 71%;
 }
 
 .press-start-btn:hover,
@@ -257,7 +257,7 @@ a:visited {
   }
 
   .hard-mode-btn {
-    top: 70%;
+    top: 72%;
   }
 
   .active-player-style {
