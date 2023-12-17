@@ -123,7 +123,8 @@ function GetChoice() {
 
   // Get rational choice from computer
   const getComputerHardMode = () => {
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    let result;
+
     // this should be good to use
     const getOpenRowLength = printBoard().map(
       (row) => row.filter((cell) => cell === 0).length
@@ -176,24 +177,22 @@ function GetChoice() {
     //closing diagonals
     const checkPlayerOneClosingDiagonal = printBoard()
       .map((row, column) => row[column] === getPlayers()[0].token)
-      .filter((i) => i === true).length;
-    console.log(checkPlayerOneClosingDiagonal);
+      .filter((i) => i === true);
 
     const checkPlayerTwoClosingDiagonal = printBoard()
       .map((row, column) => row[column] === getPlayers()[1].token)
-      .filter((i) => i === true).length;
-    console.log(checkPlayerTwoClosingDiagonal);
+      .filter((i) => i === true);
 
     //opening diagonals
     const checkPlayerOneOpeningDiagonal = printBoard()
-      .map((row, column) => row[column] === getPlayers()[0].token)
-      .filter((i) => i === true).length;
-    console.log(checkPlayerOneOpeningDiagonal);
+      .reverse()
+      .map((row, column) => row[column])
+      .filter((i) => i === getPlayers()[0].token);
 
     const checkPlayerTwoOpeningDiagonal = printBoard()
-      .map((row, column) => row[column] === getPlayers()[1].token)
-      .filter((i) => i === true).length;
-    console.log(checkPlayerTwoOpeningDiagonal);
+      .reverse()
+      .map((row, column) => row[column])
+      .filter((i) => i === getPlayers()[1].token);
 
     //RUN EVERYTHING
     //Run the stuff
@@ -205,6 +204,13 @@ function GetChoice() {
       resultRowOne.forEach((i) => {
         if (i === 0) {
           console.log(resultRowOne.indexOf(i));
+          if (resultRowOne.indexOf(i) === 0) {
+            result = 1;
+          } else if (resultRowOne.indexOf(i) === 1) {
+            result = 2;
+          } else if (resultRowOne.indexOf(i) === 2) {
+            result = 3;
+          }
         }
       });
     } else if (
@@ -215,6 +221,13 @@ function GetChoice() {
       resultRowTwo.forEach((i) => {
         if (i === 0) {
           console.log(resultRowTwo.indexOf(i));
+          if (resultRowTwo.indexOf(i) === 0) {
+            result = 4;
+          } else if (resultRowTwo.indexOf(i) === 1) {
+            result = 5;
+          } else if (resultRowTwo.indexOf(i) === 2) {
+            result = 6;
+          }
         }
       });
     } else if (
@@ -225,6 +238,13 @@ function GetChoice() {
       resultRowThree.forEach((i) => {
         if (i === 0) {
           console.log(resultRowThree.indexOf(i));
+          if (resultRowThree.indexOf(i) === 0) {
+            result = 7;
+          } else if (resultRowThree.indexOf(i) === 1) {
+            result = 8;
+          } else if (resultRowThree.indexOf(i) === 2) {
+            result = 9;
+          }
         }
       });
     } else if (
@@ -235,6 +255,13 @@ function GetChoice() {
       columnOneResult.forEach((i) => {
         if (i === true) {
           console.log(columnOneResult.indexOf(i));
+          if (columnOneResult.indexOf(i) === 0) {
+            result = 1;
+          } else if (columnOneResult.indexOf(i) === 1) {
+            result = 4;
+          } else if (columnOneResult.indexOf(i) === 2) {
+            result = 7;
+          }
         }
       });
     } else if (
@@ -245,6 +272,13 @@ function GetChoice() {
       columnTwoResult.forEach((i) => {
         if (i === true) {
           console.log(columnTwoResult.indexOf(i));
+          if (columnTwoResult.indexOf(i) === 0) {
+            result = 2;
+          } else if (columnTwoResult.indexOf(i) === 1) {
+            result = 5;
+          } else if (columnTwoResult.indexOf(i) === 2) {
+            result = 8;
+          }
         }
       });
     } else if (
@@ -255,21 +289,35 @@ function GetChoice() {
       columnThreeResult.forEach((i) => {
         if (i === true) {
           console.log(columnThreeResult.indexOf(i));
+          if (columnThreeResult.indexOf(i) === 0) {
+            result = 3;
+          } else if (columnThreeResult.indexOf(i) === 1) {
+            result = 6;
+          } else if (columnThreeResult.indexOf(i) === 2) {
+            result = 9;
+          }
         }
       });
     } else if (
-      checkPlayerTwoClosingDiagonal === 2 &&
-      checkPlayerOneClosingDiagonal === 0
+      checkPlayerTwoClosingDiagonal.length === 2 &&
+      checkPlayerOneClosingDiagonal.length === 0
     ) {
       const getClosingDiagonal = printBoard().map((row, column) => row[column]);
       getClosingDiagonal.forEach((i) => {
         if (i === 0) {
           console.log(getClosingDiagonal.indexOf(i));
+          if (getClosingDiagonal.indexOf(i) === 0) {
+            result = 1;
+          } else if (getClosingDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getClosingDiagonal.indexOf(i) === 2) {
+            result = 9;
+          }
         }
       });
     } else if (
-      checkPlayerTwoOpeningDiagonal === 2 &&
-      checkPlayerOneOpeningDiagonal === 0
+      checkPlayerTwoOpeningDiagonal.length === 2 &&
+      checkPlayerOneOpeningDiagonal.length === 0
     ) {
       const getOpeningDiagonal = printBoard()
         .reverse()
@@ -277,12 +325,17 @@ function GetChoice() {
       getOpeningDiagonal.forEach((i) => {
         if (i === 0) {
           console.log(getOpeningDiagonal.indexOf(i));
+          if (getOpeningDiagonal.indexOf(i) === 0) {
+            result = 7;
+          } else if (getOpeningDiagonal.indexOf(i) === 1) {
+            result = 5;
+          } else if (getOpeningDiagonal.indexOf(i) === 2) {
+            result = 3;
+          }
         }
       });
     }
-
-    // console.log(getPlayers()[0].token);
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    return result;
   };
 
   // Get player choice
