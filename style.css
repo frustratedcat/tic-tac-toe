@@ -125,6 +125,14 @@ body {
   border-radius: 10px;
 }
 
+.easy-mode-btn {
+  top: 55%;
+}
+
+.hard-mode-btn {
+  top: 70%;
+}
+
 .press-start-btn:hover,
 .press-start-btn:focus {
   background-color: var(--main-purple);
@@ -241,6 +249,14 @@ a:visited {
 
   .press-start-btn {
     top: 65%;
+  }
+
+  .easy-mode-btn {
+    top: 55%;
+  }
+
+  .hard-mode-btn {
+    top: 70%;
   }
 
   .active-player-style {
