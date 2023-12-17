@@ -117,14 +117,173 @@ function GetChoice() {
     min = Math.ceil(min);
     max = Math.floor(max);
     const result = Math.floor(Math.random() * (max - min + 1) + min);
+
     return result;
   };
 
-  // Get a somewhat rational choice from computer
-  const getComputerMediumMode = () => {};
-
   // Get rational choice from computer
-  const getComputerHardMode = () => {};
+  const getComputerHardMode = () => {
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // this should be good to use
+    const getOpenRowLength = printBoard().map(
+      (row) => row.filter((cell) => cell === 0).length
+    );
+
+    // ROWS
+    // Get row token count for player one
+    const checkForPlayerOneRowTokens = printBoard().map((row) =>
+      row.filter((cell) => cell === getPlayers()[0].token)
+    );
+
+    // Get row token count for player two
+    const checkForPlayerTwoRowTokens = printBoard().map((row) =>
+      row.filter((cell) => cell === getPlayers()[1].token)
+    );
+
+    // COLUMNS
+    // Get each column
+    const checkForColumnOne = printBoard().map((row) => row[0]);
+    const checkForColumnTwo = printBoard().map((row) => row[1]);
+    const checkForColumnThree = printBoard().map((row) => row[2]);
+
+    //Player One Checks
+    const playerOneColumnOne = checkForColumnOne.filter(
+      (cell) => cell === getPlayers()[0].token
+    );
+
+    const playerOneColumnTwo = checkForColumnTwo.filter(
+      (cell) => cell === getPlayers()[0].token
+    );
+
+    const playerOneColumnThree = checkForColumnThree.filter(
+      (cell) => cell === getPlayers()[0].token
+    );
+
+    // Player Two Checks
+    const playerTwoColumnOne = checkForColumnOne.filter(
+      (cell) => cell === getPlayers()[1].token
+    );
+
+    const playerTwoColumnTwo = checkForColumnTwo.filter(
+      (cell) => cell === getPlayers()[1].token
+    );
+
+    const playerTwoColumnThree = checkForColumnThree.filter(
+      (cell) => cell === getPlayers()[1].token
+    );
+
+    //DIAGONALS
+    //closing diagonals
+    const checkPlayerOneClosingDiagonal = printBoard()
+      .map((row, column) => row[column] === getPlayers()[0].token)
+      .filter((i) => i === true).length;
+    console.log(checkPlayerOneClosingDiagonal);
+
+    const checkPlayerTwoClosingDiagonal = printBoard()
+      .map((row, column) => row[column] === getPlayers()[1].token)
+      .filter((i) => i === true).length;
+    console.log(checkPlayerTwoClosingDiagonal);
+
+    //opening diagonals
+    const checkPlayerOneOpeningDiagonal = printBoard()
+      .map((row, column) => row[column] === getPlayers()[0].token)
+      .filter((i) => i === true).length;
+    console.log(checkPlayerOneOpeningDiagonal);
+
+    const checkPlayerTwoOpeningDiagonal = printBoard()
+      .map((row, column) => row[column] === getPlayers()[1].token)
+      .filter((i) => i === true).length;
+    console.log(checkPlayerTwoOpeningDiagonal);
+
+    //RUN EVERYTHING
+    //Run the stuff
+    if (
+      checkForPlayerTwoRowTokens[0].length === 2 &&
+      checkForPlayerOneRowTokens[0].length === 0
+    ) {
+      const resultRowOne = printBoard()[0];
+      resultRowOne.forEach((i) => {
+        if (i === 0) {
+          console.log(resultRowOne.indexOf(i));
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[1].length === 2 &&
+      checkForPlayerOneRowTokens[1].length === 0
+    ) {
+      const resultRowTwo = printBoard()[1];
+      resultRowTwo.forEach((i) => {
+        if (i === 0) {
+          console.log(resultRowTwo.indexOf(i));
+        }
+      });
+    } else if (
+      checkForPlayerTwoRowTokens[2].length === 2 &&
+      checkForPlayerOneRowTokens[2].length === 0
+    ) {
+      const resultRowThree = printBoard()[2];
+      resultRowThree.forEach((i) => {
+        if (i === 0) {
+          console.log(resultRowThree.indexOf(i));
+        }
+      });
+    } else if (
+      playerTwoColumnOne.length === 2 &&
+      playerOneColumnOne.length === 0
+    ) {
+      const columnOneResult = checkForColumnOne.map((cell) => cell === 0);
+      columnOneResult.forEach((i) => {
+        if (i === true) {
+          console.log(columnOneResult.indexOf(i));
+        }
+      });
+    } else if (
+      playerTwoColumnTwo.length === 2 &&
+      playerOneColumnTwo.length === 0
+    ) {
+      const columnTwoResult = checkForColumnTwo.map((cell) => cell === 0);
+      columnTwoResult.forEach((i) => {
+        if (i === true) {
+          console.log(columnTwoResult.indexOf(i));
+        }
+      });
+    } else if (
+      playerTwoColumnThree.length === 2 &&
+      playerOneColumnThree.length === 0
+    ) {
+      const columnThreeResult = checkForColumnThree.map((cell) => cell === 0);
+      columnThreeResult.forEach((i) => {
+        if (i === true) {
+          console.log(columnThreeResult.indexOf(i));
+        }
+      });
+    } else if (
+      checkPlayerTwoClosingDiagonal === 2 &&
+      checkPlayerOneClosingDiagonal === 0
+    ) {
+      const getClosingDiagonal = printBoard().map((row, column) => row[column]);
+      getClosingDiagonal.forEach((i) => {
+        if (i === 0) {
+          console.log(getClosingDiagonal.indexOf(i));
+        }
+      });
+    } else if (
+      checkPlayerTwoOpeningDiagonal === 2 &&
+      checkPlayerOneOpeningDiagonal === 0
+    ) {
+      const getOpeningDiagonal = printBoard()
+        .reverse()
+        .map((row, column) => row[column]);
+      getOpeningDiagonal.forEach((i) => {
+        if (i === 0) {
+          console.log(getOpeningDiagonal.indexOf(i));
+        }
+      });
+    }
+
+    // console.log(getPlayers()[0].token);
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  };
 
   // Get player choice
   const getPlayerChoice = () =>
@@ -174,7 +333,6 @@ function GetChoice() {
     printBoard,
     getBoard,
     getComputerEasyMode,
-    getComputerMediumMode,
     getComputerHardMode,
     handlePlayerChoice,
     cellBtn1,
@@ -205,7 +363,6 @@ function PlayGame() {
   // Get selections
   const handleChoices = async function getChoices() {
     const getComputerEasyMode = () => getChoice.getComputerEasyMode();
-    const getComputerMediumMode = () => getChoice.getComputerMediumMode();
     const getComputerHardMode = () => getChoice.getComputerHardMode();
     const handlePlayerChoice = () =>
       new Promise((resolve) => resolve(getChoice.handlePlayerChoice()));
@@ -651,20 +808,20 @@ function gameStory() {
     new Promise((resolve) => setTimeout(resolve, 4000));
 
   async function showIntro() {
-    introSectionIntro1.classList.remove("hidden-item");
-    await delayIntroItems();
-    introSectionIntro1.classList.add("hidden-item");
-    introSectionIntro2.classList.remove("hidden-item");
-    await delayIntroItems();
-    introSectionIntro2.classList.add("hidden-item");
-    introSectionIntro3.classList.remove("hidden-item");
-    await delayIntroItems();
-    introSectionIntro3.classList.add("hidden-item");
-    introSectionIntro4.classList.remove("hidden-item");
-    await delayIntroItems();
-    introSectionIntro4.classList.add("hidden-item");
-    introSectionIntro5.classList.remove("hidden-item");
-    await delayIntroItems();
+    // introSectionIntro1.classList.remove("hidden-item");
+    // await delayIntroItems();
+    // introSectionIntro1.classList.add("hidden-item");
+    // introSectionIntro2.classList.remove("hidden-item");
+    // await delayIntroItems();
+    // introSectionIntro2.classList.add("hidden-item");
+    // introSectionIntro3.classList.remove("hidden-item");
+    // await delayIntroItems();
+    // introSectionIntro3.classList.add("hidden-item");
+    // introSectionIntro4.classList.remove("hidden-item");
+    // await delayIntroItems();
+    // introSectionIntro4.classList.add("hidden-item");
+    // introSectionIntro5.classList.remove("hidden-item");
+    // await delayIntroItems();
     introSectionIntro5.classList.add("hidden-item");
     introSectionIntro6.classList.remove("hidden-item");
     playGameBtn.classList.remove("hidden-item");
